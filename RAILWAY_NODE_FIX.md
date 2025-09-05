@@ -8,11 +8,19 @@ error: collision between nodejs-18.20.5 and nodejs-20.18.1
 ## **🔧 SOLUCIÓN APLICADA:**
 
 ### **1. Archivo `.nvmrc` creado:**
+```
+20
+```
 - Fuerza Node.js versión 20
 
 ### **2. `package.json` actualizado:**
-- Agregado `engines.node: "20.x"`
-- Railway respetará esta configuración
+```json
+"engines": {
+    "node": "20.x",
+    "npm": ">=9.0.0"
+}
+```
+- Railway respetará esta configuración automáticamente
 
 ### **3. Variables Railway REQUERIDAS:**
 ```env
