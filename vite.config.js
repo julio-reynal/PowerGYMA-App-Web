@@ -22,4 +22,19 @@ export default defineConfig({
         }),
         tailwindcss(),
     ],
+    build: {
+        rollupOptions: {
+            output: {
+                manualChunks: undefined,
+            },
+        },
+        manifest: true,
+        outDir: 'public/build',
+        assetsDir: 'assets',
+    },
+    server: {
+        hmr: {
+            host: 'localhost',
+        },
+    },
 });
