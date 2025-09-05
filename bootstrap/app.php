@@ -14,6 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'role' => \App\Http\Middleware\CheckRole::class,
             'force.https' => \App\Http\Middleware\ForceHttps::class,
+            'vite.manifest' => \App\Http\Middleware\HandleViteManifest::class,
         ]);
         
         // Trust proxies for Railway/cloud platforms
@@ -24,6 +25,7 @@ return Application::configure(basePath: dirname(__DIR__))
             $middleware->web(prepend: [
                 \App\Http\Middleware\TrustProxies::class,
                 \App\Http\Middleware\ForceHttps::class,
+                \App\Http\Middleware\HandleViteManifest::class,
             ]);
         }
     })

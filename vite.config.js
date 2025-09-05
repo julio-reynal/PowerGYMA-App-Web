@@ -31,14 +31,26 @@ export default defineConfig({
         manifest: true,
         outDir: 'public/build',
         assetsDir: 'assets',
+        copyPublicDir: false,
+        target: 'es2020',
+        minify: 'terser',
+        sourcemap: false,
+        chunkSizeWarningLimit: 1600,
     },
     server: {
         hmr: {
             host: 'localhost',
         },
     },
-    // Configuración para producción
-    base: process.env.NODE_ENV === 'production' 
-        ? 'https://powergyma-app-web-production.up.railway.app/build/' 
-        : '/build/',
+    // Configuración simplificada para Railway
+    base: '/build/',
+    publicDir: false,
+    resolve: {
+        alias: {
+            '@': '/resources',
+        },
+    },
+    css: {
+        devSourcemap: false,
+    },
 });

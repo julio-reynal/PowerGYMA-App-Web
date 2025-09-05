@@ -15,13 +15,19 @@
     <!-- Boxicons for consistent iconography with the mockup -->
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
 
-    @try
-        @vite(['resources/css/login.css', 'resources/js/login.js'])
-    @catch(\Exception $e)
-        <!-- Fallback CSS en caso de que Vite falle -->
+    @if(app()->environment('production') && !file_exists(public_path('build/manifest.json')))
+        <!-- Fallback para producción sin manifest -->
         <link href="{{ asset('resources/css/login.css') }}" rel="stylesheet">
         <script src="{{ asset('resources/js/login.js') }}" defer></script>
-    @endtry
+    @else
+        @try
+            @vite(['resources/css/login.css', 'resources/js/login.js'])
+        @catch(\Exception $e)
+            <!-- Fallback CSS en caso de que Vite falle -->
+            <link href="{{ asset('resources/css/login.css') }}" rel="stylesheet">
+            <script src="{{ asset('resources/js/login.js') }}" defer></script>
+        @endtry
+    @endif
 </head>
 <body>
     <div class="login-container">

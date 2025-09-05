@@ -4,6 +4,7 @@
 [variables]
 NODE_VERSION = "20.19.0"
 PHP_VERSION = "8.2"
+NODE_ENV = "production"
 
 [phases.setup]
 nixPkgs = ["nodejs_20", "nodePackages.npm", "php82", "php82Packages.composer"]
@@ -11,14 +12,17 @@ nixPkgs = ["nodejs_20", "nodePackages.npm", "php82", "php82Packages.composer"]
 [phases.install]
 cmds = [
   "composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist",
-  "npm ci"
+  "npm ci --no-audit --prefer-offline"
 ]
 
 [phases.build]
 cmds = [
   "chmod +x build.sh",
-  "./build.sh"
+  "./build.sh",
+  "php artisan config:cache",
+  "php artisan route:cache",
+  "php artisan view:cache"
 ]
 
 [start]
-cmd = "php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=$PORT"
+cmd = "php artisan vite:fix-manifest --force && php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=$PORT"
