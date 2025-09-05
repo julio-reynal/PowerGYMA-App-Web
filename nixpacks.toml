@@ -1,5 +1,5 @@
 # Configuración de Nixpacks para Power GYMA
-# Configuración optimizada para evitar errores de build
+# Configuración optimizada para resolver vite not found
 
 [variables]
 NODE_VERSION = "20"
@@ -11,12 +11,12 @@ nixPkgs = ["nodejs_20", "nodePackages.npm", "php82", "php82Packages.composer"]
 [phases.install]
 cmds = [
   "composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist",
-  "npm install --include=dev"
+  "npm install --include=dev --verbose"
 ]
 
 [phases.build]
 cmds = [
-  "npm run build",
+  "npx vite build",
   "php artisan storage:link"
 ]
 
