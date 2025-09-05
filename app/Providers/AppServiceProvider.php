@@ -23,20 +23,20 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Forzar HTTPS en producción
-        if (config('app.env') === 'production') {
+        // Configuración HTTPS para producción
+        if (config('app.env') === 'production' || config('force_https', false)) {
+            // Forzar HTTPS para URLs
             URL::forceScheme('https');
+            
+            // Configurar servidor para HTTPS
             $this->app['request']->server->set('HTTPS', true);
-        }
-        
-        // Configurar URL root si está definida
-        if (config('app.url')) {
-            URL::forceRootUrl(config('app.url'));
-        }
-        
-        // Forzar HTTPS para assets en producción
-        if (config('app.env') === 'production') {
-            \Illuminate\Support\Facades\Vite::useHotFile(public_path('hot'));
+            $this->app['request']->server->set('SERVER_PORT', 443);
+            $this->app['request']->server->set('HTTP_X_FORWARDED_PROTO', 'https');
+            
+            // Configurar URL root
+            if (config('app.url')) {
+                URL::forceRootUrl(config('app.url'));
+            }
         }
     }
 }

@@ -1,0 +1,6 @@
+# Variables ADICIONALES para agregar en Railway Dashboard
+# Estas variables solucionan los errores de Node.js collision y vite not found
+
+NODE_VERSION=20.18.1
+NIXPACKS_NODE_VERSION=20
+NIXPACKS_INSTALL_CMD=composer install --no-dev --optimize-autoloader && npm install --include=dev
