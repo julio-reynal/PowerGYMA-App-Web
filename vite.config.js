@@ -37,4 +37,8 @@ export default defineConfig({
             host: 'localhost',
         },
     },
+    // Configuración para producción
+    base: process.env.NODE_ENV === 'production' 
+        ? 'https://powergyma-app-web-production.up.railway.app/build/' 
+        : '/build/',
 });

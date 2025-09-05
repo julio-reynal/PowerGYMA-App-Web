@@ -26,11 +26,17 @@ class AppServiceProvider extends ServiceProvider
         // Forzar HTTPS en producción
         if (config('app.env') === 'production') {
             URL::forceScheme('https');
+            $this->app['request']->server->set('HTTPS', true);
         }
         
         // Configurar URL root si está definida
         if (config('app.url')) {
             URL::forceRootUrl(config('app.url'));
+        }
+        
+        // Forzar HTTPS para assets en producción
+        if (config('app.env') === 'production') {
+            \Illuminate\Support\Facades\Vite::useHotFile(public_path('hot'));
         }
     }
 }
