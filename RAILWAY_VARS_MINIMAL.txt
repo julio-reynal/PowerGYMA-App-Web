@@ -1,0 +1,20 @@
+NODE_VERSION=20.19.0
+NIXPACKS_NODE_VERSION=20.19.0
+APP_NAME=Power GYMA
+APP_ENV=production
+APP_KEY=base64:vAUG8BbJbiXaEuZYKBkM9suO0Q2j8cRwNi+/nTF2oMs=
+APP_DEBUG=true
+APP_URL=https://powergyma-app-web-production.up.railway.app
+ASSET_URL=https://powergyma-app-web-production.up.railway.app
+FORCE_HTTPS=true
+TRUST_PROXIES=*
+DB_CONNECTION=mysql
+DB_HOST=mysql.railway.internal
+DB_PORT=3306
+DB_DATABASE=railway
+DB_USERNAME=root
+DB_PASSWORD=XmAYhysjQKuqurqFzBLaACtbNeUCjWqf
+SESSION_DRIVER=file
+CACHE_STORE=file
+QUEUE_CONNECTION=database
+FILESYSTEM_DISK=local

@@ -1,0 +1,28 @@
+APP_NAME=Power GYMA
+APP_ENV=production
+APP_KEY=base64:vAUG8BbJbiXaEuZYKBkM9suO0Q2j8cRwNi+/nTF2oMs=
+APP_DEBUG=true
+APP_URL=https://powergyma-app-web-production.up.railway.app
+ASSET_URL=https://powergyma-app-web-production.up.railway.app
+NODE_VERSION=20.19.0
+NODE_ENV=production
+NIXPACKS_NODE_VERSION=20.19.0
+FORCE_HTTPS=true
+TRUST_PROXIES=*
+NIXPACKS_INSTALL_CMD=composer install --no-dev --optimize-autoloader && npm install --include=dev
+NIXPACKS_BUILD_CMD=npm run build && php artisan storage:link
+DB_CONNECTION=mysql
+DB_HOST=mysql.railway.internal
+DB_PORT=3306
+DB_DATABASE=railway
+DB_USERNAME=root
+DB_PASSWORD=XmAYhysjQKuqurqFzBLaACtbNeUCjWqf
+APP_LOCALE=es
+APP_FALLBACK_LOCALE=en
+LOG_CHANNEL=stack
+SESSION_DRIVER=file
+SESSION_LIFETIME=120
+CACHE_STORE=file
+QUEUE_CONNECTION=database
+FILESYSTEM_DISK=local
+VITE_APP_NAME=Power GYMA
