@@ -33,15 +33,9 @@ export default defineConfig({
         assetsDir: 'assets',
         copyPublicDir: false,
         target: 'es2020',
-        minify: 'terser',
+        minify: 'esbuild', // Usar esbuild en lugar de terser como fallback
         sourcemap: false,
         chunkSizeWarningLimit: 1600,
-        terserOptions: {
-            compress: {
-                drop_console: true,
-                drop_debugger: true
-            }
-        }
     },
     server: {
         hmr: {

@@ -23,18 +23,43 @@ if ! npm list vite >/dev/null 2>&1; then
     npm install vite@^6.0.0 --no-save
 fi
 
+# Verificar si terser está instalado
+echo "Verificando terser..."
+if ! npm list terser >/dev/null 2>&1; then
+    echo "Instalando terser..."
+    npm install terser@^5.36.0 --no-save
+fi
+
 # Build de Vite con configuración específica
 echo "Ejecutando Vite build..."
 export NODE_ENV=production
 export NODE_OPTIONS="--max-old-space-size=4096"
 
-# Intentar build normal
+# Estrategia 1: Intentar build normal
+echo "Intento 1: Build normal con terser..."
 if npm run build; then
     echo "✅ Build de Vite exitoso"
 else
-    echo "❌ Error en build, usando comando de fallback..."
-    # Usar comando Laravel personalizado como fallback
-    php artisan vite:fix-manifest --force
+    echo "❌ Build falló, intentando con configuración alternativa..."
+    
+    # Estrategia 2: Usar configuración sin terser
+    echo "Intento 2: Build con esbuild..."
+    if cp vite.config.fallback.js vite.config.temp.js && mv vite.config.js vite.config.original.js && mv vite.config.temp.js vite.config.js; then
+        if npm run build; then
+            echo "✅ Build exitoso con esbuild"
+            mv vite.config.original.js vite.config.js
+        else
+            echo "❌ Build con esbuild falló, restaurando config..."
+            mv vite.config.original.js vite.config.js
+            
+            # Estrategia 3: Usar comando Laravel personalizado como fallback
+            echo "Intento 3: Usando comando de fallback..."
+            php artisan vite:fix-manifest --force
+        fi
+    else
+        echo "❌ Error copiando configuración, usando fallback..."
+        php artisan vite:fix-manifest --force
+    fi
 fi
 
 # Verificar resultado
