@@ -20,7 +20,8 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->trustProxies(at: '*');
         
         // Aplicar HTTPS middleware globalmente en producción
-        if (config('app.env') === 'production') {
+        // Usar $_ENV en lugar de config() durante bootstrap
+        if (($_ENV['APP_ENV'] ?? 'local') === 'production') {
             $middleware->web(prepend: [
                 \App\Http\Middleware\TrustProxies::class,
                 \App\Http\Middleware\ForceHttps::class,
