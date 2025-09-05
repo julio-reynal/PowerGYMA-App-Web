@@ -1,0 +1,12 @@
+# Railway Node.js Configuration
+# Force specific Node.js version
+NODE_VERSION=20.18.1
+
+# Environment
+NODE_ENV=production
+
+# Build configuration
+BUILD_COMMAND=npm run build
+
+# Railway auto-detection override
+NIXPACKS_NODE_VERSION=20
