@@ -25,7 +25,8 @@ return Application::configure(basePath: dirname(__DIR__))
             $middleware->web(prepend: [
                 \App\Http\Middleware\TrustProxies::class,
                 \App\Http\Middleware\ForceHttps::class,
-                \App\Http\Middleware\HandleViteManifest::class,
+                // Temporalmente comentado para debug
+                // \App\Http\Middleware\HandleViteManifest::class,
             ]);
         }
     })
