@@ -1,17 +1,17 @@
 # Configuración de Nixpacks para Power GYMA
-# Este archivo es opcional pero proporciona mejor control sobre el proceso de build
+# Configuración optimizada para evitar errores de build
 
 [variables]
-NODE_VERSION = "18"
+NODE_VERSION = "20"
 PHP_VERSION = "8.2"
 
 [phases.setup]
-nixPkgs = ["nodejs_18", "nodePackages.npm", "php82", "php82Packages.composer"]
+nixPkgs = ["nodejs_20", "nodePackages.npm", "php82", "php82Packages.composer"]
 
 [phases.install]
 cmds = [
   "composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist",
-  "npm ci"
+  "npm install --include=dev"
 ]
 
 [phases.build]
