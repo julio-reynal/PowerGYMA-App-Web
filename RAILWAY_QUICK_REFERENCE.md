@@ -5,7 +5,7 @@
 ### Copiar y pegar en Railway Variables:
 
 ```bash
-# Build Configuration (CRÍTICO) - CORREGIDO PARA NIXPACKS
+# Build Configuration (VERSIÓN SIMPLIFICADA - SIN CONFLICTOS)
 NIXPACKS_BUILD_CMD=composer install --no-dev --optimize-autoloader && npm install && npm run build && php artisan storage:link
 
 NIXPACKS_START_CMD=php artisan migrate --force && php artisan config:cache && php artisan route:cache && php artisan view:cache && php artisan serve --host=0.0.0.0 --port=$PORT
