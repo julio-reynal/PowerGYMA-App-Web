@@ -2,7 +2,7 @@
 # Configuración optimizada para resolver vite not found
 
 [variables]
-NODE_VERSION = "20"
+NODE_VERSION = "20.19.0"
 PHP_VERSION = "8.2"
 
 [phases.setup]
@@ -16,7 +16,7 @@ cmds = [
 
 [phases.build]
 cmds = [
-  "npx vite build",
+  "npm run build",
   "php artisan storage:link"
 ]
 
