@@ -1,0 +1,36 @@
+FECHA,25-ago
+RIESGO,Alto
+HORA INICIO,19:00
+HORA FIN,20:00
+,
+1-ago,Bajo,Consumo estable
+2-ago,Alto,Demanda por evento especial
+3-ago,Moderado,
+4-ago,Bajo,Mantenimiento programado
+5-ago,No procede,
+6-ago,Alto,
+7-ago,No procede,
+8-ago,Bajo,
+9-ago,Alto,
+10-ago,Moderado,
+11-ago,Bajo,
+12-ago,Alto,
+13-ago,Moderado,
+14-ago,Alto,
+15-ago,Bajo,
+16-ago,Alto,
+17-ago,Alto,
+18-ago,Bajo,
+19-ago,Moderado,
+20-ago,Alto,
+21-ago,Alto,
+22-ago,Bajo,
+23-ago,Alto,
+24-ago,Moderado,
+25-ago,Alto,
+26-ago,Moderado,
+27-ago,Alto,
+28-ago,Bajo,
+29-ago,Bajo,
+30-ago,Alto,
+31-ago,Moderado,

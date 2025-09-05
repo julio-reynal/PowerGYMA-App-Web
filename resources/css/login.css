@@ -1,0 +1,506 @@
+:root {
+    /* Global palette aligned to the mockup */
+    --background-dark: #0E0E0E;
+    --left-panel-bg: #0E0E0E;
+    --card-bg: #261E18;           /* Card background */
+    --card-border: #51443A;       /* Card border */
+    --primary-accent: #E78B1B;    /* Buttons / focus */
+    --text-light: #FFFFFF;
+    --text-muted: #A0A0A0;
+    --input-bg: #1C1C1C;          /* Slightly darker input surface */
+    --input-border: #3A3A3A;      /* Neutral outline like the reference */
+    --input-inner-highlight: rgba(255, 255, 255, 0.06); /* soft top highlight */
+    --divider: rgba(255, 255, 255, 0.06);
+}
+
+/* Light theme (optional) */
+:root.light {
+    --background-dark: #F7F7F8;
+    --left-panel-bg: #FFFFFF;
+    --card-bg: #FFFFFF;
+    --card-border: #E5E7EB;
+    --primary-accent: #E78B1B;
+    --text-light: #0F172A;
+    --text-muted: #6B7280;
+    --input-bg: #FFFFFF;
+    --input-border: #D1D5DB;
+    --input-inner-highlight: rgba(15, 23, 42, 0.04);
+    --divider: rgba(15, 23, 42, 0.06);
+}
+
+body {
+    background-color: var(--background-dark);
+    color: var(--text-light);
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    min-height: 100vh;
+}
+
+/* Prevent width overflow: all widths include padding & borders */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+.login-container {
+    display: flex;
+    min-height: 100vh;
+    position: relative;
+}
+
+/* subtle divider between left hero and right card */
+.login-container::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 0;
+    height: 100%;
+    width: 1px;
+    background: var(--divider);
+    transform: translateX(-50%);
+    pointer-events: none;
+}
+
+.left-panel {
+    flex: 1 1 50%;
+    background-color: var(--left-panel-bg);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 4rem 3rem 2rem 4rem;
+    color: var(--text-light);
+    position: relative;
+    overflow: hidden; /* contain decorative shapes */
+}
+
+/* Center the hero content (logo + promo) vertically, keep footer at bottom, moved higher as requested */
+.left-panel > div:first-child {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* moved to top as requested */
+    flex: 1 1 auto;
+    position: relative;
+    padding-top: 10rem; /* positioned a bit higher from middle */
+    z-index: 1;        /* above background glows */
+    animation: fadeInUp 1.2s ease-out 0.3s both; /* entrance animation */
+}
+
+/* background glows modeled from provided SVG */
+.left-panel::before,
+.left-panel::after {
+    content: "";
+    position: absolute;
+    border-radius: 9999px;
+    pointer-events: none;
+    z-index: 0;
+}
+/* Left blue soft gradient */
+.left-panel::before {
+    width: 560px;
+    height: 560px;
+    left: -180px;
+    bottom: -140px;
+    background: radial-gradient(ellipse at 10% 65%, rgba(2, 92, 205, 0.25) 0%, rgba(2, 92, 205, 0.08) 45%, rgba(2, 92, 205, 0) 75%);
+}
+/* Right orange soft gradient */
+.left-panel::after {
+    width: 460px;
+    height: 460px;
+    left: 320px;
+    bottom: 140px;
+    background: radial-gradient(ellipse at 70% 65%, rgba(231, 139, 27, 0.25) 0%, rgba(231, 139, 27, 0.12) 45%, rgba(231, 139, 27, 0) 75%);
+}
+
+.left-panel .logo {
+    width: 170px;
+    position: absolute;
+    top: 2.5rem;
+    left: 0rem;
+    margin: 0;
+    z-index: 1;
+}
+
+.left-panel .promo-text h1 {
+    font-size: clamp(2.4rem, 4.2vw + 1rem, 3.8rem);
+    font-weight: 800;
+    margin-bottom: 1rem;
+    line-height: 1.15;
+    letter-spacing: 0.6px;
+}
+/* Promo block moved higher with entrance animation */
+.left-panel .promo-text {
+    display: flex;
+    width: 672px;
+    height: 208px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 32px;
+    flex-shrink: 0;
+    position: relative; /* allow inner glow */
+    margin-top: 2rem; /* additional spacing to position higher */
+}
+.left-panel .promo-text::after {
+    content: "";
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    left: 45%;
+    top: 45%;
+    transform: translate(-50%, -50%);
+    border-radius: 9999px;
+    background: radial-gradient(closest-side, rgba(231, 139, 27, 0.06) 0%, rgba(231, 139, 27, 0) 70%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.left-panel .promo-text p {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    max-width: 440px;
+}
+
+.left-panel .copyright {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.right-panel {
+    flex: 1 1 50%;
+    display: grid;
+    place-items: center;
+    padding: 2rem;
+}
+
+/* Gradient border wrapper: keep the animated border visible and contain the inner card */
+.card-outer {
+    position: relative;
+    border: 2px solid transparent;          /* 2px gradient border */
+    border-radius: 16px;                     /* outer radius */
+    padding: 2px; /* gap so inner card doesn't overlap the gradient */
+    display: flex;            /* center the inner card reliably */
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;        /* prevent inner content from bleeding over rounded corners */
+    background: 
+        linear-gradient(var(--card-bg), var(--card-bg)) padding-box,
+        linear-gradient(135deg, #0073ff, #ff8400) border-box; /* gradient colors */
+    /* Optional subtle movement without bleeding */
+    background-origin: padding-box, border-box;
+    background-clip: padding-box, border-box;
+    background-size: 100% 100%, 300% 300%;
+    background-position: center, 0% 50%;
+    /* smoother, slower diagonal drift for the gradient border */
+    animation: borderMove 8s ease-in-out infinite;
+    isolation: isolate; /* allow glow behind without leaking */
+}
+/* Soft outer glow to make colors pop without changing brand hexes */
+.card-outer::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    background: linear-gradient(135deg, #0073ff, #ff8400);
+    filter: blur(22px);
+    opacity: 0.14;
+    z-index: -1;
+}
+@keyframes borderMove {
+    0% { background-position: center, 0% 40%; }
+    50% { background-position: center, 100% 60%; }
+    100% { background-position: center, 0% 40%; }
+}
+
+.login-card {
+    width: 100%;                 /* fill the inner area of .card-outer */
+    max-width: 520px;            /* keep the intended max width */
+    height: auto;                /* responsive height */
+    flex-shrink: 0;
+    border-radius: 12px;         /* slightly smaller so the outer gradient shows on corners */
+    border: 1px solid var(--card-border);
+    background: var(--card-bg);
+    box-shadow: 0 10px 20px -6px rgba(0, 0, 0, 0.18), 0 6px 12px -8px rgba(0, 0, 0, 0.12);
+    padding: clamp(1.25rem, 2.5vw, 2.5rem);
+    position: relative;
+    box-sizing: border-box;
+}
+
+.login-card .form-title {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+/* Theme toggle */
+.theme-toggle {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 36px; height: 36px;
+    display: grid; place-items: center;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--card-border);
+    color: var(--text-muted);
+    cursor: pointer;
+    border-radius: 9999px;
+    backdrop-filter: blur(6px);
+    transition: color .2s ease, border-color .2s ease, background .2s ease;
+}
+.theme-toggle:hover { color: var(--primary-accent); border-color: var(--primary-accent); background: rgba(255,255,255,0.08); }
+
+.login-card .form-title h2 {
+    font-weight: 800;
+    font-size: 1.6rem;
+    margin-bottom: 0.5rem;
+}
+
+.login-card .form-title p {
+    color: var(--text-muted);
+}
+
+.alert {
+    background: rgba(254, 242, 242, 0.9);
+    color: #7f1d1d;
+    border: 1px solid #fecaca;
+    padding: 10px 12px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: flex-start;
+    gap: .5rem;
+}
+.alert.success { background: rgba(236, 253, 245, 0.9); color: #065f46; border-color: #a7f3d0; }
+.alert.info { background: rgba(239, 246, 255, 0.9); color: #1e3a8a; border-color: #bfdbfe; }
+.alert .close {
+    margin-left: auto;
+    background: transparent;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+}
+.alert ul {
+    margin: 0;
+    padding-left: 1.2rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+}
+
+.input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.input-wrapper .icon {
+    position: absolute;
+    top: 50%;
+    left: 1rem;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    font-size: 1.25rem; /* slightly larger for clarity */
+}
+
+.form-control {
+    width: 100%;
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    color: var(--text-light);
+    border-radius: 10px; /* rounder corners like the reference */
+    padding: 0.85rem 1rem 0.85rem 2.5rem;
+    min-height: 46px; /* consistent height */
+    font-size: 1rem;
+    font-family: inherit;
+    box-shadow: inset 0 1px 0 var(--input-inner-highlight);
+    transition: border-color .18s ease, box-shadow .18s ease, background-color .18s ease;
+    caret-color: var(--text-light);
+}
+.form-control::placeholder {
+    color: #B7B7B7;
+}
+.form-control:focus {
+    outline: none;
+    border-color: var(--primary-accent);
+    box-shadow: 0 0 0 1px rgba(231, 139, 27, 0.4), inset 0 1px 0 var(--input-inner-highlight);
+}
+
+/* subtle hover, closer to reference */
+.form-control:hover {
+    border-color: color-mix(in srgb, var(--input-border), #ffffff 12%);
+}
+
+.input-wrapper.error .form-control {
+    border-color: #dc2626;
+}
+
+.password-wrapper .icon-toggle {
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 1.25rem; /* match left icon */
+}
+.password-wrapper .form-control { padding-right: 2.75rem; }
+
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    color: var(--text-muted);
+    cursor: pointer;
+    user-select: none;
+}
+.checkbox-label input[type="checkbox"] {
+    /* custom checkbox to match the mockup */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--primary-accent);
+    background: transparent;
+    border-radius: 4px;
+    display: inline-grid;
+    place-content: center;
+    margin-right: 0.5rem;
+}
+.checkbox-label input[type="checkbox"]::before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    transform: scale(0);
+    transition: 120ms transform ease-in-out;
+    background: var(--primary-accent);
+    border-radius: 2px;
+}
+.checkbox-label input[type="checkbox"]:checked::before {
+    transform: scale(1);
+}
+
+.form-link {
+    color: var(--text-muted);
+    text-decoration: none;
+}
+.form-link:hover {
+    color: var(--primary-accent);
+    text-decoration: underline;
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 0.9rem;
+    border-radius: 8px;                 /* Button radius */
+    background: linear-gradient(180deg,
+        color-mix(in srgb, var(--primary-accent), white 10%) 0%,
+        color-mix(in srgb, var(--primary-accent), black 6%) 100%
+    );
+    color: #1B140F;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 10px 24px rgba(250, 140, 22, 0.35), 0 3px 8px rgba(0,0,0,.18);
+    transition: background-color 0.2s, transform 0.05s ease-in-out, box-shadow .2s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+}
+.btn-submit:hover {
+    background: linear-gradient(180deg,
+        color-mix(in srgb, var(--primary-accent), white 16%) 0%,
+        color-mix(in srgb, var(--primary-accent), black 2%) 100%
+    );
+    box-shadow: 0 14px 30px rgba(250, 140, 22, 0.45), 0 4px 10px rgba(0,0,0,.2);
+}
+.btn-submit:active { transform: translateY(1px); }
+
+/* Make input icons react on focus for more vivid feel */
+.input-wrapper:focus-within .icon,
+.password-wrapper:focus-within .icon-toggle {
+    color: color-mix(in srgb, var(--primary-accent), white 10%);
+}
+
+.support-link {
+    text-align: center;
+    margin-top: 2rem;
+    font-size: 0.9rem;
+}
+
+.notifications {
+    /* Floating to the top-right of the viewport */
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    left: auto;
+    display: grid;
+    gap: 12px;
+    z-index: 9999; /* float above everything */
+    max-width: min(420px, calc(100% - 48px));
+}
+.notification {
+    background: #1f2937;
+    color: #f9fafb;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    padding: 10px 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,.1), 0 4px 6px -4px rgba(0,0,0,.1);
+    animation: slideIn .25s ease-out;
+}
+.notification.success { background: #064e3b; }
+.notification.error { background: #7f1d1d; }
+.notification .close { margin-left: auto; background: transparent; border: none; color: #fff; cursor: pointer; }
+/* Entrance animation keyframes */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.fade-out { opacity: 0; transition: opacity .5s ease; }
+
+@media (max-width: 992px) {
+    .login-container::after { display: none; }
+    .left-panel { display: none; }
+    .right-panel { padding: 1rem; }
+    .login-card {
+        width: 100%;
+        height: auto;
+        padding: 2rem;
+        max-width: 520px;
+    }
+
+    .form-control { font-size: 0.95rem; min-height: 44px; }
+    .btn-submit { padding: 0.85rem; font-size: 0.98rem; }
+    .notifications { right: 12px; top: 12px; left: auto; max-width: calc(100% - 24px); }
+}
+
+@media (max-width: 480px) {
+    .left-panel { display: none; }
+    .card-outer { width: 96%; }
+    .login-card { padding: 1.25rem; }
+    .form-control { font-size: 0.95rem; padding: 0.7rem 0.9rem 0.7rem 2.25rem; }
+    .theme-toggle { top: 8px; right: 8px; width: 32px; height: 32px; }
+}

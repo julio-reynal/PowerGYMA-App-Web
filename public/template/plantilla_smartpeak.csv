@@ -1,0 +1,4 @@
+Fecha,Consumo Total (kWh),Demanda Máxima (kW),Factor de Potencia,Costo Total ($),Eficiencia (%),Nivel de Riesgo,Observaciones
+2024-01-15,1250.50,45.2,0.92,875.35,87.5,Moderado,Consumo normal para la temporada
+2024-02-01,1180.20,42.8,0.89,826.14,85.2,Bajo,Mes de febrero con menor demanda
+2024-03-01,1350.75,48.9,0.94,945.53,89.1,Alto,Incremento por equipos nuevos

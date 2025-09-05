@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluación de Riesgo Diario</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #111827; /* bg-slate-900 */
+            color: #e5e7eb; /* text-gray-200 */
+        }
+        .risk-table-color {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+        #riskValue {
+            text-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+
+    <div class="w-full max-w-md mx-auto p-6 bg-slate-800 border border-slate-700 rounded-lg shadow-lg">
+        
+        <div class="text-center mb-4">
+            <h1 class="text-xl font-bold text-white">Evaluación de Riesgo Diario</h1>
+            <p id="fullDate" class="text-sm text-slate-400">CARGANDO...</p>
+            <p class="text-4xl font-bold text-white mt-2">
+                RIESGO: <span id="riskStatus">N/A</span>
+            </p>
+        </div>
+        
+        <!-- MODIFICADO: Se añade más margen inferior para dar espacio al texto que se ha movido -->
+        <div class="relative w-full max-w-xs mx-auto h-48 mt-4 mb-24">
+            <canvas id="riskGauge"></canvas>
+             <!-- MODIFICADO: Se mueve el texto del porcentaje muy por debajo del medidor usando un valor negativo -->
+             <div class="absolute -bottom-16 left-1/2 -translate-x-1/2 text-center">
+                <div id="riskValue" class="text-4xl font-bold text-white">0%</div>
+                <div class="text-sm font-bold text-slate-400">RIESGO</div>
+            </div>
+        </div>
+
+        <!-- MODIFICADO: Se cambia a un layout de una columna y se añade la nueva leyenda -->
+        <div class="mt-6 border-t border-slate-700 pt-4 space-y-6">
+            <div id="riskLegend" class="flex flex-wrap justify-center items-center gap-x-4 gap-y-2 text-sm">
+                <!-- La leyenda se genera con JavaScript -->
+            </div>
+            <div class="text-center bg-slate-900 p-4 rounded-lg border border-slate-700">
+                <p class="text-xs text-slate-400 uppercase tracking-wider font-medium">Hora de Mayor Riesgo</p>
+                <p id="riskHour" class="text-4xl font-bold text-white mt-1">N/A</p>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const canvas = document.getElementById('riskGauge');
+        const ctx = canvas.getContext('2d');
+        const riskValueDisplay = document.getElementById('riskValue');
+        const riskStatusDisplay = document.getElementById('riskStatus');
+        const dateDisplay = document.getElementById('fullDate');
+        const riskLegendContainer = document.getElementById('riskLegend');
+        const riskHourDisplay = document.getElementById('riskHour');
+
+        const riskLevels = [
+            { limit: 10, display: 10, label: 'Muy Bajo', color: '#22c55e' }, 
+            { limit: 20, display: 20, label: 'Bajo', color: '#22c55e' },      // CORREGIDO: Bajo = 20%
+            { limit: 50, display: 50, label: 'Moderado', color: '#f97316' },
+            { limit: 80, display: 80, label: 'Alto', color: '#ef4444' },      // CORREGIDO: Alto = 80%
+            { limit: 100, display: 95, label: 'Crítico', color: '#dc2626' }   // CORREGIDO: Crítico = 95%
+        ];
+        
+        // MODIFICADO: Se crea una función para encontrar el punto medio de una categoría de riesgo.
+        function findCategoryMiddlePoint(value) {
+            let lowerBound = 0;
+            for (const level of riskLevels) {
+                if (value <= level.limit) {
+                    return (lowerBound + level.limit) / 2;
+                }
+                lowerBound = level.limit;
+            }
+            return (lowerBound + 100) / 2; // Fallback para la última categoría
+        }
+
+        let currentRisk = 0;
+        const actualRiskValue = 65; // Este es el valor de riesgo real.
+        // MODIFICADO: El objetivo de la aguja ahora es el punto medio de la categoría del riesgo actual.
+        let targetRisk = findCategoryMiddlePoint(actualRiskValue); 
+        let animationFrameId = null;
+
+        riskLegendContainer.innerHTML = '';
+        riskLevels.forEach(level => {
+            const item = document.createElement('span');
+            item.className = 'flex items-center';
+            item.innerHTML = `
+                <span class="risk-table-color" style="background-color: ${level.color};"></span>
+                <span class="text-slate-300">${level.label} <span class="text-slate-400 font-medium">(${level.display}%)</span></span>
+            `;
+            riskLegendContainer.appendChild(item);
+        });
+
+        function resizeCanvas() {
+            const container = canvas.parentElement;
+            canvas.width = container.clientWidth;
+            canvas.height = container.clientHeight;
+            draw();
+        }
+
+        function valueToAngle(value) {
+            return (value / 100) * Math.PI - Math.PI;
+        }
+
+        function drawGaugeArc() {
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height - 10;
+            const radius = Math.max(0, Math.min(centerX, centerY) * 0.85);
+            const lineWidth = 50;
+            
+            ctx.lineCap = 'butt';
+            
+            let lastLimit = 0;
+            riskLevels.forEach(level => {
+                ctx.beginPath();
+                const startAngle = valueToAngle(lastLimit);
+                const endAngle = valueToAngle(level.limit);
+                ctx.arc(centerX, centerY, radius, startAngle, endAngle, false);
+                ctx.strokeStyle = level.color;
+                ctx.lineWidth = lineWidth;
+                ctx.stroke();
+                lastLimit = level.limit;
+            });
+        }
+        
+        function drawNeedle(value) {
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height - 10;
+            const radius = Math.max(0, Math.min(centerX, centerY) * 0.85 - 5);
+            const angle = valueToAngle(value);
+
+            ctx.save();
+            ctx.translate(centerX, centerY);
+            ctx.rotate(angle + Math.PI / 2);
+            
+            ctx.beginPath();
+            ctx.moveTo(0, -radius);
+            ctx.lineTo(-7, 15);
+            ctx.lineTo(7, 15);
+            ctx.closePath();
+            
+            ctx.fillStyle = '#ffffff';
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+            ctx.shadowBlur = 10;
+            ctx.shadowOffsetY = 3;
+            ctx.fill();
+            
+            ctx.restore();
+
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, 8, 0, 2 * Math.PI);
+            ctx.fillStyle = '#ffffff';
+            ctx.fill();
+        }
+
+        function getLevelColor(value) {
+            return (riskLevels.find(l => value <= l.limit) || riskLevels[riskLevels.length - 1]).color;
+        }
+
+        function updateDisplay(value) {
+            const roundedValue = Math.round(value);
+            const level = riskLevels.find(l => roundedValue <= l.limit) || riskLevels[riskLevels.length - 1];
+            
+            riskValueDisplay.textContent = `${roundedValue}%`;
+            riskStatusDisplay.textContent = `${level.label.toUpperCase()}`;
+            riskStatusDisplay.style.color = level.color;
+
+            // La lógica de la hora de mayor riesgo ahora se basa en el valor real, no en el de la pantalla.
+            updateRiskHour(actualRiskValue, level.color);
+        }
+        
+        function updateRiskHour(value, color) {
+            let hour = "06:00 - 08:00";
+            if (value > 20) hour = "09:00 - 11:00";
+            if (value > 35) hour = "12:00 - 14:00";
+            if (value > 50) hour = "16:00 - 18:00";
+            if (value > 65) hour = "19:00 - 20:00";
+            riskHourDisplay.innerText = hour;
+            riskHourDisplay.style.color = color;
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawGaugeArc();
+            drawNeedle(currentRisk);
+        }
+        
+        function animate() {
+            if (Math.abs(targetRisk - currentRisk) < 0.1) {
+                currentRisk = targetRisk;
+                cancelAnimationFrame(animationFrameId);
+                animationFrameId = null;
+            } else {
+                currentRisk += (targetRisk - currentRisk) * 0.1;
+                animationFrameId = requestAnimationFrame(animate);
+            }
+            draw();
+            updateDisplay(currentRisk);
+        }
+        
+        function setInitialDate() {
+             const now = new Date();
+             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+             const formattedDate = now.toLocaleDateString('es-ES', options);
+             dateDisplay.innerText = `HOY: ${formattedDate.toUpperCase()}`;
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        
+        setInitialDate();
+        resizeCanvas();
+        // Inicia la animación al cargar la página
+        animate();
+    </script>
+</body>
+</html>
+
+
