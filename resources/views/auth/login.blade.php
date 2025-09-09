@@ -30,7 +30,7 @@
             <div>
                 <img src="{{ asset('Img/Ico/Ico-Pw.svg') }}" alt="Power GYMA Logo" class="logo">
                 <div class="promo-text">
-                    <h1>Controla tu consumo, potencia tu ahorro.hillaaaaaaa</h1>
+                    <h1>Controla tu consumo, potencia tu ahorro.</h1>
                     <p>Accede a tu portal exclusivo y gestiona tus datos de manera inteligente.</p>
                 </div>
             </div>
