@@ -19,6 +19,7 @@ cmds = [
 [phases.build]
 cmds = [
   "chmod +x build.sh",
+  "chmod +x build-simple.sh",
   "./build.sh",
   "php artisan config:cache",
   "php artisan route:cache",

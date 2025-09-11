@@ -37,17 +37,32 @@ export NODE_OPTIONS="--max-old-space-size=4096"
 
 # Estrategia 1: Intentar build normal
 echo "Intento 1: Build normal con terser..."
-if npm run build; then
+if npm run build-only; then
     echo "✅ Build de Vite exitoso"
+    
+    # Ejecutar fix-manifest manualmente para evitar problemas
+    echo "Aplicando fix de manifest..."
+    if [ -f "public/build/.vite/manifest.json" ]; then
+        mv "public/build/.vite/manifest.json" "public/build/manifest.json"
+        echo "✅ Manifest movido correctamente"
+    else
+        echo "ℹ️ Manifest ya está en la ubicación correcta"
+    fi
 else
     echo "❌ Build falló, intentando con configuración alternativa..."
     
     # Estrategia 2: Usar configuración sin terser
     echo "Intento 2: Build con esbuild..."
     if cp vite.config.fallback.js vite.config.temp.js && mv vite.config.js vite.config.original.js && mv vite.config.temp.js vite.config.js; then
-        if npm run build; then
+        if npm run build-only; then
             echo "✅ Build exitoso con esbuild"
             mv vite.config.original.js vite.config.js
+            
+            # Fix manifest manual
+            if [ -f "public/build/.vite/manifest.json" ]; then
+                mv "public/build/.vite/manifest.json" "public/build/manifest.json"
+                echo "✅ Manifest movido correctamente"
+            fi
         else
             echo "❌ Build con esbuild falló, restaurando config..."
             mv vite.config.original.js vite.config.js
@@ -77,11 +92,5 @@ fi
 # Storage link
 echo "Creando storage link..."
 php artisan storage:link || echo "Storage link ya existe"
-
-# Optimizar Laravel
-echo "Optimizando Laravel..."
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
 
 echo "=== BUILD COMPLETADO ==="
