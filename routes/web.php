@@ -12,6 +12,16 @@ Route::get('/', function () {
     return view('index');
 });
 
+// Ruta de prueba para verificar assets y rutas
+Route::get('/test-routes', function() {
+    return view('test-routes');
+})->name('test.routes');
+
+// Ruta de verificación para el botón de acceso
+Route::get('/verification', function() {
+    return view('verification');
+})->name('verification');
+
 // Ruta de prueba para verificar datos del dashboard
 Route::get('/test-dashboard-data', function() {
     return view('test-dashboard-data');

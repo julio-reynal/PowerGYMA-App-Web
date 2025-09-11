@@ -14,6 +14,11 @@ export default defineConfig({
                 'resources/js/auth.js',
                 'resources/css/login.css',
                 'resources/js/login.js',
+                // Main site assets
+                'resources/css/main.css',
+                'resources/css/components.css',
+                'resources/js/main.js',
+                'resources/js/components.js',
                 // Dashboard dark theme assets
                 'resources/css/dashboard.css',
                 'resources/js/chart-theme.js',
@@ -23,23 +28,14 @@ export default defineConfig({
         tailwindcss(),
     ],
     build: {
+        outDir: 'public/build',
+        emptyOutDir: true,
+        manifest: true,
         rollupOptions: {
             output: {
-                manualChunks: undefined,
-            },
-        },
-        manifest: true,
-        outDir: 'public/build',
-        assetsDir: 'assets',
-        copyPublicDir: false,
-        target: 'es2020',
-        minify: 'terser',
-        sourcemap: false,
-        chunkSizeWarningLimit: 1600,
-        terserOptions: {
-            compress: {
-                drop_console: true,
-                drop_debugger: true
+                entryFileNames: 'assets/[name]-[hash].js',
+                chunkFileNames: 'assets/[name]-[hash].js',
+                assetFileNames: 'assets/[name]-[hash].[ext]'
             }
         }
     },
@@ -47,16 +43,5 @@ export default defineConfig({
         hmr: {
             host: 'localhost',
         },
-    },
-    // Configuración simplificada para Railway
-    base: '/build/',
-    publicDir: false,
-    resolve: {
-        alias: {
-            '@': '/resources',
-        },
-    },
-    css: {
-        devSourcemap: false,
     },
 });

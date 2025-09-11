@@ -7,9 +7,10 @@
         "npm": ">=9.0.0"
     },
     "scripts": {
-        "build": "vite build",
+        "build": "vite build && npm run fix-manifest",
         "dev": "vite",
-        "production": "vite build"
+        "production": "vite build && npm run fix-manifest",
+        "fix-manifest": "powershell -Command \"if (Test-Path 'public/build/.vite/manifest.json') { Move-Item 'public/build/.vite/manifest.json' 'public/build/manifest.json' -Force }\""
     },
     "dependencies": {
         "vite": "^6.0.0",

@@ -1,0 +1,802 @@
+/* Components CSS - Header and Footer */
+
+/* CSS Variables */
+:root {
+    /* Paleta de Colores (Initial State - Figma Design) */
+    --bg-color: rgba(255, 255, 255, 1);
+    --text-color-primary: #040404;
+    --text-color-secondary: #040404;
+    --border-color: transparent;
+    --accent-color: #025ccd;
+
+    /* Paleta para Barra Flotante (Scrolled) */
+    --scrolled-bg: rgba(22, 22, 22, 1);
+    --scrolled-text: #000000;
+    --scrolled-border: rgba(255, 255, 255, 0.15);
+    --scrolled-btn-bg: #F9FAFB;
+    --scrolled-btn-text: #1F2937;
+
+    /* Propiedades de Diseño */
+    --pro-shadow: none;
+    --pro-shadow-scrolled: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+    --transition-curve: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Header Styles - Estado inicial según diseño Figma */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 1);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0);
+    transition: all 0.5s var(--transition-curve);
+    padding: 0;
+}
+
+/* Estado inicial (diseño Figma) */
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 4rem;
+    height: 80px;
+    max-width: 1920px;
+    margin: 0 auto;
+    background: transparent;
+    border: none;
+    transition: all 0.5s var(--transition-curve);
+}
+
+/* Estado de scroll (flotante y compacto) */
+header.scrolled {
+    padding: 1rem 2rem;
+    background: transparent;
+    backdrop-filter: none;
+    box-shadow: none;
+}
+
+header.scrolled .header-container {
+    background-color: rgb(255 255 255 / 30%);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--scrolled-border);
+    border-radius: 100px;
+    padding: 0.6rem 1rem;
+    max-width: 800px;
+    height: auto;
+    box-shadow: var(--pro-shadow-scrolled);
+}
+
+.logo {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    height: 64px;
+    width: 144px;
+    object-fit: contain;
+    transition: all 0.5s var(--transition-curve);
+}
+
+header.scrolled .logo img {
+    height: 48px;
+    width: 108px;
+}
+
+.main-nav {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 2.5rem;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+}
+
+.nav-item {
+    position: relative;
+}
+
+.nav-item a {
+    display: block;
+    padding: 1rem 0;
+    color: #040404;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: all 0.5s var(--transition-curve);
+    position: relative;
+}
+
+.nav-item a:hover { 
+    color: #fe9213;
+}
+
+header.scrolled .nav-item a { 
+    color: var(--scrolled-text); 
+    font-weight: 400; 
+    padding: 0.5rem 0;
+}
+
+header.scrolled .nav-item a:hover { 
+    opacity: 1; 
+    color: #fff; 
+}
+
+.nav-item.active a {
+    color: #fe9213;
+}
+
+.nav-item.active a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: #fe9213;
+}
+
+header.scrolled .nav-item.active a {
+    color: var(--scrolled-text);
+}
+
+.header-cta {
+    flex-shrink: 0;
+}
+
+.btn-access {
+    border: none;
+    cursor: pointer;
+    border-radius: 1rem;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 1.125rem;
+    padding: 0.75rem 1rem;
+    transition: all 0.5s var(--transition-curve);
+    background-color: var(--accent-color);
+    color: white;
+    box-shadow: 0 2px 0 rgba(253, 147, 20, 0.3);
+}
+
+.btn-access:hover { 
+    background: #0147a3;
+    transform: translateY(-1px);
+}
+
+header.scrolled .btn-access {
+    background-color: var(--scrolled-btn-bg);
+    color: var(--scrolled-btn-text);
+    padding: 0.6rem 1.25rem;
+    font-size: 0.9rem;
+    box-shadow: none;
+    border-radius: 50px;
+}
+
+.mobile-menu-btn {
+    display: none;
+    flex-direction: column;
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+    gap: 4px;
+    transition: all 0.3s ease;
+}
+
+.mobile-menu-btn span {
+    width: 25px;
+    height: 3px;
+    background: #040404;
+    transition: all 0.3s ease;
+}
+
+header.scrolled .mobile-menu-btn span {
+    background: var(--scrolled-text);
+}
+
+/* Footer Styles - Exact Figma Match */
+.footer-figma {
+    background: #050505;
+    color: white;
+    padding: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.footer-container-figma {
+    max-width: 1920px;
+    margin: 0 auto;
+    padding: 64px 80px 32px;
+    box-sizing: border-box;
+}
+
+.footer-content-figma {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 80px;
+    margin-bottom: 60px;
+}
+
+/* Company Info Section - Figma */
+.footer-section-company {
+    flex: 0 0 360px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.footer-logo-figma {
+    width: 144px;
+    height: 64px;
+    margin-bottom: 8px;
+}
+
+.footer-logo-figma img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.company-description-figma p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    color: #9CA3AF;
+    margin: 0;
+    width: 334px;
+}
+
+/* Navigation Section - Figma */
+.footer-section-nav {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.footer-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 30px;
+    color: rgba(255, 255, 255, 0.85);
+    margin: 0 0 20px 0;
+}
+
+.nav-links-figma {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.nav-link-figma {
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    color: #9CA3AF;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    display: block;
+    white-space: nowrap;
+}
+
+.nav-link-figma:hover {
+    color: #fe9213;
+}
+
+/* Contact Section - Figma */
+.footer-section-contact {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.contact-items-figma {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.contact-item-figma {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.contact-item-figma:hover .contact-text-figma {
+    color: #fe9213;
+}
+
+.contact-icon-wrapper {
+    width: 20px;
+    height: 20px;
+    position: relative;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.contact-icon-figma {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+}
+
+.contact-text-figma {
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    color: #9CA3AF;
+    white-space: nowrap;
+    transition: color 0.3s ease;
+}
+
+/* Social Media Section - Figma */
+.footer-section-social {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.social-links-figma {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.social-link-figma {
+    width: 48px;
+    height: 48px;
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.social-link-figma:hover {
+    background: #fe9213;
+    transform: translateY(-2px);
+}
+
+.social-icon-wrapper {
+    width: 20px;
+    height: 20px;
+    position: relative;
+}
+
+.social-icon-mask {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    mask-repeat: no-repeat;
+    mask-size: contain;
+    mask-position: center;
+    background-color: white;
+}
+
+.social-icon-figma {
+    width: 100%;
+    height: 100%;
+    /* Use the image directly for social icons without mask */
+}
+
+.social-link-figma:hover .social-icon-figma {
+    filter: brightness(0) saturate(100%) invert(0%);
+}
+
+.social-link-figma:hover .social-icon-mask {
+    background-color: #040404;
+}
+
+/* Footer Divider - Figma */
+.footer-divider-figma {
+    padding: 40px 0;
+}
+
+.footer-line {
+    width: 100%;
+    height: 1px;
+    background: rgba(229, 231, 235, 0.1);
+}
+
+/* Footer Bottom - Figma */
+.footer-bottom-figma {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.copyright-figma {
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 20px;
+    color: #6B7280;
+    text-align: center;
+    margin: 0;
+}
+
+/* Responsive Design - Footer */
+@media (max-width: 1024px) {
+    .footer-container-figma {
+        padding: 48px 40px 24px;
+    }
+    
+    .footer-content-figma {
+        gap: 40px;
+        flex-wrap: wrap;
+    }
+    
+    .footer-section-company {
+        flex: 1 1 100%;
+        margin-bottom: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .footer-container-figma {
+        padding: 32px 20px 16px;
+    }
+    
+    .footer-content-figma {
+        flex-direction: column;
+        gap: 24px;
+    }
+    
+    .footer-section-company,
+    .footer-section-nav,
+    .footer-section-contact,
+    .footer-section-social {
+        flex: none;
+        width: 100%;
+    }
+    
+    .company-description-figma p {
+        width: 100%;
+    }
+    
+    .social-links-figma {
+        justify-content: flex-start;
+    }
+}
+
+/* Mobile Header Styles */
+@media (max-width: 1024px) {
+    .header-container {
+        padding: 0 2rem;
+        height: 70px;
+    }
+    
+    header.scrolled .header-container {
+        padding: 0.5rem 0.75rem;
+        max-width: 700px;
+    }
+    
+    .nav-menu {
+        gap: 1.5rem;
+    }
+    
+    .logo img {
+        height: 56px;
+        width: 126px;
+    }
+    
+    header.scrolled .logo img {
+        height: 42px;
+        width: 95px;
+    }
+}
+
+@media (max-width: 768px) {
+    .header-container {
+        padding: 0 1rem;
+        height: 60px;
+    }
+    
+    header.scrolled {
+        padding: 0.5rem 1rem;
+    }
+    
+    header.scrolled .header-container {
+        padding: 0.4rem 0.5rem;
+        border-radius: 50px;
+        max-width: 90%;
+    }
+    
+    .main-nav {
+        display: none;
+    }
+    
+    .mobile-menu-btn {
+        display: flex;
+    }
+    
+    .logo img {
+        height: 48px;
+        width: 108px;
+    }
+    
+    header.scrolled .logo img {
+        height: 36px;
+        width: 81px;
+    }
+    
+    .btn-access {
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+    }
+    
+    header.scrolled .btn-access {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+    }
+    
+    /* Mobile Navigation */
+    .main-nav.mobile-open {
+        display: block;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        padding: 2rem;
+        border-radius: 0 0 20px 20px;
+        margin-top: 1rem;
+    }
+    
+    header.scrolled .main-nav.mobile-open {
+        background: var(--scrolled-bg);
+        backdrop-filter: blur(16px);
+        border: 1px solid var(--scrolled-border);
+        border-top: none;
+        border-radius: 0 0 25px 25px;
+        margin-top: 0.5rem;
+    }
+    
+    .main-nav.mobile-open .nav-menu {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .main-nav.mobile-open .nav-item a {
+        padding: 0.75rem 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        font-size: 1.1rem;
+    }
+    
+    header.scrolled .main-nav.mobile-open .nav-item a {
+        border-bottom: 1px solid var(--scrolled-border);
+        color: var(--scrolled-text);
+    }
+}
+
+/* Footer Mobile Styles */
+@media (max-width: 1024px) {
+    .footer-container {
+        padding: 3rem 2rem 2rem;
+    }
+    
+    .footer-content {
+        flex-wrap: wrap;
+        gap: 2rem;
+        width: 100%;
+        height: auto;
+    }
+    
+    .footer-section {
+        width: calc(50% - 1rem) !important;
+        height: auto;
+    }
+    
+    .footer-margin-wrapper {
+        height: auto;
+    }
+    
+    .footer-divider-wrapper {
+        height: auto;
+        padding: 2rem 0;
+    }
+    
+    .footer-divider {
+        width: 100%;
+    }
+    
+    .footer-bottom {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .footer-container {
+        padding: 2rem 1rem;
+    }
+    
+    .footer-content {
+        flex-direction: column;
+        gap: 2rem;
+        text-align: center;
+        width: 100%;
+    }
+    
+    .footer-section {
+        width: 100% !important;
+        align-items: center;
+        height: auto;
+    }
+    
+    .footer-margin-wrapper {
+        height: auto;
+        padding-bottom: 2rem;
+    }
+    
+    .section-title-wrapper,
+    .section-title-frame,
+    .social-title-frame {
+        justify-content: center;
+    }
+    
+    .nav-link-item {
+        justify-content: center;
+        width: 100%;
+    }
+    
+    .contact-item-wrapper {
+        height: auto;
+        padding-bottom: 1rem;
+    }
+    
+    .contact-item {
+        justify-content: center;
+        width: 100%;
+    }
+    
+    .social-links {
+        justify-content: center;
+        width: 100%;
+    }
+    
+    .company-description-frame {
+        text-align: center;
+        padding-right: 0;
+    }
+    
+    .company-description-frame p {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Utility Classes */
+.fade-in-up {
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.slide-in-left {
+    animation: slideInLeft 0.8s ease-out;
+}
+
+.slide-in-right {
+    animation: slideInRight 0.8s ease-out;
+}
+
+/* Loading States */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid #fe9213;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 1s linear infinite;
+}
+
+/* Header Performance Optimizations */
+header {
+    will-change: transform;
+    transform: translateZ(0);
+}
+
+.header-container {
+    will-change: transform, background-color, border-radius;
+    transform: translateZ(0);
+}
+
+/* Smooth transitions for all interactive elements */
+.logo, .nav-item a, .btn-access, .mobile-menu-btn {
+    will-change: transform, color, background-color;
+}
+
+/* Additional hover effects for scrolled state */
+header.scrolled .nav-item a:hover {
+    transform: translateY(-1px);
+}
+
+header.scrolled .btn-access:hover {
+    transform: scale(1.05) translateY(-1px);
+}
+
+/* Focus styles for accessibility */
+.nav-item a:focus,
+.btn-access:focus,
+.mobile-menu-btn:focus {
+    outline: 2px solid #fe9213;
+    outline-offset: 2px;
+}
+
+header.scrolled .nav-item a:focus {
+    outline-color: var(--scrolled-text);
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
