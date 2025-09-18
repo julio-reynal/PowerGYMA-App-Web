@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba Autocompletado RUC</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        input[type="text"]:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+        .btn {
+            background: #007bff;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-left: 10px;
+        }
+        .btn:hover {
+            background: #0056b3;
+        }
+        .input-group {
+            display: flex;
+            align-items: center;
+        }
+        .input-group input {
+            flex: 1;
+            margin: 0;
+        }
+        .status {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        .test-rucs {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .test-rucs h3 {
+            margin-top: 0;
+            color: #495057;
+        }
+        .test-rucs ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .test-rucs li {
+            padding: 5px 0;
+            border-bottom: 1px solid #dee2e6;
+        }
+        .test-rucs li:last-child {
+            border-bottom: none;
+        }
+        .company-info {
+            background: #e9ecef;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 15px;
+        }
+        .company-info h4 {
+            margin-top: 0;
+            color: #495057;
+        }
+        .field {
+            margin-bottom: 10px;
+        }
+        .field label {
+            font-weight: normal;
+            margin-bottom: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Prueba de Autocompletado RUC</h1>
+        
+        <div class="test-rucs">
+            <h3>📋 RUCs de Prueba Disponibles:</h3>
+            <ul>
+                <li><strong>20123456789</strong> - Empresa Tecnológica Power GYMA S.A.C.</li>
+                <li><strong>20987654321</strong> - Comercializadora Los Andes E.I.R.L.</li>
+                <li><strong>20555666777</strong> - Constructora Lima Norte S.A.</li>
+            </ul>
+        </div>
+
+        <div class="form-group">
+            <label for="ruc">RUC de la Empresa (11 dígitos):</label>
+            <div class="input-group">
+                <input type="text" id="ruc" placeholder="20123456789" maxlength="11">
+                <button type="button" id="search-btn" class="btn">🔍 Buscar</button>
+            </div>
+            <div id="status" class="status" style="display: none;"></div>
+        </div>
+
+        <div id="company-info" class="company-info" style="display: none;">
+            <h4>📋 Información de la Empresa</h4>
+            <div class="field">
+                <label>RUC:</label>
+                <input type="text" id="company-ruc" readonly>
+            </div>
+            <div class="field">
+                <label>Razón Social:</label>
+                <input type="text" id="company-razon-social" readonly>
+            </div>
+            <div class="field">
+                <label>Teléfono:</label>
+                <input type="text" id="company-telefono" readonly>
+            </div>
+            <div class="field">
+                <label>Departamento:</label>
+                <input type="text" id="company-departamento" readonly>
+            </div>
+            <div class="field">
+                <label>Provincia:</label>
+                <input type="text" id="company-provincia" readonly>
+            </div>
+            <div class="field">
+                <label>Dirección:</label>
+                <input type="text" id="company-direccion" readonly>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const rucInput = document.getElementById('ruc');
+        const searchBtn = document.getElementById('search-btn');
+        const statusDiv = document.getElementById('status');
+        const companyInfoDiv = document.getElementById('company-info');
+
+        function showStatus(message, type = 'info') {
+            statusDiv.textContent = message;
+            statusDiv.className = `status ${type}`;
+            statusDiv.style.display = 'block';
+        }
+
+        function hideCompanyInfo() {
+            companyInfoDiv.style.display = 'none';
+        }
+
+        function showCompanyInfo(company) {
+            document.getElementById('company-ruc').value = company.ruc || '';
+            document.getElementById('company-razon-social').value = company.razon_social || '';
+            document.getElementById('company-telefono').value = company.telefono_fijo || '';
+            document.getElementById('company-departamento').value = company.departamento?.nombre || '';
+            document.getElementById('company-provincia').value = company.provincia?.nombre || '';
+            document.getElementById('company-direccion').value = company.direccion_calle || '';
+            companyInfoDiv.style.display = 'block';
+        }
+
+        async function searchRuc() {
+            const ruc = rucInput.value.trim();
+            
+            if (ruc.length !== 11 || !/^\d{11}$/.test(ruc)) {
+                showStatus('❌ El RUC debe tener exactamente 11 dígitos numéricos', 'error');
+                hideCompanyInfo();
+                return;
+            }
+
+            showStatus('🔍 Buscando empresa...', 'info');
+            searchBtn.disabled = true;
+            searchBtn.textContent = '⏳ Buscando...';
+
+            try {
+                const response = await fetch(`/api/v1/companies/ruc/${ruc}`, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                });
+
+                const result = await response.json();
+                console.log('API Response:', result);
+
+                if (result.success && result.data) {
+                    showStatus(`✅ Empresa encontrada: ${result.data.razon_social}`, 'success');
+                    showCompanyInfo(result.data);
+                } else {
+                    showStatus('⚠️ No se encontró empresa con este RUC en la base de datos', 'error');
+                    hideCompanyInfo();
+                }
+
+            } catch (error) {
+                console.error('Error:', error);
+                showStatus('❌ Error al buscar la empresa. Verifique la conexión.', 'error');
+                hideCompanyInfo();
+            } finally {
+                searchBtn.disabled = false;
+                searchBtn.textContent = '🔍 Buscar';
+            }
+        }
+
+        // Event listeners
+        searchBtn.addEventListener('click', searchRuc);
+        
+        rucInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                searchRuc();
+            }
+        });
+
+        // Solo permitir números
+        rucInput.addEventListener('input', function() {
+            this.value = this.value.replace(/[^0-9]/g, '');
+            if (this.value.length === 11) {
+                showStatus('✅ RUC completo. Presiona Enter o haz clic en Buscar.', 'info');
+            } else if (this.value.length > 0) {
+                showStatus(`Faltan ${11 - this.value.length} dígitos`, 'info');
+            } else {
+                statusDiv.style.display = 'none';
+                hideCompanyInfo();
+            }
+        });
+
+        // Auto-search when RUC is complete and input loses focus
+        rucInput.addEventListener('blur', function() {
+            if (this.value.length === 11) {
+                searchRuc();
+            }
+        });
+    </script>
+</body>
+</html>

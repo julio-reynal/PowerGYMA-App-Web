@@ -2,7 +2,7 @@
     /* Global palette aligned to the mockup */
     --background-dark: #0E0E0E;
     --left-panel-bg: #0E0E0E;
-    --card-bg: #261E18;           /* Card background */
+             /* Card background */
     --card-border: #51443A;       /* Card border */
     --primary-accent: #E78B1B;    /* Buttons / focus */
     --text-light: #FFFFFF;
@@ -11,13 +11,17 @@
     --input-border: #3A3A3A;      /* Neutral outline like the reference */
     --input-inner-highlight: rgba(255, 255, 255, 0.06); /* soft top highlight */
     --divider: rgba(255, 255, 255, 0.06);
+    /* Demo link colors */
+    --demo-link-color: #FFB000;   /* Bright orange-yellow for dark mode */
+    --demo-link-hover: #FFC843;   /* Lighter on hover */
 }
+
 
 /* Light theme (optional) */
 :root.light {
     --background-dark: #F7F7F8;
     --left-panel-bg: #FFFFFF;
-    --card-bg: #FFFFFF;
+    /*-card-bg: #FFFFFF; */
     --card-border: #E5E7EB;
     --primary-accent: #E78B1B;
     --text-light: #0F172A;
@@ -26,6 +30,9 @@
     --input-border: #D1D5DB;
     --input-inner-highlight: rgba(15, 23, 42, 0.04);
     --divider: rgba(15, 23, 42, 0.06);
+    /* Demo link colors for light mode */
+    --demo-link-color: #D97706;   /* Darker orange for light mode */
+    --demo-link-hover: #B45309;   /* Even darker on hover */
 }
 
 body {
@@ -222,6 +229,7 @@ body {
     position: relative;
     box-sizing: border-box;
 }
+
 
 .login-card .form-title {
     text-align: center;
@@ -430,6 +438,35 @@ body {
 }
 .btn-submit:active { transform: translateY(1px); }
 
+/* Demo link section - simple and contrasting */
+.demo-link-section {
+    text-align: center;
+    margin: 1.5rem 0;
+    padding: 1rem 0;
+    border-top: 1px solid var(--divider);
+}
+
+.demo-link-section p {
+    color: var(--text-muted);
+    font-size: 1rem;
+    margin: 0;
+    font-weight: 500;
+}
+
+.demo-link {
+    color: var(--demo-link-color);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+}
+
+.demo-link:hover {
+    color: var(--demo-link-hover);
+    text-decoration: none;
+    text-shadow: 0 0 8px rgba(255, 176, 0, 0.4);
+}
+
 /* Make input icons react on focus for more vivid feel */
 .input-wrapper:focus-within .icon,
 .password-wrapper:focus-within .icon-toggle {
@@ -503,4 +540,10 @@ body {
     .login-card { padding: 1.25rem; }
     .form-control { font-size: 0.95rem; padding: 0.7rem 0.9rem 0.7rem 2.25rem; }
     .theme-toggle { top: 8px; right: 8px; width: 32px; height: 32px; }
+    .demo-link-section p { 
+        font-size: 0.95rem; 
+    }
+    .demo-link { 
+        font-size: 0.95rem; 
+    }
 }

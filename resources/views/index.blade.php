@@ -68,9 +68,9 @@
                                 <p class="hero-description">Soluciones energéticas inteligentes y consultoría estratégica para empresas que buscan reducir costos y maximizar eficiencia.</p>
                                 
                                 <div class="hero-buttons">
-                                    <button class="hero-btn hero-btn-primary">
-                                        <span>Contacta a un Experto</span>
-                                    </button>
+                                    <a href="{{ route('demo.solicitar') }}" class="hero-btn hero-btn-primary">
+                                        <span>Solicitar Demo Gratuito</span>
+                                    </a>
                                     <button class="hero-btn hero-btn-secondary">
                                         <span>Ver Nuestros Servicios</span>
                                     </button>
@@ -155,7 +155,7 @@
                 <div class="cta-content">
                     <h2>¿Listo para optimizar tu consumo energético?</h2>
                     <p>Nuestros expertos están listos para ayudarte</p>
-                    <button class="btn btn-primary">Solicita una consulta gratuita</button>
+                    <a href="{{ route('demo.solicitar') }}" class="btn btn-primary">Solicita una demostración gratuita</a>
                 </div>
             </div>
         </section>

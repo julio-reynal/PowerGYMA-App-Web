@@ -11,7 +11,7 @@
         "build-only": "vite build",
         "dev": "vite",
         "production": "vite build && npm run fix-manifest",
-        "fix-manifest": "test -f 'public/build/.vite/manifest.json' && mv 'public/build/.vite/manifest.json' 'public/build/manifest.json' || echo 'Manifest file not found or already moved'"
+        "fix-manifest": "powershell -Command \"if (Test-Path 'public/build/.vite/manifest.json') { Move-Item 'public/build/.vite/manifest.json' 'public/build/manifest.json' -Force } else { Write-Host 'Manifest file not found or already moved' }\""
     },
     "dependencies": {
         "vite": "^6.0.0",

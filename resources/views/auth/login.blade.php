@@ -95,6 +95,10 @@
                     </button>
                 </form>
                 
+                <div class="demo-link-section">
+                    <p>¿Nuevo en PowerGYMA? <a href="{{ route('demo.solicitar') }}" class="demo-link">Solicitar Demo Gratuito</a></p>
+                </div>
+                
                 <div class="support-link">
                     <a href="#" class="form-link">Contactar a Soporte</a>
                 </div>

@@ -821,6 +821,8 @@
                 $peakTo = $s['peakTo'] ?? null;
                 $todayEvalDate = $s['todayEvalDate'] ?? null;
                 $hasToday = (bool)($s['hasToday'] ?? false);
+                $isFromToday = (bool)($s['isFromToday'] ?? false);
+                $dataSource = $s['dataSource'] ?? 'sin_datos';
                 $hasMonthly = (bool)($s['hasMonthly'] ?? false);
                 $monthYear = $s['monthYear'] ?? ['year' => now()->year, 'month' => now()->month];
                 $monthData = $s['monthData'] ?? [];
@@ -845,7 +847,14 @@
                 }
             } else {
                 // Obtener datos reales de la base de datos
-                $todayEval = \App\Models\RiskEvaluation::today() ?? \App\Models\RiskEvaluation::orderBy('evaluation_date','desc')->first();
+                $todayEval = \App\Models\RiskEvaluation::whereDate('evaluation_date', today())->first();
+                $isFromToday = $todayEval !== null;
+                
+                // Si no hay datos de hoy, buscar la evaluación más reciente
+                if (!$todayEval) {
+                    $todayEval = \App\Models\RiskEvaluation::orderBy('evaluation_date', 'desc')->first();
+                }
+                
                 $map = config('risk.percentages');
                 $riskLevel = $todayEval?->risk_level ?? null;
                 $latestMonth = null;
@@ -854,7 +863,8 @@
                     $riskLevel = $latestMonth?->risk_level ?? 'No procede';
                 }
                 $todayEvalDate = $todayEval?->evaluation_date?->toDateString();
-                $hasToday = $todayEval !== null;
+                $hasToday = $isFromToday;
+                $dataSource = $isFromToday ? 'hoy' : ($todayEval ? 'último_disponible' : 'sin_datos');
                 $hasMonthly = $latestMonth !== null;
                 $riskPercent = $map[$riskLevel] ?? 0;
                 $startH = $todayEval?->start_time ? (int)Carbon::parse($todayEval->start_time)->format('H') : null;
@@ -1004,6 +1014,24 @@
                                 @endif
                             </div>
                             <div class="flex flex-col items-end gap-2 ml-4">
+                                <!-- Indicador de fuente de datos -->
+                                @if($dataSource === 'hoy')
+                                    <div class="flex items-center gap-2 px-3 py-1 rounded-lg bg-green-500/20 border border-green-500/40">
+                                        <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                                        <span class="text-xs font-medium text-green-400">Datos de hoy</span>
+                                    </div>
+                                @elseif($dataSource === 'último_disponible')
+                                    <div class="flex items-center gap-2 px-3 py-1 rounded-lg bg-yellow-500/20 border border-yellow-500/40">
+                                        <div class="w-2 h-2 bg-yellow-400 rounded-full"></div>
+                                        <span class="text-xs font-medium text-yellow-400">Último disponible</span>
+                                    </div>
+                                @else
+                                    <div class="flex items-center gap-2 px-3 py-1 rounded-lg bg-gray-500/20 border border-gray-500/40">
+                                        <div class="w-2 h-2 bg-gray-400 rounded-full"></div>
+                                        <span class="text-xs font-medium text-gray-400">Sin datos</span>
+                                    </div>
+                                @endif
+                                
                                 <button class="text-sm bg-[var(--bg-search)] px-4 py-2 rounded-lg font-medium">
                                     {{ $todayEvalDate ? \Carbon\Carbon::parse($todayEvalDate)->format('d \d\e M') : 'Hoy' }}
                                 </button>
@@ -1395,6 +1423,16 @@
             const riskData = @json($series);
             const riskLabels = @json($labels);
             
+            // DEBUG: Mostrar datos en consola para verificar
+            console.log('📈 RISK CHART - CURVA GRADUAL:', {
+                nivel_excel: '{{ $snapshot["riskLevel"] ?? "N/A" }}',
+                valor_maximo: '{{ $snapshot["riskPercent"] ?? 0 }}%',
+                curva_datos: riskData,
+                inicio: riskData[0] + '%',
+                maximo: Math.max(...riskData) + '%',
+                version: 'v4.0 - Curva gradual desde 0%'
+            });
+            
             riskChart = new Chart(riskCtx, {
                 type: 'line', 
                 data: { 
@@ -1407,25 +1445,25 @@
                         borderWidth: 3, 
                         pointBackgroundColor: function(context) {
                             const value = context.parsed.y;
-                            if (value >= 66) return '#EF4444'; // Rojo para alto riesgo
-                            if (value >= 36) return '#F59E0B'; // Amarillo para medio
-                            return '#22C55E'; // Verde para bajo
+                            if (value >= 51) return '#EF4444'; // Rojo para alto riesgo (51-100%)
+                            if (value >= 21) return '#0bf51fff'; // Amarillo para medio riesgo (21-50%)
+                            return '#22C55E'; // Verde para bajo riesgo (0-20%)
                         },
                         pointBorderColor: function(context) {
                             const value = context.parsed.y;
-                            if (value >= 66) return '#DC2626';
-                            if (value >= 36) return '#D97706';
+                            if (value >= 51) return '#DC2626';
+                            if (value >= 21) return '#0cff0cff';
                             return '#16A34A';
                         },
-                        pointRadius: 6, 
-                        pointHoverRadius: 8, 
-                        tension: 0.4, 
+                        pointRadius: 4, 
+                        pointHoverRadius: 6, 
+                        tension: 0.5, // Curva más suave y natural 
                         fill: true,
                         segment: {
                             borderColor: function(ctx) {
                                 const value = ctx.p1.parsed.y;
-                                if (value >= 66) return '#EF4444'; // Rojo
-                                if (value >= 36) return '#F59E0B'; // Amarillo
+                                if (value >= 51) return '#EF4444'; // Rojo - Alto Riesgo (51-100%)
+                                if (value >= 21) return '#0bf546ff'; // Amarillo - Riesgo Medio (21-50%)
                                 return '#22C55E'; // Verde
                             }
                         }
@@ -1659,7 +1697,12 @@
 
             let currentRisk = 0;
             const actualRiskValue = {{ $riskPercent ?? 0 }};
-            let targetRisk = findCategoryMiddlePoint(actualRiskValue); 
+            let targetRisk = actualRiskValue; // Usar valor exacto del porcentaje, no el punto medio
+            console.log('🔧 GAUGE DEBUG:', {
+                riskLevel: '{{ $riskLevel }}',
+                actualRiskValue: actualRiskValue,
+                targetRisk: targetRisk
+            });
             let animationFrameId = null;
 
             // Crear leyenda

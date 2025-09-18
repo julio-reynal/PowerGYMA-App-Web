@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard SmartPeak - Demo</title>
+    <title>Dashboard SmartPeak - Demo ({{ date('His') }})</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
@@ -986,6 +986,51 @@
                 </div>
             @endif
 
+            <!-- Demo Data Source Info - Mes Pasado -->
+            @if(isset($snapshot['isDemoMode']) && $snapshot['isDemoMode'])
+                <div class="mx-6 mb-4 p-4 rounded-lg flex items-center space-x-3 border bg-blue-500/10 border-blue-500/30 text-blue-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0">
+                        <path d="M8 2v4"/>
+                        <path d="M16 2v4"/>
+                        <rect width="18" height="18" x="3" y="4" rx="2"/>
+                        <path d="M3 10h18"/>
+                        <path d="M8 14h.01"/>
+                        <path d="M12 14h.01"/>
+                        <path d="M16 14h.01"/>
+                        <path d="M8 18h.01"/>
+                        <path d="M12 18h.01"/>
+                    </svg>
+                    <div class="flex-1">
+                        <strong>Datos de {{ $snapshot['demoInfo']['month_spanish'] ?? 'Mes Anterior' }}.</strong> 
+                        @if(isset($snapshot['demoInfo']['is_simulated']) && !$snapshot['demoInfo']['is_simulated'])
+                            Mostrando información real del mes pasado.
+                            <span class="block text-xs mt-1 opacity-80">
+                                Datos reales disponibles: {{ $snapshot['demoInfo']['data_count'] ?? 0 }} registros
+                            </span>
+                        @else
+                            Mostrando datos simulados del mes pasado para demostración.
+                            <span class="block text-xs mt-1 opacity-80">
+                                Los datos son simulados porque no hay información real disponible de {{ $snapshot['demoInfo']['month_spanish'] ?? 'ese período' }}
+                            </span>
+                        @endif
+                    </div>
+                    
+                    <!-- Botón para refrescar datos demo -->
+                    <form method="POST" action="{{ route('demo.dashboard.refresh') }}" class="inline">
+                        @csrf
+                        <button type="submit" class="px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-sm font-medium flex items-center space-x-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
+                                <path d="M21 3v5h-5"/>
+                                <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/>
+                                <path d="M3 21v-5h5"/>
+                            </svg>
+                            <span>Refrescar</span>
+                        </button>
+                    </form>
+                </div>
+            @endif
+
             <!-- Main Dashboard -->
             <main class="flex-1 p-6 space-y-6">
                 <?php 
@@ -1039,10 +1084,8 @@
                         }
                         $peakFrom = $startH!==null ? sprintf('%02d:00',$startH+1) : null;
                         $peakTo = $endH!==null ? sprintf('%02d:00',$endH+1) : null;
-                        // Construir monthData como mapa día->nivel
-                        $monthCollection = \App\Models\MonthlyRiskData::currentMonth();
-                        $monthData = [];
-                        foreach ($monthCollection as $m) { $monthData[(int)$m->day] = $m->risk_level; }
+                        // Construir monthData desde el snapshot del demo
+                        $monthData = $snapshot['monthData'] ?? [];
                     }
                 ?>
 
@@ -1164,11 +1207,13 @@
                                         @endif
                                     </div>
                                     <div class="flex flex-col items-end gap-2 ml-4">
-                                        <button class="text-sm bg-[var(--bg-search)] px-4 py-2 rounded-lg font-medium">
-                                            {{ $todayEvalDate ? \Carbon\Carbon::parse($todayEvalDate)->format('d \d\e M') : 'Datos Demo' }}
-                                        </button>
+                                  
                                         <div class="text-xs text-[var(--text-secondary)] text-right">
-                                            <div>Demo: Datos simulados</div>
+                                            @if(isset($snapshot['isDemoMode']) && $snapshot['isDemoMode'])
+                                                <div>{{ $snapshot['demoInfo']['is_simulated'] ? 'Demo: Datos simulados' : 'Demo: Datos reales' }}</div>
+                                            @else
+                                                <div>Demo: Datos simulados</div>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -1211,7 +1256,13 @@
                             
                             <div class="text-center mb-6">
                                 <h2 class="text-2xl font-bold mb-2" style="color: var(--text-headings);">Evaluación de Riesgo Diario</h2>
-                                <p id="fullDate" class="text-sm mb-4" style="color: var(--text-secondary);">{{ \Carbon\Carbon::now('America/Lima')->locale('es')->isoFormat('dddd, D [de] MMMM [de] YYYY') }}</p>
+                                <p id="fullDate" class="text-sm mb-4" style="color: var(--text-secondary);">
+                                    @if(isset($snapshot['isDemoMode']) && $snapshot['isDemoMode'])
+                                        {{ \Carbon\Carbon::now('America/Lima')->subMonth()->locale('es')->isoFormat('dddd, D [de] MMMM [de] YYYY') }} (Demo)
+                                    @else
+                                        {{ \Carbon\Carbon::now('America/Lima')->locale('es')->isoFormat('dddd, D [de] MMMM [de] YYYY') }}
+                                    @endif
+                                </p>
                                 <div class="inline-block px-4 py-2 rounded-lg
                                     {{ $riskLevel === 'Crítico' ? 'bg-red-500/20 border-2 border-red-500/40' : 
                                        ($riskLevel === 'Alto' ? 'bg-red-400/20 border-2 border-red-400/40' : 
@@ -1259,11 +1310,16 @@
             <!-- CALENDARIO MENSUAL - Individual -->
             <div class="card p-6">
                 <h2 class="text-xl font-semibold text-[var(--text-headings)] mb-4">
-                    Previsión {{ ucfirst(\Carbon\Carbon::now('America/Lima')->locale('es')->monthName) }} {{ \Carbon\Carbon::now('America/Lima')->year }} (Demo)
+                    Previsión {{ $snapshot['demoInfo']['month_spanish'] ?? 'Mes Anterior' }} (Demo)
                 </h2>
                 <div class="grid grid-cols-7 gap-y-2 text-center text-sm">
                     <div class="font-bold text-[var(--text-secondary)]">L</div><div class="font-bold text-[var(--text-secondary)]">M</div><div class="font-bold text-[var(--text-secondary)]">X</div><div class="font-bold text-[var(--text-secondary)]">J</div><div class="font-bold text-[var(--text-secondary)]">V</div><div class="font-bold text-[var(--text-secondary)]">S</div><div class="font-bold text-[var(--text-secondary)]">D</div>                            @php
-                                $currentDate = \Carbon\Carbon::now('America/Lima');
+                                // En modo demo, usar fecha del mes pasado
+                                if(isset($snapshot['isDemoMode']) && $snapshot['isDemoMode']) {
+                                    $currentDate = \Carbon\Carbon::now('America/Lima')->subMonth();
+                                } else {
+                                    $currentDate = \Carbon\Carbon::now('America/Lima');
+                                }
                                 $daysInMonth = $currentDate->daysInMonth;
                                 $firstDayOfWeek = $currentDate->copy()->startOfMonth()->dayOfWeek;
                                 $firstDayOfWeek = $firstDayOfWeek == 0 ? 7 : $firstDayOfWeek; // Convertir domingo de 0 a 7
@@ -1326,7 +1382,11 @@
                             <li class="flex justify-between items-center p-2 bg-[var(--bg-hover)] rounded-lg">
                                 <span class="flex items-center">
                                     <div class="inline-block w-2 h-2 rounded-full bg-red-500 mr-3"></div>
-                                    <span class="font-medium">Hoy</span>
+                                    @if(isset($snapshot['isDemoMode']) && $snapshot['isDemoMode'])
+                                        <span class="font-medium">{{ $snapshot['demoInfo']['month_spanish'] ?? 'Mes Anterior' }}</span>
+                                    @else
+                                        <span class="font-medium">Hoy</span>
+                                    @endif
                                 </span>
                                 <span class="text-[var(--text-secondary)]">{{ $peakFrom }} - {{ $peakTo }}</span>
                             </li>
@@ -1402,28 +1462,7 @@
                 <div class="text-xs text-[var(--text-secondary)] mt-4 text-center">
                     * Datos de demostración - Funcionalidad completa disponible en versión premium
                 </div>
-            </div>                    <!-- Accumulated Savings (Demo) -->
-                    <div class="card p-6 flex flex-col items-center">
-                        <h2 class="text-xl font-semibold text-[var(--text-headings)]">Ahorro Estimado (Demo)</h2>
-                        <div class="relative w-40 h-40 my-4">
-                            <canvas id="savingsChart"></canvas>
-                            <div class="absolute inset-0 flex flex-col items-center justify-center">
-                                <span class="text-3xl font-bold text-[var(--text-headings)]">32%</span>
-                                <span class="text-sm text-[var(--text-secondary)]">estimado</span>
-                            </div>
-                        </div>
-                        <p class="text-3xl font-bold text-[var(--text-headings)]">S/. 12,540</p>
-                        <p class="text-sm text-[var(--text-secondary)] mb-6">Ahorro potencial estimado</p>
-                        <div class="w-full space-y-2 text-sm text-[var(--text-secondary)]">
-                            <div class="flex justify-between items-center text-[var(--text-headings)]"><span>Sin SmartPeak</span><span>S/. 38,000</span></div>
-                            <div class="w-full bg-[var(--bg-hover)] h-2 rounded-full"><div class="bg-red-500 h-2 rounded-full" style="width: 100%"></div></div>
-                            <div class="flex justify-between items-center text-[var(--text-headings)]"><span>Con SmartPeak</span><span>S/. 25,460</span></div>
-                            <div class="w-full bg-[var(--bg-hover)] h-2 rounded-full"><div class="bg-green-500 h-2 rounded-full" style="width: 67%"></div></div>
-                        </div>
-                        <div class="text-xs text-gray-400 mt-4 text-center">
-                            * Valores ilustrativos para demostración
-                        </div>
-                    </div>
+            </div>
 
                 </div>
             </main>
@@ -1522,7 +1561,7 @@
     </div>
 
     <script>
-        let riskChart, savingsChart;
+        let riskChart;
 
         function updateChartColors() {
             const isLight = document.documentElement.classList.contains('light');
@@ -1536,11 +1575,6 @@
                 riskChart.options.scales.x.ticks.color = textColor;
                 riskChart.options.scales.y.ticks.color = textColor;
                 riskChart.update();
-            }
-
-            // Update savings chart colors
-            if (savingsChart) {
-                savingsChart.update();
             }
         }
 
@@ -1664,29 +1698,6 @@
                 }
             });
 
-            // Savings Chart (Donut)
-            const savingsCtx = document.getElementById('savingsChart').getContext('2d');
-            savingsChart = new Chart(savingsCtx, {
-                type: 'doughnut',
-                data: {
-                    datasets: [{ 
-                        data: [32, 68], 
-                        backgroundColor: ['#F59E0B', '#334155'], 
-                        borderWidth: 0, 
-                        borderRadius: 5, 
-                        cutout: '75%' 
-                    }] 
-                },
-                options: { 
-                    responsive: true, 
-                    maintainAspectRatio: false, 
-                    plugins: { 
-                        legend: { display: false }, 
-                        tooltip: { enabled: false } 
-                    } 
-                }
-            });
-
             // Set initial colors
             updateChartColors();
         }
@@ -1721,7 +1732,10 @@
         
         // Función para actualizar la fecha automáticamente en español (zona horaria de Perú)
         function updateDateAndTime() {
+            // En modo demo, usar la fecha del mes anterior
             const now = new Date();
+            const demoDate = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
+            
             const options = {
                 weekday: 'long',
                 year: 'numeric',
@@ -1731,10 +1745,10 @@
             };
             
             const dateFormatter = new Intl.DateTimeFormat('es-PE', options);
-            const formattedDate = dateFormatter.format(now);
+            const formattedDate = dateFormatter.format(demoDate);
             
             // Capitalizar la primera letra y formatear correctamente
-            const finalDate = formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
+            const finalDate = formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1) + ' (Demo)';
             
             const fullDateElement = document.getElementById('fullDate');
             if (fullDateElement) {

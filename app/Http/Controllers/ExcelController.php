@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\ExcelProcessorService;
 use App\Services\DashboardSnapshotService;
+use App\Services\RiskCalculationService;
 use App\Models\ExcelUpload;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -15,13 +16,15 @@ class ExcelController extends Controller
 {
     protected $excelProcessor;
     protected DashboardSnapshotService $snapshotService;
+    protected RiskCalculationService $riskService;
 
-    public function __construct(ExcelProcessorService $excelProcessor, DashboardSnapshotService $snapshotService)
+    public function __construct(ExcelProcessorService $excelProcessor, DashboardSnapshotService $snapshotService, RiskCalculationService $riskService)
     {
         $this->middleware('auth');
         $this->middleware('role:admin');
         $this->excelProcessor = $excelProcessor;
         $this->snapshotService = $snapshotService;
+        $this->riskService = $riskService;
     }
 
     /**
@@ -103,10 +106,21 @@ class ExcelController extends Controller
             $result = $this->excelProcessor->processExcelFile($fullPath, $excelUpload->id, (int) $request->input('csv_year'));
 
             if ($result['success']) {
-                // Marcar actualización pendiente: el dashboard cliente se actualizará solo cuando el usuario haga clic en "Actualizar información"
-                Cache::forever('cliente_dashboard_pending_update', now()->toIso8601String());
+                // Actualizar automáticamente el sistema de riesgo con los datos del Excel
+                try {
+                    $this->riskService->updateRiskByExcelData($excelUpload->id);
+                    Log::info("Sistema de riesgo actualizado automáticamente después de procesar Excel ID: {$excelUpload->id}");
+                } catch (\Exception $e) {
+                    Log::warning("Error al actualizar sistema de riesgo después de procesar Excel: " . $e->getMessage());
+                    // No falla el proceso principal, solo registra el warning
+                }
+                
+                // Invalidar inmediatamente la caché del dashboard del cliente para forzar actualización
+                $this->snapshotService->refreshCache();
+                Cache::forget('cliente_dashboard_pending_update');
+                
                 return redirect()->route('admin.excel.index')
-                               ->with('success', $result['message'])
+                               ->with('success', $result['message'] . ' El sistema de riesgo y el dashboard del cliente han sido actualizados automáticamente.')
                                ->with('upload_summary', $result['summary']);
             } else {
                 return redirect()->route('admin.excel.index')
@@ -160,10 +174,21 @@ class ExcelController extends Controller
             $result = $this->excelProcessor->processExcelFile($upload->file_path, $upload->id, $csvYear);
 
             if ($result['success']) {
-                // Marcar actualización pendiente
-                Cache::forever('cliente_dashboard_pending_update', now()->toIso8601String());
+                // Actualizar automáticamente el sistema de riesgo con los datos del Excel reprocesado
+                try {
+                    $this->riskService->updateRiskByExcelData($upload->id);
+                    Log::info("Sistema de riesgo actualizado automáticamente después de reprocesar Excel ID: {$upload->id}");
+                } catch (\Exception $e) {
+                    Log::warning("Error al actualizar sistema de riesgo después de reprocesar Excel: " . $e->getMessage());
+                    // No falla el proceso principal, solo registra el warning
+                }
+                
+                // Invalidar inmediatamente la caché del dashboard del cliente para forzar actualización
+                $this->snapshotService->refreshCache();
+                Cache::forget('cliente_dashboard_pending_update');
+                
                 return redirect()->route('admin.excel.index')
-                               ->with('success', 'Archivo reprocesado exitosamente.')
+                               ->with('success', 'Archivo reprocesado exitosamente. El sistema de riesgo y el dashboard del cliente han sido actualizados automáticamente.')
                                ->with('upload_summary', $result['summary']);
             } else {
                 return redirect()->route('admin.excel.index')

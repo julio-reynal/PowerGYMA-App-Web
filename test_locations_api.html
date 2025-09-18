@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test API Locations</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .result { background: #f5f5f5; padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .error { background: #ffe6e6; color: #d00; }
+        .success { background: #e6ffe6; color: #0a0; }
+        button { padding: 10px 20px; margin: 5px; background: #007cba; color: white; border: none; border-radius: 3px; cursor: pointer; }
+        select { padding: 8px; margin: 5px; width: 200px; }
+    </style>
+</head>
+<body>
+    <h1>Test API de Ubicaciones</h1>
+    
+    <div>
+        <button onclick="testDepartamentos()">Cargar Departamentos</button>
+        <button onclick="testProvincias()">Cargar Provincias de La Libertad</button>
+    </div>
+    
+    <div>
+        <select id="departamento" onchange="cargarProvincias()">
+            <option value="">Seleccionar departamento...</option>
+        </select>
+        <select id="provincia">
+            <option value="">Seleccionar provincia...</option>
+        </select>
+    </div>
+    
+    <div id="results"></div>
+
+    <script>
+        function addResult(message, isError = false) {
+            const results = document.getElementById('results');
+            const div = document.createElement('div');
+            div.className = 'result ' + (isError ? 'error' : 'success');
+            div.innerHTML = '<strong>' + new Date().toLocaleTimeString() + ':</strong> ' + message;
+            results.appendChild(div);
+        }
+
+        async function testDepartamentos() {
+            try {
+                addResult('Cargando departamentos...');
+                const response = await fetch('/api/v1/locations/departamentos');
+                const data = await response.json();
+                
+                if (data.success) {
+                    addResult(`✅ Departamentos cargados: ${data.count} registros`);
+                    
+                    // Poblar el select
+                    const select = document.getElementById('departamento');
+                    select.innerHTML = '<option value="">Seleccionar departamento...</option>';
+                    
+                    data.data.forEach(dep => {
+                        const option = document.createElement('option');
+                        option.value = dep.id;
+                        option.textContent = dep.nombre;
+                        option.dataset.nombre = dep.nombre;
+                        select.appendChild(option);
+                    });
+                    
+                    addResult('Select de departamentos poblado correctamente');
+                } else {
+                    addResult(`❌ Error: ${data.message}`, true);
+                }
+            } catch (error) {
+                addResult(`❌ Error de conexión: ${error.message}`, true);
+            }
+        }
+
+        async function testProvincias() {
+            try {
+                addResult('Cargando provincias de La Libertad (ID: 13)...');
+                const response = await fetch('/api/v1/locations/provincias/departamento/13');
+                const data = await response.json();
+                
+                if (data.success) {
+                    addResult(`✅ Provincias cargadas: ${data.count} registros`);
+                    addResult(`Provincias: ${data.data.map(p => p.nombre).join(', ')}`);
+                } else {
+                    addResult(`❌ Error: ${data.message}`, true);
+                }
+            } catch (error) {
+                addResult(`❌ Error de conexión: ${error.message}`, true);
+            }
+        }
+
+        async function cargarProvincias() {
+            const depSelect = document.getElementById('departamento');
+            const provSelect = document.getElementById('provincia');
+            const depId = depSelect.value;
+            const depNombre = depSelect.selectedOptions[0]?.dataset?.nombre;
+            
+            if (!depId) {
+                provSelect.innerHTML = '<option value="">Seleccionar provincia...</option>';
+                return;
+            }
+
+            try {
+                addResult(`Cargando provincias para ${depNombre}...`);
+                provSelect.innerHTML = '<option value="">Cargando...</option>';
+                
+                const response = await fetch(`/api/v1/locations/provincias/departamento/${depId}`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    provSelect.innerHTML = '<option value="">Seleccionar provincia...</option>';
+                    data.data.forEach(prov => {
+                        const option = document.createElement('option');
+                        option.value = prov.nombre;
+                        option.textContent = prov.nombre;
+                        provSelect.appendChild(option);
+                    });
+                    addResult(`✅ ${data.count} provincias cargadas para ${depNombre}`);
+                } else {
+                    addResult(`❌ Error cargando provincias: ${data.message}`, true);
+                    provSelect.innerHTML = '<option value="">Error al cargar...</option>';
+                }
+            } catch (error) {
+                addResult(`❌ Error de conexión: ${error.message}`, true);
+                provSelect.innerHTML = '<option value="">Error de conexión...</option>';
+            }
+        }
+
+        // Cargar departamentos al iniciar
+        window.addEventListener('load', testDepartamentos);
+    </script>
+</body>
+</html>

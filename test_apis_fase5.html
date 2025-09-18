@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test APIs FASE 5 - PowerGYMA</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #f5f5f5; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .success { background: #d4edda; border-color: #c3e6cb; color: #155724; }
+        .error { background: #f8d7da; border-color: #f5c6cb; color: #721c24; }
+        .pending { background: #fff3cd; border-color: #ffeaa7; color: #856404; }
+        button { background: #007bff; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; margin: 5px; }
+        button:hover { background: #0056b3; }
+        pre { background: #f8f9fa; padding: 10px; border-radius: 4px; overflow-x: auto; }
+        input, select { padding: 8px; margin: 5px; border: 1px solid #ddd; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Test APIs FASE 5 - PowerGYMA</h1>
+        <p>Pruebas de validación y funcionalidad de las APIs implementadas en FASE 5</p>
+
+        <!-- Test 1: Check Email -->
+        <div class="test-section pending" id="test-email">
+            <h3>📧 Test 1: Verificación de Email</h3>
+            <input type="email" id="email-input" placeholder="test@example.com" value="nuevo@test.com">
+            <button onclick="testCheckEmail()">Verificar Email</button>
+            <div id="email-result"></div>
+        </div>
+
+        <!-- Test 2: Check Document -->
+        <div class="test-section pending" id="test-document">
+            <h3>📄 Test 2: Verificación de Documento</h3>
+            <select id="tipo-doc">
+                <option value="dni">DNI</option>
+                <option value="ruc">RUC</option>
+                <option value="ce">Carnet de Extranjería</option>
+                <option value="pasaporte">Pasaporte</option>
+            </select>
+            <input type="text" id="numero-doc" placeholder="12345678" value="87654321">
+            <button onclick="testCheckDocument()">Verificar Documento</button>
+            <div id="document-result"></div>
+        </div>
+
+        <!-- Test 3: Validate Field -->
+        <div class="test-section pending" id="test-validate">
+            <h3>✅ Test 3: Validación de Campo</h3>
+            <select id="field-name">
+                <option value="email">Email</option>
+                <option value="numero_documento">Número Documento</option>
+                <option value="telefono">Teléfono</option>
+                <option value="password">Password</option>
+            </select>
+            <input type="text" id="field-value" placeholder="Valor a validar" value="test@valid.com">
+            <button onclick="testValidateField()">Validar Campo</button>
+            <div id="validate-result"></div>
+        </div>
+
+        <!-- Test 4: Password Strength -->
+        <div class="test-section pending" id="test-password">
+            <h3>🔒 Test 4: Fortaleza de Contraseña</h3>
+            <input type="password" id="password-input" placeholder="Mi contraseña" value="MiPassword123!">
+            <button onclick="testPasswordStrength()">Evaluar Contraseña</button>
+            <div id="password-result"></div>
+        </div>
+
+        <!-- Test 5: DNI Validation -->
+        <div class="test-section pending" id="test-dni">
+            <h3>🆔 Test 5: Validación DNI Peruano</h3>
+            <input type="text" id="dni-input" placeholder="12345678" value="12345678">
+            <button onclick="testDniValidation()">Validar DNI</button>
+            <div id="dni-result"></div>
+        </div>
+
+        <!-- Test 6: Process Registration -->
+        <div class="test-section pending" id="test-register">
+            <h3>👤 Test 6: Procesamiento de Registro</h3>
+            <button onclick="testProcessRegistration()">Simular Registro</button>
+            <div id="register-result"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>📊 Resumen de Pruebas</h3>
+            <div id="summary">
+                <p>✅ Exitosas: <span id="success-count">0</span></p>
+                <p>❌ Fallidas: <span id="error-count">0</span></p>
+                <p>⏳ Pendientes: <span id="pending-count">6</span></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const BASE_URL = 'http://127.0.0.1:8000/api/v1/forms';
+        let stats = { success: 0, error: 0, pending: 6 };
+
+        function updateStats() {
+            document.getElementById('success-count').textContent = stats.success;
+            document.getElementById('error-count').textContent = stats.error;
+            document.getElementById('pending-count').textContent = stats.pending;
+        }
+
+        function markTestResult(testId, success, message, data = null) {
+            const element = document.getElementById(testId);
+            const resultDiv = element.querySelector('div[id$="-result"]');
+            
+            element.className = `test-section ${success ? 'success' : 'error'}`;
+            resultDiv.innerHTML = `
+                <p><strong>${success ? '✅ Éxito' : '❌ Error'}:</strong> ${message}</p>
+                ${data ? `<pre>${JSON.stringify(data, null, 2)}</pre>` : ''}
+            `;
+
+            if (success) {
+                stats.success++;
+            } else {
+                stats.error++;
+            }
+            stats.pending--;
+            updateStats();
+        }
+
+        async function apiCall(endpoint, params = {}) {
+            try {
+                const url = new URL(`${BASE_URL}${endpoint}`);
+                Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
+                
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${data.message || 'Error desconocido'}`);
+                }
+                
+                return { success: true, data };
+            } catch (error) {
+                return { success: false, error: error.message };
+            }
+        }
+
+        async function testCheckEmail() {
+            const email = document.getElementById('email-input').value;
+            const result = await apiCall('/check-email', { email });
+            
+            if (result.success) {
+                markTestResult('test-email', true, 'Email verificado correctamente', result.data);
+            } else {
+                markTestResult('test-email', false, `Error: ${result.error}`);
+            }
+        }
+
+        async function testCheckDocument() {
+            const tipo = document.getElementById('tipo-doc').value;
+            const numero = document.getElementById('numero-doc').value;
+            const result = await apiCall('/check-document', { tipo_documento: tipo, numero_documento: numero });
+            
+            if (result.success) {
+                markTestResult('test-document', true, 'Documento verificado correctamente', result.data);
+            } else {
+                markTestResult('test-document', false, `Error: ${result.error}`);
+            }
+        }
+
+        async function testValidateField() {
+            const field = document.getElementById('field-name').value;
+            const value = document.getElementById('field-value').value;
+            const result = await apiCall('/validate-field', { field, value });
+            
+            if (result.success) {
+                markTestResult('test-validate', true, 'Campo validado correctamente', result.data);
+            } else {
+                markTestResult('test-validate', false, `Error: ${result.error}`);
+            }
+        }
+
+        async function testPasswordStrength() {
+            const password = document.getElementById('password-input').value;
+            const result = await apiCall('/password-strength', { password });
+            
+            if (result.success) {
+                markTestResult('test-password', true, 'Contraseña evaluada correctamente', result.data);
+            } else {
+                markTestResult('test-password', false, `Error: ${result.error}`);
+            }
+        }
+
+        async function testDniValidation() {
+            const dni = document.getElementById('dni-input').value;
+            const result = await apiCall('/validate-dni', { dni });
+            
+            if (result.success) {
+                markTestResult('test-dni', true, 'DNI validado correctamente', result.data);
+            } else {
+                markTestResult('test-dni', false, `Error: ${result.error}`);
+            }
+        }
+
+        async function testProcessRegistration() {
+            const testData = {
+                name: 'Usuario Test FASE 5',
+                email: 'test.api@fase5.com',
+                password: 'TestPassword123!',
+                password_confirmation: 'TestPassword123!',
+                tipo_documento: 'dni',
+                numero_documento: '11223344',
+                telefono: '987654321',
+                direccion: 'Av. Test API 123',
+                fecha_nacimiento: '1990-01-01',
+                genero: 'masculino'
+            };
+
+            try {
+                const response = await fetch(`${BASE_URL}/process-registration`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: JSON.stringify(testData)
+                });
+
+                const data = await response.json();
+                
+                if (response.ok) {
+                    markTestResult('test-register', true, 'Registro procesado correctamente', data);
+                } else {
+                    markTestResult('test-register', false, `Error HTTP ${response.status}`, data);
+                }
+            } catch (error) {
+                markTestResult('test-register', false, `Error de red: ${error.message}`);
+            }
+        }
+
+        // Auto-ejecutar algunas pruebas básicas al cargar
+        window.onload = function() {
+            console.log('🚀 Página de pruebas FASE 5 cargada');
+            updateStats();
+        };
+    </script>
+</body>
+</html>

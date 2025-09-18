@@ -7,10 +7,11 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\ExcelController;
 use App\Http\Controllers\ClienteDashboardController;
 use App\Http\Controllers\DemoDashboardController;
+use App\Http\Controllers\DemoRequestController;
 
 Route::get('/', function () {
     return view('index');
-});
+})->name('home');
 
 // Ruta de prueba para verificar assets y rutas
 Route::get('/test-routes', function() {
@@ -26,6 +27,31 @@ Route::get('/verification', function() {
 Route::get('/test-dashboard-data', function() {
     return view('test-dashboard-data');
 })->name('test.dashboard.data');
+
+// Ruta para el formulario de registro extendido (demo)
+Route::get('/demo/enhanced-registration', function () {
+    return view('enhanced-registration-demo');
+});
+
+// Ruta para debug de selectores de ubicación
+Route::get('/debug/location-selector', function () {
+    return view('debug-location-selector');
+});
+
+// Ruta para test simple
+Route::get('/test/simple', function () {
+    return view('test-simple');
+});
+
+// Ruta para fix de ubicaciones
+Route::get('/fix/locations', function () {
+    return view('location-fix');
+});
+
+// Ruta para solución final de ubicaciones
+Route::get('/solution/locations', function () {
+    return view('location-solution');
+});
 
 // Rutas temporales para probar upload sin autenticación ni CSRF
 Route::withoutMiddleware([\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class])->group(function () {
@@ -105,6 +131,15 @@ Route::post('/logout', [LoginController::class, 'logout'])->middleware('auth')->
 Route::get('/logout', [LoginController::class, 'logout'])->middleware('auth')->name('logout.get');
 Route::get('/salir', [LoginController::class, 'logout'])->middleware('auth')->name('logout.es');
 
+// Rutas públicas para solicitud de demo
+Route::get('/demo/solicitar', [DemoRequestController::class, 'create'])->name('demo.solicitar');
+Route::post('/demo/solicitar', [DemoRequestController::class, 'store'])->name('demo.store');
+Route::get('/demo/gracias', [DemoRequestController::class, 'gracias'])->name('demo.gracias');
+
+// API públicas para el formulario de demo
+Route::get('/api/demo/provincias/{departamento}', [DemoRequestController::class, 'getProvinciasByDepartamento'])->name('demo.provincias');
+Route::post('/api/demo/check-email', [DemoRequestController::class, 'checkEmail'])->name('demo.check-email');
+
 // Dashboard principal (redirige según rol)
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -120,12 +155,20 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::post('/users', [AdminController::class, 'storeUser'])->name('users.store');
     
     // Gestión de usuarios demo
-    Route::get('/demo/create', [AdminController::class, 'createDemo'])->name('demo.create');
+    Route::get('/users/create-demo', [AdminController::class, 'createDemo'])->name('users.create-demo');
     Route::post('/demo', [AdminController::class, 'storeDemo'])->name('demo.store');
     
     // Acciones de usuario
     Route::patch('/users/{user}/toggle-status', [AdminController::class, 'toggleUserStatus'])->name('users.toggle-status');
-    Route::delete('/users/{user}', [AdminController::class, 'deleteUser'])->name('users.delete');
+    Route::delete('/users/{user}', [AdminController::class, 'deleteUser'])->name('users.delete')->where('user', '[0-9]+');
+    
+    // Gestión de solicitudes de demo
+    Route::get('/demo-requests', [DemoRequestController::class, 'index'])->name('demo-requests.index');
+    Route::get('/demo-requests/{demoRequest}', [DemoRequestController::class, 'show'])->name('demo-requests.show');
+    Route::put('/demo-requests/{demoRequest}', [DemoRequestController::class, 'update'])->name('demo-requests.update');
+    Route::patch('/demo-requests/{demoRequest}/estado', [DemoRequestController::class, 'updateEstado'])->name('demo-requests.update-estado');
+    Route::delete('/demo-requests/{demoRequest}', [DemoRequestController::class, 'destroy'])->name('demo-requests.destroy');
+    Route::get('/demo-requests/export/csv', [DemoRequestController::class, 'exportarCSV'])->name('demo-requests.export');
     
     // Gestión de Excel
     Route::get('/excel', [ExcelController::class, 'index'])->name('excel.index');
@@ -137,6 +180,20 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     
     // API Status
     Route::get('/api/excel/{id}/status', [ExcelController::class, 'getProcessingStatus'])->name('excel.status');
+    
+    // Gestión de Excel para Demo (fechas del mes anterior)
+    Route::prefix('demo-excel')->name('demo-excel.')->group(function () {
+        Route::get('/', [\App\Http\Controllers\DemoExcelController::class, 'index'])->name('index');
+        Route::post('/upload', [\App\Http\Controllers\DemoExcelController::class, 'upload'])->name('upload');
+        Route::get('/{id}', [\App\Http\Controllers\DemoExcelController::class, 'show'])->name('show');
+        Route::post('/{id}/reprocess', [\App\Http\Controllers\DemoExcelController::class, 'reprocess'])->name('reprocess');
+        Route::delete('/{id}', [\App\Http\Controllers\DemoExcelController::class, 'destroy'])->name('destroy');
+        Route::get('/template/download', [\App\Http\Controllers\DemoExcelController::class, 'downloadTemplate'])->name('download-template');
+        Route::get('/refresh/demo', [\App\Http\Controllers\DemoExcelController::class, 'refreshDemo'])->name('refresh');
+        
+        // API Status para demo
+        Route::get('/api/{id}/status', [\App\Http\Controllers\DemoExcelController::class, 'getProcessingStatus'])->name('status');
+    });
     
     // Ruta de prueba para debug
     Route::get('/excel/test-processor', function() {
@@ -195,8 +252,42 @@ Route::middleware(['auth', 'role:demo'])->prefix('demo')->name('demo.')->group(f
     // Dashboard de demo (acceso directo)
     Route::get('/dashboard', [DemoDashboardController::class, 'index'])->name('dashboard');
 
+    // Refrescar cache de datos demo del mes pasado
+    Route::post('/dashboard/refresh', [DemoDashboardController::class, 'refreshDemoCache'])->name('dashboard.refresh');
+
     // Endpoint JSON (read-only)
     Route::get('/api/snapshot', [DemoDashboardController::class, 'apiSnapshot'])->name('api.snapshot');
 
     Route::view('/info', 'demo.info')->name('info');
+});
+
+// Rutas para demos (accesibles para todos los usuarios autenticados)
+Route::middleware('auth')->group(function () {
+    // FASE 4: Autocompletado de ubicaciones
+    Route::view('/demo/autocompletado', 'demo.autocompletado')->name('demo.autocompletado');
+    
+    // FASE 5: Formularios y validaciones
+    Route::get('/demo/formularios', [App\Http\Controllers\AdvancedFormController::class, 'showDemo'])->name('demo.formularios');
+});
+
+// API Routes para formularios avanzados
+Route::middleware('auth')->prefix('api/v1/forms')->name('forms.')->group(function () {
+    // Procesar formulario de registro
+    Route::post('/registration', [App\Http\Controllers\AdvancedFormController::class, 'processRegistration'])->name('process-registration');
+    
+    // Validación individual de campos
+    Route::post('/validate-field', [App\Http\Controllers\AdvancedFormController::class, 'validateField'])->name('validate-field');
+    
+    // Validación completa del formulario
+    Route::post('/validate-full', [App\Http\Controllers\AdvancedFormController::class, 'validateFullForm'])->name('validate-full');
+    
+    // Verificaciones de disponibilidad
+    Route::post('/check-email', [App\Http\Controllers\AdvancedFormController::class, 'checkEmailAvailability'])->name('check-email');
+    Route::post('/check-document', [App\Http\Controllers\AdvancedFormController::class, 'checkDocumentAvailability'])->name('check-document');
+    
+    // Validación de relaciones de ubicación
+    Route::post('/validate-location', [App\Http\Controllers\AdvancedFormController::class, 'validateLocationRelation'])->name('validate-location');
+    
+    // Sugerencias para autocompletado de campos
+    Route::get('/suggestions/{field}', [App\Http\Controllers\AdvancedFormController::class, 'getFieldSuggestions'])->name('field-suggestions');
 });

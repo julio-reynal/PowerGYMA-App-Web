@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Descarga Plantilla</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-2xl mx-auto bg-white rounded-lg shadow-lg p-6">
+        <h1 class="text-2xl font-bold mb-4">Test de Descarga de Plantilla CSV</h1>
+        
+        <div class="mb-6">
+            <h2 class="text-lg font-semibold mb-2">Archivo de Ejemplo:</h2>
+            <p class="text-gray-600 mb-4">plantilla_riesgo_ejemplos.csv</p>
+            
+            <!-- Botón de descarga actualizado -->
+            <button onclick="downloadTemplate()" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-transform transform hover:scale-105 flex items-center gap-2 mb-4">
+                <i class="fas fa-download"></i>
+                <span>Descargar Ejemplo CSV</span>
+            </button>
+            
+            <!-- Link directo para verificar -->
+            <a href="http://127.0.0.1:8000/plantilla_excel/plantilla_riesgo_ejemplos.csv" 
+               target="_blank" 
+               class="text-blue-600 hover:text-blue-800 underline">
+                Ver archivo directamente
+            </a>
+        </div>
+        
+        <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-semibold mb-2">Contenido del archivo CSV:</h3>
+            <pre class="text-sm text-gray-700 overflow-x-auto">FECHA,15-ago,
+RIESGO,Alto,
+HORA INICIO,21:00,
+HORA FIN,22:00,
+,
+1-ago,Bajo,
+2-ago,Alto,
+3-ago,Alto,
+4-ago,Bajo,
+5-ago,Bajo,
+6-ago,Bajo,
+7-ago,Bajo,
+8-ago,Bajo,
+9-ago,Bajo,
+10-ago,Bajo,
+11-ago,Bajo,
+12-ago,Alto,
+13-ago,Alto,
+14-ago,Alto,
+15-ago,Alto,
+16-ago,null,
+17-ago,null,
+18-ago,null,
+19-ago,null,
+20-ago,null,
+21-ago,null,
+22-ago,null,
+23-ago,null,
+24-ago,null,
+25-ago,null,
+26-ago,null,
+27-ago,null,
+28-ago,null,
+29-ago,null,
+30-ago,null,</pre>
+        </div>
+    </div>
+
+    <script>
+        function downloadTemplate() {
+            console.log('Iniciando descarga de plantilla...');
+            
+            // Descargar el archivo de ejemplo real desde el servidor
+            const link = document.createElement('a');
+            link.href = 'http://127.0.0.1:8000/plantilla_excel/plantilla_riesgo_ejemplos.csv';
+            link.download = 'plantilla_riesgo_ejemplos.csv';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            console.log('Descarga iniciada');
+        }
+    </script>
+</body>
+</html>

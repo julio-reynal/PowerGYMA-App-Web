@@ -1,0 +1,14 @@
+{
+  "name": "figma-mcp",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Minimal MCP server for Figma API (community-style)",
+  "scripts": {
+    "start": "node server.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^0.1.0",
+    "undici": "^6.19.8"
+  }
+}

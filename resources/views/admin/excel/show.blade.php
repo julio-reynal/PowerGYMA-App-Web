@@ -1,157 +1,139 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalles de Upload - Power GYMA</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-</head>
-<body class="bg-gray-100 min-h-screen">
+@extends('layouts.admin')
+
+@section('title', 'Detalles de Carga de Excel')
+@section('page-title', 'Detalles de Carga')
+@section('page-description', 'Información detallada del archivo y su procesamiento.')
+
+@section('content')
+<div class="space-y-8">
+
     <!-- Header -->
-    <div class="bg-white shadow-md border-b">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center py-4">
-                <div class="flex items-center space-x-4">
-                    <i class="fas fa-file-excel text-green-600 text-2xl"></i>
-                    <h1 class="text-2xl font-bold text-gray-900">Detalles del Archivo</h1>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <a href="{{ route('admin.excel.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg transition duration-200">
-                        <i class="fas fa-arrow-left mr-2"></i>Volver a la Lista
-                    </a>
-                </div>
-            </div>
+    <div class="flex justify-between items-center flex-wrap gap-4">
+        <div>
+            <h1 class="text-3xl font-bold text-gray-800 dark:text-gray-100 truncate" title="{{ $upload->original_filename }}">{{ Str::limit($upload->original_filename, 40) }}</h1>
+            <p class="text-gray-500 dark:text-gray-400 mt-1">Subido por {{ $upload->adminUser->name ?? 'Sistema' }} el {{ $upload->created_at->isoFormat('LL') }}</p>
         </div>
+        <a href="{{ route('admin.excel.index') }}" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-lg shadow-sm transition-all flex items-center gap-2">
+            <i class="fas fa-arrow-left"></i>
+            <span>Volver al Listado</span>
+        </a>
     </div>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        
-        <!-- Información básica -->
-        <div class="bg-white rounded-lg shadow-md p-6 mb-8">
-            <h2 class="text-xl font-semibold text-gray-900 mb-4">
-                <i class="fas fa-info-circle mr-2 text-blue-600"></i>Información del Archivo
-            </h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Nombre del Archivo</label>
-                    <p class="mt-1 text-sm text-gray-900">{{ $upload->original_filename }}</p>
-                </div>
-                
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Subido por</label>
-                    <p class="mt-1 text-sm text-gray-900">{{ $upload->adminUser->name }}</p>
-                </div>
-                
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Fecha de Subida</label>
-                    <p class="mt-1 text-sm text-gray-900">{{ $upload->created_at->format('d/m/Y H:i:s') }}</p>
-                </div>
-                
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Estado</label>
-                    <div class="mt-1">
-                        @switch($upload->status)
-                            @case('completed')
-                                <span class="px-2 py-1 text-xs font-semibold bg-green-100 text-green-800 rounded-full">
-                                    <i class="fas fa-check-circle mr-1"></i>Completado
-                                </span>
-                                @break
-                            @case('failed')
-                                <span class="px-2 py-1 text-xs font-semibold bg-red-100 text-red-800 rounded-full">
-                                    <i class="fas fa-times-circle mr-1"></i>Error
-                                </span>
-                                @break
-                            @case('processing')
-                                <span class="px-2 py-1 text-xs font-semibold bg-yellow-100 text-yellow-800 rounded-full">
-                                    <i class="fas fa-spinner fa-spin mr-1"></i>Procesando
-                                </span>
-                                @break
-                            @default
-                                <span class="px-2 py-1 text-xs font-semibold bg-gray-100 text-gray-800 rounded-full">
-                                    <i class="fas fa-clock mr-1"></i>Pendiente
-                                </span>
-                        @endswitch
-                    </div>
-                </div>
-                
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Registros Procesados</label>
-                    <p class="mt-1 text-sm text-gray-900">{{ $upload->records_processed }}</p>
-                </div>
-                
+    <!-- Status & Main Info Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Left Column (Status & Summary) -->
+        <div class="lg:col-span-1 space-y-8">
+            <!-- Status Card -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 text-center">
+                <h3 class="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">Estado</h3>
+                @php
+                    $statusConfig = [
+                        'completed' => ['bg' => 'bg-green-100 dark:bg-green-900', 'text' => 'text-green-800 dark:text-green-200', 'icon' => 'fas fa-check-circle'],
+                        'failed' => ['bg' => 'bg-red-100 dark:bg-red-900', 'text' => 'text-red-800 dark:text-red-200', 'icon' => 'fas fa-times-circle'],
+                        'processing' => ['bg' => 'bg-blue-100 dark:bg-blue-900', 'text' => 'text-blue-800 dark:text-blue-200', 'icon' => 'fas fa-spinner fa-spin'],
+                        'pending' => ['bg' => 'bg-yellow-100 dark:bg-yellow-900', 'text' => 'text-yellow-800 dark:text-yellow-200', 'icon' => 'fas fa-clock'],
+                    ];
+                    $config = $statusConfig[$upload->status] ?? $statusConfig['pending'];
+                @endphp
+                <span class="px-6 py-3 rounded-full text-lg font-bold uppercase tracking-wider {{ $config['bg'] }} {{ $config['text'] }} inline-flex items-center gap-3">
+                    <i class="{{ $config['icon'] }}"></i>
+                    <span>{{ $upload->status_text }}</span>
+                </span>
                 @if($upload->processed_at)
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Fecha de Procesamiento</label>
-                    <p class="mt-1 text-sm text-gray-900">{{ $upload->processed_at->format('d/m/Y H:i:s') }}</p>
-                </div>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-4">Procesado el {{ $upload->processed_at->isoFormat('LLLL') }}</p>
                 @endif
             </div>
-        </div>
 
-        <!-- Resumen de procesamiento -->
-        @if($upload->processing_summary)
-        <div class="bg-white rounded-lg shadow-md p-6 mb-8">
-            <h2 class="text-xl font-semibold text-gray-900 mb-4">
-                <i class="fas fa-chart-bar mr-2 text-green-600"></i>Resumen de Procesamiento
-            </h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="bg-blue-50 p-4 rounded-lg">
-                    <div class="flex items-center">
-                        <i class="fas fa-calendar-day text-blue-600 text-2xl mr-3"></i>
-                        <div>
-                            <p class="text-2xl font-bold text-blue-600">{{ $upload->processing_summary['daily_evaluations'] ?? 0 }}</p>
-                            <p class="text-sm text-blue-700">Evaluaciones Diarias</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="bg-green-50 p-4 rounded-lg">
-                    <div class="flex items-center">
-                        <i class="fas fa-calendar-alt text-green-600 text-2xl mr-3"></i>
-                        <div>
-                            <p class="text-2xl font-bold text-green-600">{{ $upload->processing_summary['monthly_data'] ?? 0 }}</p>
-                            <p class="text-sm text-green-700">Datos Mensuales</p>
-                        </div>
-                    </div>
+            <!-- Actions Card -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+                <h3 class="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">Acciones</h3>
+                <div class="space-y-2">
+                    @if($upload->status === 'failed')
+                        <form action="{{ route('admin.excel.reprocess', $upload) }}" method="POST">
+                            @csrf
+                            <button type="submit" class="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded-lg flex items-center justify-center gap-2 transition-all">
+                                <i class="fas fa-redo"></i> Reprocesar Archivo
+                            </button>
+                        </form>
+                    @endif
+                    <form action="{{ route('admin.excel.destroy', $upload) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar este archivo y sus registros? Esta acción es irreversible.')">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg flex items-center justify-center gap-2 transition-all">
+                            <i class="fas fa-trash-alt"></i> Eliminar Archivo
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
-        @endif
 
-        <!-- Errores (si los hay) -->
-        @if($upload->error_message)
-        <div class="bg-white rounded-lg shadow-md p-6">
-            <h2 class="text-xl font-semibold text-gray-900 mb-4">
-                <i class="fas fa-exclamation-triangle mr-2 text-red-600"></i>Mensaje de Error
-            </h2>
-            
-            <div class="bg-red-50 border-l-4 border-red-400 p-4">
-                <div class="flex">
-                    <div class="flex-shrink-0">
-                        <i class="fas fa-exclamation-circle text-red-400"></i>
-                    </div>
-                    <div class="ml-3">
-                        <p class="text-sm text-red-700">{{ $upload->error_message }}</p>
-                    </div>
+        <!-- Right Column (Details) -->
+        <div class="lg:col-span-2 space-y-8">
+            <!-- File Details -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg">
+                <div class="p-6 bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600 flex items-center gap-4">
+                    <i class="fas fa-file-alt text-2xl text-gray-500"></i>
+                    <h3 class="text-xl font-bold text-gray-800 dark:text-gray-100">Detalles del Archivo</h3>
+                </div>
+                <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <x-info-item icon="fa-file-signature" label="Nombre Original" :value="$upload->original_filename" />
+                    <x-info-item icon="fa-save" label="Nombre Almacenado" :value="$upload->filename" />
+                    <x-info-item icon="fa-weight-hanging" label="Tamaño" value="{{ number_format($upload->file_size / 1024, 2) }} KB" />
+                    <x-info-item icon="fa-calendar-day" label="Año de Datos" value="{{ $upload->processing_summary['csv_year'] ?? 'N/A' }}" />
                 </div>
             </div>
 
-            @if($upload->status === 'failed')
-            <div class="mt-4">
-                <form action="{{ route('admin.excel.reprocess', $upload->id) }}" method="POST" class="inline">
-                    @csrf
-                    <button type="submit" class="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded-lg transition duration-200">
-                        <i class="fas fa-redo mr-2"></i>Reprocesar Archivo
-                    </button>
-                </form>
+            <!-- Processing Summary -->
+            @if($upload->processing_summary)
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg">
+                <div class="p-6 bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600 flex items-center gap-4">
+                    <i class="fas fa-chart-pie text-2xl text-purple-500"></i>
+                    <h3 class="text-xl font-bold text-gray-800 dark:text-gray-100">Resumen del Procesamiento</h3>
+                </div>
+                <div class="p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-center">
+                    <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg">
+                        <p class="text-3xl font-extrabold text-blue-600 dark:text-blue-400">{{ number_format($upload->processing_summary['total_rows'] ?? 0) }}</p>
+                        <p class="text-sm font-semibold text-gray-500 dark:text-gray-400">Filas Totales</p>
+                    </div>
+                    <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg">
+                        <p class="text-3xl font-extrabold text-green-600 dark:text-green-400">{{ number_format($upload->records_processed ?? 0) }}</p>
+                        <p class="text-sm font-semibold text-gray-500 dark:text-gray-400">Registros Creados</p>
+                    </div>
+                    <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg">
+                        <p class="text-3xl font-extrabold text-yellow-600 dark:text-yellow-400">{{ number_format($upload->processing_summary['warnings'] ?? 0) }}</p>
+                        <p class="text-sm font-semibold text-gray-500 dark:text-gray-400">Advertencias</p>
+                    </div>
+                    <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg">
+                        <p class="text-3xl font-extrabold text-red-600 dark:text-red-400">{{ number_format($upload->processing_summary['errors'] ?? 0) }}</p>
+                        <p class="text-sm font-semibold text-gray-500 dark:text-gray-400">Errores</p>
+                    </div>
+                </div>
+            </div>
+            @endif
+
+            <!-- Error Details -->
+            @if($upload->error_message)
+            <div class="bg-red-100 dark:bg-red-900 border-l-4 border-red-500 text-red-800 dark:text-red-300 p-6 rounded-lg shadow-md">
+                <div class="flex items-start gap-4">
+                    <i class="fas fa-exclamation-triangle text-2xl"></i>
+                    <div>
+                        <h4 class="font-bold text-lg">Detalles del Error</h4>
+                        <pre class="mt-2 text-sm whitespace-pre-wrap font-mono bg-red-200 dark:bg-red-800 p-4 rounded-md">{{ $upload->error_message }}</pre>
+                    </div>
+                </div>
             </div>
             @endif
         </div>
-        @endif
-
     </div>
-</body>
-</html>
+</div>
+@endsection
+
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        @if($upload->status === 'processing')
+            setTimeout(() => window.location.reload(), 10000); // Auto-refresh every 10 seconds
+        @endif
+    });
+</script>
+@endpush

@@ -31,14 +31,25 @@ class DashboardSnapshotService
 
     public function buildSnapshot(): array
     {
-        $todayEval = RiskEvaluation::today() ?? RiskEvaluation::orderBy('evaluation_date', 'desc')->first();
+        // LÓGICA PRINCIPAL: Priorizar datos de hoy, si no existen usar los más recientes
+        $todayEval = RiskEvaluation::whereDate('evaluation_date', today())->first();
+        $isFromToday = $todayEval !== null;
+        
+        // Si no hay datos de hoy, buscar la evaluación más reciente
+        if (!$todayEval) {
+            $todayEval = RiskEvaluation::orderBy('evaluation_date', 'desc')->first();
+        }
+        
         $map = config('risk.percentages');
         $riskLevel = $todayEval?->risk_level ?? null;
         $latestMonth = null;
+        
+        // Si aún no hay datos de RiskEvaluation, usar MonthlyRiskData como respaldo
         if (!$riskLevel) {
             $latestMonth = MonthlyRiskData::orderBy('year','desc')->orderBy('month','desc')->orderBy('day','desc')->first();
             $riskLevel = $latestMonth?->risk_level ?? 'No procede';
         }
+        
         $riskPercent = $map[$riskLevel] ?? 0;
 
         // Serie 24 horas 00..23
@@ -47,24 +58,42 @@ class DashboardSnapshotService
         $startH = $todayEval?->start_time ? (int) Carbon::parse($todayEval->start_time)->format('H') : null;
         $endH = $todayEval?->end_time ? (int) Carbon::parse($todayEval->end_time)->format('H') : null;
         $hourly = $todayEval?->hourly_data ?? null;
-        $low=20; $mid=50; $high=80;
+        
+        // Crear curva gradual que empieza en 0% y sube hasta el valor exacto
+        $exactValue = $riskPercent; // Valor exacto del nivel de riesgo
+        
         for ($h=0; $h<24; $h++) {
             $key = sprintf('%02d:00', $h);
             $labels[] = $key;
-            if (is_array($hourly) && isset($hourly[$key])) {
-                $series[] = (int)$hourly[$key];
-            } elseif ($startH!==null && $endH!==null) {
-                if ($h < $startH) $series[]=$low;
-                elseif ($h == $startH) $series[]=$mid;
-                elseif ($h >= $startH+1 && $h <= $endH+1) $series[]=$high;
-                elseif ($h == $endH+2) $series[]=$mid;
-                else $series[]=$low;
+            
+            // Crear curva suave desde 0% hasta el valor exacto
+            if ($startH!==null && $endH!==null) {
+                // Curva que alcanza el pico durante el horario especificado
+                if ($h < $startH) {
+                    // Antes del horario pico: curva gradual ascendente
+                    $progress = $h / max(1, $startH); // Progreso de 0 a 1
+                    $series[] = round($exactValue * $progress * 0.3); // Sube suavemente hasta 30% del valor
+                } elseif ($h >= $startH && $h <= $endH) {
+                    // Durante el pico: valor exacto del Excel
+                    $series[] = $exactValue;
+                } elseif ($h == $endH + 1) {
+                    // Hora después del pico: transición suave hacia abajo
+                    $series[] = round($exactValue * 0.7);
+                } else {
+                    // Resto del día: curva descendente suave
+                    $hoursAfterPeak = $h - ($endH + 1);
+                    $remainingHours = (24 - ($endH + 2));
+                    $progress = $hoursAfterPeak / max(1, $remainingHours);
+                    $series[] = round($exactValue * (0.7 - ($progress * 0.7))); // Baja gradualmente hacia 0
+                }
             } else {
-                $series[] = $riskPercent;
+                // Sin horario específico: curva suave durante todo el día
+                $progress = ($h <= 12) ? ($h / 12) : ((24 - $h) / 12); // Curva simétrica
+                $series[] = round($exactValue * $progress);
             }
         }
-        $peakFrom = $startH!==null ? sprintf('%02d:00',$startH+1) : null;
-        $peakTo = $endH!==null ? sprintf('%02d:00',$endH+1) : null;
+        $peakFrom = $startH!==null ? sprintf('%02d:00',$startH) : null;
+        $peakTo = $endH!==null ? sprintf('%02d:00',$endH) : null;
 
         // Datos del mes actual para el calendario (día -> nivel)
         $year = now()->year; $month = now()->month;
@@ -76,13 +105,15 @@ class DashboardSnapshotService
 
         return [
             'todayEvalDate' => $todayEval?->evaluation_date ? Carbon::parse($todayEval->evaluation_date)->toDateString() : null,
+            'isFromToday' => $isFromToday,
+            'dataSource' => $isFromToday ? 'hoy' : ($todayEval ? 'último_disponible' : 'sin_datos'),
             'riskLevel' => $riskLevel,
             'riskPercent' => $riskPercent,
             'labels' => $labels,
             'series' => $series,
             'peakFrom' => $peakFrom,
             'peakTo' => $peakTo,
-            'hasToday' => $todayEval !== null,
+            'hasToday' => $isFromToday,
             'hasMonthly' => $monthItems->count() > 0,
             'monthYear' => ['year' => $year, 'month' => $month],
             'monthData' => $monthData,

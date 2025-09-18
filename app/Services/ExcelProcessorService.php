@@ -112,7 +112,7 @@ class ExcelProcessorService
         return $this->processFile($filePath, $uploadId, $csvYear);
     }
 
-    private function readCsvFile($filePath)
+    protected function readCsvFile($filePath)
     {
         $data = [];
         
@@ -195,7 +195,7 @@ class ExcelProcessorService
         return $data;
     }
 
-    private function isTemplateFormat($data)
+    protected function isTemplateFormat($data)
     {
         if (empty($data)) {
             return false;
@@ -211,7 +211,7 @@ class ExcelProcessorService
         return false;
     }
 
-    private function extractRiskTemplateData($data)
+    protected function extractRiskTemplateData($data)
     {
         // Limpiar y validar datos antes de procesar
         $data = $this->cleanCsvData($data);
@@ -301,7 +301,7 @@ class ExcelProcessorService
         ];
     }
 
-    private function buildHourlySeries(string $horaInicio, string $horaFin): array
+    protected function buildHourlySeries(string $horaInicio, string $horaFin): array
     {
         // Serie 00..23 con porcentajes (aprox) para representar evolución
         // Esquema: antes del inicio -> bajo (20), inicio -> medio (50),
@@ -330,7 +330,7 @@ class ExcelProcessorService
         return $series; // p.ej. {"00:00":20, "01:00":20, ..., "20:00":80}
     }
 
-    private function parsearFechaCorta($fechaCorta, $year = null)
+    protected function parsearFechaCorta($fechaCorta, $year = null)
     {
         // Convertir formato "25-ago" o "1-ago" a fecha completa
         $meses = [
@@ -395,7 +395,7 @@ class ExcelProcessorService
         return sprintf('%04d-%s-%s', $anio, $mes, $dia);
     }
 
-    private function extractLegacyFormatData($data)
+    protected function extractLegacyFormatData($data)
     {
         $result = [
             'daily_evaluation' => null,
@@ -471,7 +471,7 @@ class ExcelProcessorService
         return $result;
     }
 
-    private function processDataRow($row, $columnMap)
+    protected function processDataRow($row, $columnMap)
     {
         try {
             $fecha = trim($row[$columnMap['Fecha']]);
@@ -495,7 +495,7 @@ class ExcelProcessorService
         }
     }
 
-    private function processDailyEvaluation($data)
+    protected function processDailyEvaluation($data)
     {
         if (!$data) { return; }
         // Buscar si ya existe una evaluación para esta fecha
@@ -588,7 +588,7 @@ class ExcelProcessorService
         }
     }
 
-    private function processMonthlyData($data)
+    protected function processMonthlyData($data)
     {
         // Parsear fecha a componentes año/mes/día para ajustarse al esquema de la tabla
         $date = Carbon::parse($data['fecha']);
@@ -681,7 +681,7 @@ class ExcelProcessorService
     /**
      * Limpia y valida los datos del CSV para evitar problemas de codificación
      */
-    private function cleanCsvData($data)
+    protected function cleanCsvData($data)
     {
         $cleanData = [];
         
@@ -720,7 +720,7 @@ class ExcelProcessorService
     /**
      * Valida que una cadena sea UTF-8 válido
      */
-    private function isValidUtf8($str)
+    protected function isValidUtf8($str)
     {
         return mb_check_encoding($str, 'UTF-8');
     }
@@ -728,7 +728,7 @@ class ExcelProcessorService
     /**
      * Convierte una cadena a UTF-8 seguro
      */
-    private function toSafeUtf8($str)
+    protected function toSafeUtf8($str)
     {
         // Detectar codificación
         $encoding = mb_detect_encoding($str, ['UTF-8', 'ISO-8859-1', 'Windows-1252'], true);
