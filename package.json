@@ -14,12 +14,14 @@
         "fix-manifest": "powershell -Command \"if (Test-Path 'public/build/.vite/manifest.json') { Move-Item 'public/build/.vite/manifest.json' 'public/build/manifest.json' -Force } else { Write-Host 'Manifest file not found or already moved' }\""
     },
     "dependencies": {
-        "vite": "^6.0.0",
-        "laravel-vite-plugin": "^1.0.0",
+        "@tailwindcss/postcss": "^4.1.13",
         "@tailwindcss/vite": "^4.0.0",
-        "tailwindcss": "^4.0.0",
+        "autoprefixer": "^10.4.21",
         "axios": "^1.11.0",
-        "terser": "^5.36.0"
+        "laravel-vite-plugin": "^1.0.0",
+        "tailwindcss": "^4.0.0",
+        "terser": "^5.36.0",
+        "vite": "^6.0.0"
     },
     "devDependencies": {
         "concurrently": "^9.0.1"
