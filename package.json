@@ -11,7 +11,7 @@
         "build-only": "vite build",
         "dev": "vite",
         "production": "vite build && npm run fix-manifest",
-        "fix-manifest": "powershell -Command \"if (Test-Path 'public/build/.vite/manifest.json') { Move-Item 'public/build/.vite/manifest.json' 'public/build/manifest.json' -Force } else { Write-Host 'Manifest file not found or already moved' }\""
+        "fix-manifest": "node -e \"const fs = require('fs'); const path = require('path'); const src = 'public/build/.vite/manifest.json'; const dest = 'public/build/manifest.json'; if (fs.existsSync(src)) { fs.renameSync(src, dest); console.log('Manifest moved successfully'); } else { console.log('Manifest file not found or already moved'); }\""
     },
     "dependencies": {
         "@tailwindcss/postcss": "^4.1.13",
