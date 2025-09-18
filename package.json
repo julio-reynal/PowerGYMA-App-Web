@@ -24,6 +24,8 @@
         "vite": "^6.0.0"
     },
     "devDependencies": {
-        "concurrently": "^9.0.1"
+        "concurrently": "^9.0.1",
+        "vite-plugin-compression": "^0.5.1",
+        "vite-plugin-imagemin": "^0.6.1"
     }
 }

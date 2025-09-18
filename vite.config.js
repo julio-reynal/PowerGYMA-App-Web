@@ -31,17 +31,61 @@ export default defineConfig({
         outDir: 'public/build',
         emptyOutDir: true,
         manifest: true,
+        // Optimizaciones de rendimiento
+        minify: 'terser',
+        cssMinify: true,
+        sourcemap: false, // Desactivar sourcemaps en producción
+        target: 'es2018', // Soporte para navegadores modernos
         rollupOptions: {
             output: {
                 entryFileNames: 'assets/[name]-[hash].js',
                 chunkFileNames: 'assets/[name]-[hash].js',
-                assetFileNames: 'assets/[name]-[hash].[ext]'
+                assetFileNames: 'assets/[name]-[hash].[ext]',
+                // Optimización de chunks
+                manualChunks: {
+                    'vendor': ['axios'],
+                    'utils': ['resources/js/components.js'],
+                }
+            },
+            // Tree shaking más agresivo
+            treeshake: {
+                preset: 'smallest',
+                moduleSideEffects: false
             }
-        }
+        },
+        // Compresión y optimización adicional
+        terserOptions: {
+            compress: {
+                drop_console: true, // Eliminar console.log en producción
+                drop_debugger: true,
+                pure_funcs: ['console.log', 'console.info', 'console.debug', 'console.warn'],
+                passes: 2, // Múltiples pasadas de optimización
+            },
+            mangle: {
+                safari10: true,
+            },
+            format: {
+                comments: false, // Eliminar comentarios
+            }
+        },
+        // Optimización de CSS
+        cssCodeSplit: true,
+        chunkSizeWarningLimit: 1000, // Advertencia para chunks grandes
     },
     server: {
         hmr: {
             host: 'localhost',
         },
     },
+    // Optimizaciones adicionales
+    optimizeDeps: {
+        include: ['axios'],
+        esbuildOptions: {
+            target: 'es2018'
+        }
+    },
+    esbuild: {
+        target: 'es2018',
+        legalComments: 'none', // Eliminar comentarios legales
+    }
 });
