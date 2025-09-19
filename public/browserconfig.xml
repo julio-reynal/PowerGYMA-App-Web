@@ -2,10 +2,7 @@
 <browserconfig>
     <msapplication>
         <tile>
-            <square70x70logo src="{{ asset('Img/Ico/Ico-Pw-Redes.svg') }}"/>
-            <square150x150logo src="{{ asset('Img/Ico/Ico-Pw-Redes.svg') }}"/>
-            <square310x310logo src="{{ asset('Img/Ico/Ico-Pw-Redes.svg') }}"/>
-            <wide310x150logo src="{{ asset('Img/Ico/Ico-Pw-Redes.svg') }}"/>
+            <square150x150logo src="/mstile-150x150.png"/>
             <TileColor>#007bff</TileColor>
         </tile>
     </msapplication>

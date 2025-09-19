@@ -376,8 +376,8 @@
         
         <!-- Sidebar -->
         <div id="sidebar" class="mobile-menu md:transform-none fixed md:relative top-0 left-0 z-30 md:z-auto hidden md:flex flex-col w-64 h-full bg-white dark:bg-gray-800 dark:text-gray-100 shadow-lg">
-            <div class="flex items-center justify-center h-20 border-b dark:border-gray-700">
-                <img src="/Img/Ico/Ico-Pw.svg" alt="Power GYMA Logo" class="h-12">
+<div class="flex items-center justify-center h-20 border-b dark:border-gray-700">
+                <img src="{{ asset('Img/Ico/Ico-Pw.svg') }}" alt="Power GYMA Logo" class="h-12">
             </div>
             <div class="flex flex-col flex-grow p-4">
                 <nav class="flex-grow">
