@@ -1,9 +1,22 @@
-<!DOCTYPE html>
+<!DOC    <title>POWERGYMA - Optimiza tu energía. Controla tu costo</title>
+    
+    {{-- Favicon y PWA meta tags --}}
+    @include('components.favicon')
+    
+    <!-- Vite Assets -->
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>POWERGYMA - Optimiza tu energía. Controla tu costo</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('Img/Ico/Ico-Pw-Redes.svg') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('Img/Ico/Ico-Pw-Redes.svg') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('Img/Ico/Ico-Pw-Redes.svg') }}">
+    <link rel="manifest" href="{{ asset('site.webmanifest') }}">
+    <meta name="theme-color" content="#007bff">
     
     <!-- Vite Assets -->
     @vite(['resources/css/main.css', 'resources/css/components.css', 'resources/js/components.js', 'resources/js/main.js'])

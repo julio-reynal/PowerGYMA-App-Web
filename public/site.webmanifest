@@ -1,0 +1,27 @@
+{
+    "name": "PowerGYMA - Sistema de Gestión",
+    "short_name": "PowerGYMA",
+    "description": "Optimiza tu energía. Controla tu costo",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#007bff",
+    "orientation": "portrait",
+    "icons": [
+        {
+            "src": "/Img/Ico/Ico-Pw-Redes.svg",
+            "sizes": "any",
+            "type": "image/svg+xml",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/favicon.svg",
+            "sizes": "any",
+            "type": "image/svg+xml"
+        }
+    ],
+    "categories": ["business", "productivity", "utilities"],
+    "lang": "es",
+    "scope": "/",
+    "prefer_related_applications": false
+}

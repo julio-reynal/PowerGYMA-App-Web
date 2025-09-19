@@ -4,6 +4,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>@yield('title', 'Panel de Administración') - Power GYMA</title>
+    
+    {{-- Favicon y PWA meta tags --}}
+    @include('components.favicon')
+    
     <script>
   // Inicialización de tema mejorada (por defecto: oscuro)
   (function() {
