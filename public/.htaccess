@@ -13,6 +13,11 @@
     RewriteCond %{HTTP:x-xsrf-token} .
     RewriteRule .* - [E=HTTP_X_XSRF_TOKEN:%{HTTP:X-XSRF-Token}]
 
+    # Favicon fallbacks - IMPORTANTE para Railway
+    RewriteRule ^favicon\.ico$ /favicon.ico [L]
+    RewriteRule ^apple-touch-icon.*\.png$ /favicon.svg [L]
+    RewriteRule ^icon-.*\.png$ /favicon.svg [L]
+
     # Redirect Trailing Slashes If Not A Folder...
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_URI} (.+)/$
@@ -42,6 +47,10 @@
 <IfModule mod_expires.c>
     # Habilitar caché del navegador
     ExpiresActive on
+    
+    # Favicons - caché largo para máxima compatibilidad
+    ExpiresByType image/x-icon "access plus 3 months"
+    ExpiresByType image/vnd.microsoft.icon "access plus 3 months"
     
     # Imágenes
     ExpiresByType image/jpg "access plus 1 month"
@@ -77,8 +86,24 @@
     Header always set X-Frame-Options DENY
     Header always set X-XSS-Protection "1; mode=block"
     
-    # Cache Control
-    <FilesMatch "\.(css|js|png|jpg|jpeg|gif|ico|svg|webp|woff|woff2)$">
+    # Headers específicos para favicon
+    <FilesMatch "\.(ico)$">
+        Header set Content-Type "image/x-icon"
+        Header set Cache-Control "max-age=7776000, public, immutable"
+    </FilesMatch>
+    
+    <FilesMatch "favicon\.svg$">
+        Header set Content-Type "image/svg+xml"
+        Header set Cache-Control "max-age=7776000, public, immutable"
+    </FilesMatch>
+    
+    <FilesMatch "site\.webmanifest$">
+        Header set Content-Type "application/manifest+json"
+        Header set Cache-Control "max-age=604800, public"
+    </FilesMatch>
+    
+    # Cache Control general
+    <FilesMatch "\.(css|js|png|jpg|jpeg|gif|svg|webp|woff|woff2)$">
         Header set Cache-Control "max-age=2592000, public"
     </FilesMatch>
     
