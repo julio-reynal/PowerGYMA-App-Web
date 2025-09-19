@@ -53,6 +53,11 @@ Route::get('/solution/locations', function () {
     return view('location-solution');
 });
 
+// Ruta para la página de contactos
+Route::get('/contacts', function () {
+    return view('components.contacts');
+})->name('contacts.index');
+
 // Rutas temporales para probar upload sin autenticación ni CSRF
 Route::withoutMiddleware([\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class])->group(function () {
     Route::get('/test-upload', function() {
