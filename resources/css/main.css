@@ -1191,8 +1191,8 @@ p {
     background: rgba(255, 255, 255, 0.2);
     border-radius: 8px;
     padding: 1.5rem;
-    width: 160px;
-    height: 80px;
+    width: 320px;
+    height: 160px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1200,7 +1200,7 @@ p {
 
 .client-logo img {
     max-width: 100%;
-    max-height: 48px;
+    max-height: 100%;
     object-fit: contain;
 }
 

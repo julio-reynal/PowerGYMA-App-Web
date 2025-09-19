@@ -228,27 +228,16 @@
                 
                 <div class="clients-logos">
                     <div class="client-logo">
-                        <img src="assets/images/1167e5ab573a0aed46d40b9ad8d07420f4122c19.png" alt="Cliente 1">
+                        <img src="assets/images/Fisa.svg" alt="Cliente 1">
                     </div>
-                    <div class="client-logo">
-                        <img src="assets/images/82245791d1f81b73a5ef2e72d04fb8dbc096bf7b.png" alt="Cliente 2">
-                    </div>
-                    <div class="client-logo">
-                        <img src="assets/images/41952dd1b2184015d5e373c183df547c84d82974.png" alt="Cliente 3">
-                    </div>
-                    <div class="client-logo">
-                        <img src="assets/images/07b977f2a677574603c400e745fc912eff822370.png" alt="Cliente 4">
-                    </div>
-                    <div class="client-logo">
-                        <img src="assets/images/c529db82fbcf4c08836620d07f143e9c44a8179f.png" alt="Cliente 5">
-                    </div>
+
                 </div>
                 
                 <div class="testimonial">
                     <div class="testimonial-content">
                         <div class="quote-mark">"</div>
-                        <p>Gracias a POWERGYMA redujimos nuestros costos de energía en un 32% el primer año. Su sistema de predicción nos permite planificar nuestra producción de manera mucho más eficiente.</p>
-                        <cite>- Gerente de Operaciones, Empresa XYZ</cite>
+                        <p>Gracias a POWERGYMA, reducimos nuestros costos de energía en un 30% en el primer año. Su sistema de predicción nos permite planificar nuestra producción de manera mucho más eficiente.</p>
+                        <cite> Elihai, Director</cite>
                     </div>
                 </div>
             </div>
@@ -405,10 +394,10 @@
 
                         <!-- Contact Info Sidebar -->
                         <div class="contact-info-sidebar">
-                            <!-- Map Container -->
-                            <div class="map-container">
-                                <img src="assets/images/87db99a37235bc3657fd7a1d428fb23fe43e13a4.png" alt="Mapa de ubicación" class="map-image">
-                            </div>
+                        <!-- Map Container -->
+                        <div class="map-container">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d1378.956052933266!2d-76.99582709033639!3d-12.16155331036798!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1s%20AV.%20GAVIOTAS%20NRO.%201805%20DPTO.%20701%20INT.!5e0!3m2!1ses!2spe!4v1758309380370!5m2!1ses!2spe" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
 
                             <!-- Contact Details Section -->
                             <div class="contact-details-section">
@@ -421,7 +410,7 @@
                                         </div>
                                         <div class="contact-detail-content">
                                             <p class="contact-detail-title">Teléfono</p>
-                                            <p class="contact-detail-text">+34 900 123 456</p>
+                                            <p class="contact-detail-text">+51 946 432 574 / +51 970 894 954</p>
                                         </div>
                                     </div>
 
@@ -441,7 +430,7 @@
                                         </div>
                                         <div class="contact-detail-content">
                                             <p class="contact-detail-title">Dirección</p>
-                                            <p class="contact-detail-text">Calle Energía, 123<br>28001 Madrid, España</p>
+                                            <p class="contact-detail-text">AV. GAVIOTAS NRO. 1805<br> LIMA - LIMA - SANTIAGO DE SURCO</p>
                                         </div>
                                     </div>
 

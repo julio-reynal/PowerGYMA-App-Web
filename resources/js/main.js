@@ -347,15 +347,15 @@ function initializeTestimonials() {
     const testimonials = [
         {
             quote: "Gracias a POWERGYMA redujimos nuestros costos de energía en un 32% el primer año. Su sistema de predicción nos permite planificar nuestra producción de manera mucho más eficiente.",
-            author: "Gerente de Operaciones, Empresa XYZ"
+            author: "Elihai, Director"
         },
         {
             quote: "La implementación fue rápida y sin interrupciones. Los resultados se vieron desde el primer mes con una reducción significativa en nuestras facturas energéticas.",
-            author: "Director Técnico, Industrias ABC"
+            author: "Elihai, Director"
         },
         {
             quote: "El equipo de POWERGYMA no solo nos ayudó a reducir costos, sino que nos enseñó a optimizar nuestros procesos de manera sostenible.",
-            author: "CEO, Manufacturas DEF"
+            author: "Elihai, Director"
         }
     ];
     

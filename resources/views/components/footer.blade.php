@@ -32,19 +32,19 @@
                         <div class="contact-icon-wrapper">
                             <img src="assets/icons/contact-address-icon.svg" alt="Ubicación" class="contact-icon-figma">
                         </div>
-                        <span class="contact-text-figma">Calle Energía 12xxxx3, Madrid</span>
+                        <span class="contact-text-figma">AV. GAVIOTAS NRO. 1805 LIMA - LIMA - SANTIAGO DE SURCO</span>
                     </div>
                     <div class="contact-item-figma">
                         <div class="contact-icon-wrapper">
                             <img src="assets/icons/contact-phone-icon.svg" alt="Teléfono" class="contact-icon-figma">
                         </div>
-                        <span class="contact-text-figma">+34 91xxx1 234 567</span>
+                        <span class="contact-text-figma">+51 946 432 574 / +51 970 894 954</span>
                     </div>
                     <div class="contact-item-figma">
                         <div class="contact-icon-wrapper">
                             <img src="assets/icons/contact-email-icon.svg" alt="Email" class="contact-icon-figma">
                         </div>
-                        <span class="contact-text-figma">info@powxxergyma.com</span>
+                        <span class="contact-text-figma">info@powergyma.com</span>
                     </div>
                 </div>
             </div>
