@@ -104,16 +104,11 @@
                             </a>
                         </li>
                         @auth
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/dashboard') }}">
-                                <i class="fas fa-tachometer-alt me-1"></i>Dashboard
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('contacts.index') }}">
-                                <i class="fas fa-address-book me-1"></i>Contactos
-                            </a>
-                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url('/dashboard') }}">
+                                    <i class="fas fa-tachometer-alt me-1"></i>Dashboard
+                                </a>
+                            </li>
                         @endauth
                     </ul>
 

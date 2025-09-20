@@ -10,7 +10,7 @@
     --accent-color: #025ccd;
 
     /* Paleta para Barra Flotante (Scrolled) */
-    --scrolled-bg: rgba(22, 22, 1);
+    --scrolled-bg: rgba(22, 22, 22, 1);
     --scrolled-text: #000000;
     --scrolled-border: rgba(255, 255, 255, 0.15);
     --scrolled-btn-bg: #F9FAFB;
@@ -59,7 +59,7 @@ header.scrolled {
 }
 
 header.scrolled .header-container {
-    background-color: rgba(255, 255, 255, 0.3);
+    background-color: rgb(255 255 255 / 30%);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid var(--scrolled-border);
