@@ -1,0 +1,769 @@
+/* =============================================================================
+   CLIENTES CSS - PowerGYMA
+   Sección de casos de éxito basada en diseño de Figma
+   ============================================================================= */
+
+/* Contenedor principal */
+.clientes-container {
+    width: 100%;
+    background: #111827;
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+}
+
+/* =============================================================================
+   SECCIÓN HERO
+   ============================================================================= */
+.hero-section {
+    position: relative;
+    height: 400px;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('/Img/e85bbecdd48713d3794e74bd92f1cae88eaa84d4.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.2;
+}
+
+.hero-pattern {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('/Img/573688e68187c0a19611fb1db9069e13da7c3a80.svg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.3;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 10;
+    max-width: 896px;
+    padding: 0 16px;
+    text-align: center;
+}
+
+.hero-title {
+    font-size: 48px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 24px 0;
+    line-height: 1.1;
+}
+
+.hero-description {
+    font-size: 20px;
+    color: #d1d5db;
+    line-height: 1.4;
+    margin: 0;
+    max-width: 790px;
+    margin: 0 auto;
+}
+
+/* =============================================================================
+   SECCIÓN CASOS DE ÉXITO
+   ============================================================================= */
+.casos-section {
+    padding: 80px 64px;
+    background: #111827;
+}
+
+.casos-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    max-width: 1792px;
+    margin: 0 auto;
+}
+
+.caso-card {
+    background: #1a202c;
+    border-radius: 8px;
+    padding: 32px;
+    border: 1px solid #374151;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+}
+
+/* Header del caso */
+.caso-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 24px;
+}
+
+.caso-info {
+    flex: 1;
+}
+
+.caso-sector {
+    font-size: 14px;
+    color: #9ca3af;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.caso-titulo {
+    font-size: 24px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0;
+    line-height: 1.33;
+}
+
+.caso-logo {
+    width: 155px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.caso-logo img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+/* Bloques de contenido */
+.caso-bloque {
+    margin-bottom: 24px;
+}
+
+.desafio-bloque {
+    background: #151a27;
+    padding: 24px;
+    border-radius: 8px;
+}
+
+.solucion-bloque {
+    position: relative;
+    padding-left: 28px;
+    min-height: 160px;
+}
+
+.solucion-borde {
+    position: absolute;
+    left: 4px;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: #fa8c16;
+    border-radius: 9999px;
+}
+
+.resultados-bloque {
+    background: #151a27;
+    padding: 24px;
+    border-radius: 8px;
+}
+
+.bloque-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.bloque-icon {
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+}
+
+.bloque-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.bloque-titulo {
+    font-size: 20px;
+    font-weight: 600;
+    color: #ffffff;
+    margin: 0;
+    line-height: 1.4;
+}
+
+.bloque-texto {
+    font-size: 16px;
+    color: #d1d5db;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* Resultados específicos */
+.resultados-content {
+    display: flex;
+    gap: 32px;
+    align-items: flex-start;
+}
+
+.resultados-info {
+    flex: 1;
+}
+
+.resultado-descripcion {
+    font-size: 16px;
+    color: #d1d5db;
+    line-height: 1.5;
+    margin: 0 0 16px 0;
+}
+
+.resultados-metricas {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+.metrica {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.metrica-valor {
+    font-size: 30px;
+    font-weight: 700;
+    color: #fa8c16;
+    line-height: 1.2;
+    margin-bottom: 4px;
+}
+
+.metrica-label {
+    font-size: 14px;
+    color: #9ca3af;
+    line-height: 1.4;
+}
+
+/* Progreso circular */
+.resultado-circular {
+    width: 150px;
+    height: 150px;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.circular-progress {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.circular-bg {
+    position: absolute;
+    inset: 0;
+    background: #151a27;
+    border-radius: 50%;
+    border: 8px solid #263c5b;
+}
+
+.circular-fill {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 8px solid transparent;
+    border-top-color: #fa8c16;
+    border-right-color: #fa8c16;
+    transform: rotate(-90deg);
+}
+
+.circular-text {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+/* =============================================================================
+   SECCIÓN RESULTADOS COMPROBABLES
+   ============================================================================= */
+.resultados-section {
+    background: #111827;
+    padding: 80px 384px;
+}
+
+.resultados-container {
+    display: flex;
+    gap: 48px;
+    align-items: center;
+    max-width: 1152px;
+    margin: 0 auto;
+}
+
+.resultados-info {
+    flex: 1;
+}
+
+.resultados-titulo {
+    font-size: 30px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 60px 0;
+    line-height: 1.2;
+}
+
+.resultados-descripcion {
+    font-size: 16px;
+    color: #d1d5db;
+    line-height: 1.5;
+    margin: 0 0 164px 0;
+}
+
+.estadisticas-generales {
+    display: flex;
+    gap: 64px;
+}
+
+.estadistica {
+    text-align: center;
+}
+
+.estadistica-valor {
+    font-size: 48px;
+    font-weight: 700;
+    color: #fa8c16;
+    line-height: 1;
+    margin-bottom: 8px;
+}
+
+.estadistica-label {
+    font-size: 16px;
+    color: #9ca3af;
+    line-height: 1.5;
+}
+
+.resultados-imagen {
+    width: 552px;
+    height: 368px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #374151;
+}
+
+.resultados-imagen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* =============================================================================
+   SECCIÓN TESTIMONIOS
+   ============================================================================= */
+.testimonios-section {
+    background: #1a202c;
+    padding: 80px 512px;
+    border-top: 1px solid #374151;
+    border-bottom: 1px solid #374151;
+    position: relative;
+}
+
+.testimonio-container {
+    text-align: center;
+    max-width: 896px;
+    margin: 0 auto;
+}
+
+.testimonio-quote {
+    font-size: 48px;
+    font-weight: 700;
+    color: #fa8c16;
+    margin-bottom: 32px;
+    line-height: 1;
+}
+
+.testimonio-texto {
+    font-size: 24px;
+    font-style: italic;
+    font-weight: 500;
+    color: #ffffff;
+    line-height: 1.33;
+    margin: 0 0 16px 0;
+}
+
+.testimonio-autor {
+    font-size: 18px;
+    font-weight: 600;
+    color: #ffffff;
+    display: block;
+    margin-bottom: 58px;
+    font-style: normal;
+}
+
+.testimonio-logo {
+    width: 250px;
+    height: 96px;
+    margin: 0 auto;
+    border-radius: 10px;
+    overflow: hidden;
+    background-size: 100% 195.65%;
+    background-position: 0% 50.91%;
+    background-repeat: no-repeat;
+}
+
+.testimonio-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* =============================================================================
+   SECCIÓN CALL TO ACTION
+   ============================================================================= */
+.cta-section {
+    background: linear-gradient(to bottom, #1a1a1a 0%, #121212 100%);
+    padding: 80px 448px 80px 448px;
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-container {
+    max-width: 1024px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.cta-content {
+    text-align: center;
+    margin-bottom: 144px;
+}
+
+.cta-titulo {
+    font-size: 36px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 64px 0;
+    line-height: 1.11;
+}
+
+.cta-descripcion {
+    font-size: 20px;
+    color: #d1d5db;
+    line-height: 1.4;
+    margin: 0 0 160px 0;
+    max-width: 768px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 40px;
+}
+
+.cta-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #fa8c16;
+    color: #ffffff;
+    padding: 16px 40px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.56;
+    transition: background-color 0.3s ease;
+}
+
+.cta-button:hover {
+    background: #e67e0a;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.cta-button img {
+    width: 18px;
+    height: 18px;
+}
+
+/* Beneficios */
+.beneficios-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+    position: relative;
+}
+
+.decoracion-izq,
+.decoracion-der {
+    position: absolute;
+    width: 160px;
+    height: 160px;
+    opacity: 0.2;
+    pointer-events: none;
+}
+
+.decoracion-izq {
+    top: -40px;
+    left: -80px;
+}
+
+.decoracion-der {
+    bottom: -64px;
+    right: -80px;
+}
+
+.decoracion-izq img,
+.decoracion-der img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.beneficio-card {
+    background: #1a1a1a;
+    border: 1px solid #333333;
+    border-radius: 8px;
+    padding: 25px;
+    text-align: left;
+    min-height: 216px;
+    display: flex;
+    flex-direction: column;
+}
+
+.beneficio-icon {
+    width: 48px;
+    height: 48px;
+    background: rgba(250, 140, 22, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 22px;
+}
+
+.beneficio-icon img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+
+.beneficio-titulo {
+    font-size: 18px;
+    font-weight: 600;
+    color: #ffffff;
+    margin: 0 0 8px 0;
+    line-height: 1.56;
+}
+
+.beneficio-descripcion {
+    font-size: 14px;
+    color: #9ca3af;
+    line-height: 1.43;
+    margin: 0;
+    flex: 1;
+}
+
+/* =============================================================================
+   RESPONSIVE DESIGN
+   ============================================================================= */
+@media (max-width: 1536px) {
+    .casos-section {
+        padding: 80px 32px;
+    }
+    
+    .resultados-section {
+        padding: 80px 192px;
+    }
+    
+    .testimonios-section {
+        padding: 80px 256px;
+    }
+    
+    .cta-section {
+        padding: 80px 224px;
+    }
+}
+
+@media (max-width: 1280px) {
+    .casos-grid {
+        gap: 32px;
+    }
+    
+    .resultados-container {
+        gap: 32px;
+    }
+    
+    .resultados-section {
+        padding: 80px 96px;
+    }
+    
+    .testimonios-section {
+        padding: 80px 128px;
+    }
+    
+    .cta-section {
+        padding: 80px 112px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .hero-title {
+        font-size: 40px;
+    }
+    
+    .hero-description {
+        font-size: 18px;
+    }
+    
+    .casos-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+    
+    .resultados-container {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .resultados-imagen {
+        width: 100%;
+        max-width: 552px;
+    }
+    
+    .beneficios-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+    }
+    
+    .estadisticas-generales {
+        gap: 32px;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-section {
+        height: 300px;
+        padding: 0 16px;
+    }
+    
+    .hero-title {
+        font-size: 32px;
+    }
+    
+    .hero-description {
+        font-size: 16px;
+    }
+    
+    .casos-section {
+        padding: 60px 16px;
+    }
+    
+    .caso-card {
+        padding: 24px;
+    }
+    
+    .caso-titulo {
+        font-size: 20px;
+    }
+    
+    .resultados-section {
+        padding: 60px 16px;
+    }
+    
+    .resultados-titulo {
+        font-size: 24px;
+    }
+    
+    .testimonios-section {
+        padding: 60px 16px;
+    }
+    
+    .testimonio-texto {
+        font-size: 20px;
+    }
+    
+    .cta-section {
+        padding: 60px 16px;
+    }
+    
+    .cta-titulo {
+        font-size: 28px;
+    }
+    
+    .cta-descripcion {
+        font-size: 18px;
+    }
+    
+    .beneficios-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .estadisticas-generales {
+        flex-direction: column;
+        gap: 24px;
+    }
+    
+    .resultados-metricas {
+        justify-content: center;
+    }
+    
+    .resultados-content {
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 28px;
+    }
+    
+    .caso-header {
+        flex-direction: column;
+        gap: 16px;
+    }
+    
+    .caso-logo {
+        width: 100%;
+        height: auto;
+        justify-content: flex-start;
+    }
+    
+    .estadistica-valor {
+        font-size: 36px;
+    }
+    
+    .metrica-valor {
+        font-size: 24px;
+    }
+    
+    .circular-progress {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .circular-text {
+        font-size: 20px;
+    }
+}

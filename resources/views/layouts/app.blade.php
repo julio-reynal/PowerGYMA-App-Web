@@ -111,6 +111,11 @@
                                 <i class="fas fa-cog me-1"></i>Servicios
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('clientes') }}">
+                                <i class="fas fa-users me-1"></i>Clientes
+                            </a>
+                        </li>
                         @auth
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ url('/dashboard') }}">

@@ -23,6 +23,9 @@ Route::get('/nosotros', function () {
     return view('nosotros.index');
 })->name('nosotros');
 
+// Ruta para clientes
+Route::get('/clientes', [App\Http\Controllers\ClientesController::class, 'index'])->name('clientes');
+
 // Ruta de prueba para servicios
 Route::get('/servicios-test', function () {
     return view('servicios.test');

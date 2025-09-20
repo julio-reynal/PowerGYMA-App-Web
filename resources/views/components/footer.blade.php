@@ -19,7 +19,7 @@
                     <a href="{{ route('home') }}" class="nav-link-figma">Inicio</a>
                     <a href="{{ route('servicios') }}" class="nav-link-figma">Servicios</a>
                     <a href="{{ route('nosotros') }}" class="nav-link-figma">Nosotros</a>
-                    <a href="#clientes" class="nav-link-figma">Clientes</a>
+                    <a href="{{ route('clientes') }}" class="nav-link-figma">Clientes</a>
                     <a href="#contacto" class="nav-link-figma">Contacto</a>
                 </div>
             </div>
