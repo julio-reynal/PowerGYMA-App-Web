@@ -19,6 +19,9 @@ export default defineConfig({
                 'resources/css/components.css',
                 'resources/js/main.js',
                 'resources/js/components.js',
+                // Servicios page assets
+                'resources/css/servicios.css',
+                'resources/js/servicios.js',
                 // Dashboard dark theme assets
                 'resources/css/dashboard.css',
                 'resources/js/chart-theme.js',

@@ -13,6 +13,16 @@ Route::get('/', function () {
     return view('index');
 })->name('home');
 
+// Ruta para servicios
+Route::get('/servicios', function () {
+    return view('servicios.index');
+})->name('servicios');
+
+// Ruta de prueba para servicios
+Route::get('/servicios-test', function () {
+    return view('servicios.test');
+})->name('servicios.test');
+
 // Ruta de prueba para verificar assets y rutas
 Route::get('/test-routes', function() {
     return view('test-routes');

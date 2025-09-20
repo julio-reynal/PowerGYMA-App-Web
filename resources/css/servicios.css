@@ -1,0 +1,663 @@
+/* Servicios Page CSS - PowerGYMA */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+/* Reset and Base Styles with high specificity */
+html, body {
+    font-family: 'Poppins', sans-serif !important;
+    background: linear-gradient(180deg, #000000 0%, #03081d 100%) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    min-height: 100vh !important;
+    overflow-x: hidden !important;
+    line-height: 1.6 !important;
+}
+
+/* Override any Bootstrap/default styles */
+#app {
+    background: transparent !important;
+    min-height: 100vh !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Hide any conflicting navbars */
+.navbar, .navbar-expand-lg, .main-content {
+    display: none !important;
+}
+
+/* Servicios Container */
+.servicios-container {
+    background: linear-gradient(135deg, #010B24 14.64%, #000 85.36%) !important;
+    min-height: 100vh !important;
+    position: relative !important;
+    padding-top: 90px !important; /* Space for fixed header */
+    width: 100% !important;
+    margin: 0 !important;
+}
+
+/* Hero Section */
+.hero-section {
+    height: 100vh;
+    min-height: 700px;
+    max-height: 900px;
+    position: relative;
+    overflow: hidden;
+    background: #000000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(45deg, rgba(0, 0, 0, 0.685) 0.64%, rgba(6, 118, 255, 0.575) 1.6%),
+        url('{{ asset('Img/91ceeac05d1a7348d95c7409d57b507c61180ecd.png') }}');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.15;
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    text-align: center;
+    color: white;
+    z-index: 2;
+    max-width: 1024px;
+    width: 100%;
+    padding: 0 40px;
+}
+
+.hero-title {
+    font-size: clamp(32px, 5vw, 60px);
+    font-weight: 600;
+    line-height: 1.1;
+    margin-bottom: 30px;
+    color: white;
+}
+
+.hero-subtitle {
+    font-size: clamp(16px, 2.5vw, 20px);
+    line-height: 1.4;
+    color: #d1d5db;
+    margin-bottom: 40px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hero-btn {
+    background: #db7f13;
+    border: none;
+    border-radius: 16px;
+    padding: 16px 33px;
+    color: white;
+    font-size: 18px;
+    font-weight: 500;
+    text-decoration: none;
+    display: inline-block;
+    box-shadow: 0px 2px 0px 0px rgba(253, 147, 20, 0.3);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.hero-btn:hover {
+    background: #c46f0f;
+    color: white;
+    transform: translateY(-2px);
+    text-decoration: none;
+}
+
+/* Services Section */
+.services-section {
+    background: #000000;
+    padding: 64px 0;
+    position: relative;
+    width: 100%;
+}
+
+.services-section.gradient {
+    background: linear-gradient(180deg, #000000 0%, #03081d 100%);
+}
+
+.service-card {
+    display: flex;
+    align-items: center;
+    min-height: 672px;
+    margin-bottom: 0;
+    max-width: 1600px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 40px;
+    gap: 40px;
+}
+
+.service-card.reverse {
+    flex-direction: row-reverse;
+}
+
+.service-image {
+    flex: 1;
+    max-width: 880px;
+    height: 672px;
+    padding: 24px;
+}
+
+.service-image-inner {
+    height: 100%;
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    background: linear-gradient(135deg, #010B24 14.64%, #000 85.36%);
+
+
+}
+
+.service-bg {
+    position: absolute;
+    top: 62px;
+    left: 83px;
+    right: 83px;
+    bottom: 62px;
+    background-size: cover;
+    background-position: center;
+    opacity: 0.8;
+    border-radius: 8px;
+}
+
+.service-overlay {
+    position: absolute;
+    top: 62px;
+    left: 83px;
+    right: 83px;
+    bottom: 62px;
+    border-radius: 8px;
+}
+
+.service-content {
+    flex: 1;
+    max-width: 720px;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 672px;
+}
+
+.service-title {
+    font-size: clamp(28px, 3.5vw, 42px);
+    font-weight: 600;
+    line-height: 1.3;
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 21px;
+}
+
+.service-subtitle {
+    font-size: clamp(18px, 2.2vw, 24px);
+    font-weight: 600;
+    line-height: 1.3;
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 28px;
+}
+
+.service-description {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #d1d5db;
+    margin-bottom: 32px;
+}
+
+.benefits-title {
+    font-size: 18px;
+    font-weight: 500;
+    color: white;
+    margin-bottom: 16px;
+}
+
+.benefits-list {
+    margin-bottom: 32px;
+}
+
+.benefit-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    gap: 16px;
+}
+
+.benefit-item.complex {
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.benefit-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.benefit-icon.large {
+    width: 40px;
+    height: 40px;
+}
+
+.benefit-icon.orange {
+    background: rgba(254, 146, 19, 0.2);
+}
+
+.benefit-icon.blue {
+    background: rgba(2, 92, 205, 0.2);
+    border-radius: 50px;
+}
+
+.benefit-icon.square {
+    border-radius: 4px;
+}
+
+.benefit-text {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #e5e7eb;
+    flex: 1;
+}
+
+.benefit-complex {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.benefit-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: white;
+    line-height: 1.5;
+}
+
+.benefit-subtitle {
+    font-size: 14px;
+    font-weight: 400;
+    color: #d1d5db;
+    line-height: 1.4;
+}
+
+.service-btn {
+    border-radius: 40px;
+    padding: 8px 21px;
+    border: none;
+    font-size: 16px;
+    font-weight: 400;
+    color: white;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    width: fit-content;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.service-btn.orange {
+    background: #db7f13;
+    box-shadow: 0px 2px 0px 0px rgba(253, 147, 20, 0.3);
+}
+
+.service-btn.blue {
+    background: #025ccd;
+    border: 1px solid #424242;
+    box-shadow: 0px 2px 0px 0px rgba(255, 255, 255, 0.04);
+}
+
+.service-btn:hover {
+    color: white;
+    transform: translateY(-1px);
+    text-decoration: none;
+}
+
+.section-divider {
+    height: 1px;
+    background: linear-gradient(90deg, rgba(0,0,0,0) 0%, #1f2937 50%, rgba(0,0,0,0) 100%);
+    margin: 0 48px;
+}
+
+.final-divider {
+    height: 2px;
+    background: linear-gradient(90deg, #025ccd 0%, #fe9213 100%);
+    max-width: 1792px;
+    width: 90%;
+    margin: 51px auto 64px;
+}
+
+/* Overlays específicos para cada servicio */
+.smartpeak-overlay {
+    background: linear-gradient(0deg, rgba(2, 92, 205, 0.5) 0%, rgba(0, 0, 0, 0) 100%);
+    opacity: 0.7;
+}
+
+.picocero-overlay {
+    background: linear-gradient(180deg, rgba(2, 92, 205, 0.5) 0%, rgba(0, 0, 0, 0) 100%);
+    opacity: 0.7;
+}
+
+.smarttarifa-overlay {
+    background: linear-gradient(0deg, rgba(254, 146, 19, 0.5) 0%, rgba(0, 0, 0, 0) 100%);
+    opacity: 0.7;
+}
+
+.consulting-overlay {
+    background: linear-gradient(270deg, rgba(2, 92, 205, 0.5) 0%, rgba(0, 0, 0, 0) 100%);
+    opacity: 0.7;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .servicios-container {
+        padding-top: 80px;
+    }
+    
+    .service-card {
+        flex-direction: column;
+        min-height: auto;
+        gap: 20px;
+        padding: 0 30px;
+    }
+    
+    .service-card.reverse {
+        flex-direction: column;
+    }
+    
+    .service-image,
+    .service-content {
+        flex: none;
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    .service-image {
+        height: 400px;
+        order: 1;
+        padding: 20px;
+    }
+    
+    .service-content {
+        order: 2;
+        min-height: auto;
+        padding: 40px 20px;
+    }
+    
+    /* Para Plan Pico Cero y Business Consulting en móvil */
+    .service-card.reverse .service-content {
+        order: 1;
+    }
+    
+    .service-card.reverse .service-image {
+        order: 2;
+    }
+}
+
+@media (max-width: 768px) {
+    .servicios-container {
+        padding-top: 70px;
+    }
+    
+    .hero-section {
+        height: 70vh;
+        min-height: 500px;
+        max-height: 600px;
+    }
+    
+    .hero-content {
+        padding: 0 20px;
+    }
+    
+    .hero-btn {
+        padding: 14px 28px;
+        font-size: 16px;
+    }
+    
+    .service-card {
+        padding: 0 20px;
+        gap: 15px;
+    }
+    
+    .service-content {
+        padding: 30px 15px;
+    }
+    
+    .service-image {
+        height: 300px;
+        padding: 15px;
+    }
+    
+    .service-bg {
+        top: 30px;
+        left: 40px;
+        right: 40px;
+        bottom: 30px;
+    }
+    
+    .service-overlay {
+        top: 30px;
+        left: 40px;
+        right: 40px;
+        bottom: 30px;
+    }
+    
+    .benefits-list {
+        margin-bottom: 24px;
+    }
+    
+    .benefit-item {
+        margin-bottom: 10px;
+        gap: 12px;
+    }
+    
+    .benefit-item.complex {
+        margin-bottom: 16px;
+    }
+    
+    .section-divider {
+        margin: 0 20px;
+    }
+    
+    .final-divider {
+        width: 95%;
+        margin: 40px auto 50px;
+    }
+    
+    .service-btn {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .servicios-container {
+        padding-top: 60px;
+    }
+    
+    .hero-section {
+        height: 60vh;
+        min-height: 450px;
+    }
+    
+    .hero-content {
+        padding: 0 15px;
+    }
+    
+    .hero-title {
+        margin-bottom: 20px;
+    }
+    
+    .hero-subtitle {
+        margin-bottom: 30px;
+    }
+    
+    .hero-btn {
+        padding: 12px 24px;
+        font-size: 15px;
+    }
+    
+    .service-card {
+        padding: 0 15px;
+    }
+    
+    .service-image {
+        height: 250px;
+        padding: 10px;
+    }
+    
+    .service-content {
+        padding: 20px 10px;
+    }
+    
+    .service-bg {
+        top: 20px;
+        left: 30px;
+        right: 30px;
+        bottom: 20px;
+    }
+    
+    .service-overlay {
+        top: 20px;
+        left: 30px;
+        right: 30px;
+        bottom: 20px;
+    }
+    
+    .benefit-icon {
+        width: 28px;
+        height: 28px;
+    }
+    
+    .benefit-icon.large {
+        width: 36px;
+        height: 36px;
+    }
+    
+    .benefit-text,
+    .benefit-title,
+    .benefit-subtitle {
+        font-size: 13px;
+    }
+    
+    .service-btn {
+        padding: 8px 16px;
+        font-size: 13px;
+    }
+    
+    .section-divider {
+        margin: 0 15px;
+    }
+}
+
+/* Animaciones de entrada */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Aplicar animaciones */
+.hero-content {
+    animation: fadeInUp 1s ease-out;
+}
+
+.service-content {
+    animation: slideInLeft 0.8s ease-out;
+}
+
+.service-image {
+    animation: slideInRight 0.8s ease-out;
+}
+
+.service-card.reverse .service-content {
+    animation: slideInRight 0.8s ease-out;
+}
+
+.service-card.reverse .service-image {
+    animation: slideInLeft 0.8s ease-out;
+}
+
+/* Mejorar rendimiento */
+.service-bg,
+.service-overlay,
+.hero-bg {
+    will-change: transform;
+    transform: translateZ(0);
+}
+
+/* Estados de carga */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/* Optimizaciones adicionales para móvil */
+@media (max-width: 768px) {
+    .service-card,
+    .hero-content,
+    .service-content,
+    .service-image {
+        animation: none; /* Desactivar animaciones en móvil para mejor rendimiento */
+    }
+}
+
+/* Mejoras de accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+    .hero-content,
+    .service-content,
+    .service-image {
+        animation: none;
+    }
+    
+    .hero-btn,
+    .service-btn {
+        transition: none;
+    }
+}
+
+/* Focus states */
+.hero-btn:focus,
+.service-btn:focus {
+    outline: 2px solid #fe9213;
+    outline-offset: 2px;
+}

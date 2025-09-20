@@ -166,11 +166,13 @@ header.scrolled .nav-item.active a {
     background-color: var(--accent-color);
     color: white;
     box-shadow: 0 2px 0 rgba(253, 147, 20, 0.3);
+    text-decoration: none !important;
 }
 
 .btn-access:hover { 
     background: #0147a3;
     transform: translateY(-1px);
+    text-decoration: none !important;
 }
 
 header.scrolled .btn-access {
@@ -180,6 +182,7 @@ header.scrolled .btn-access {
     font-size: 0.9rem;
     box-shadow: none;
     border-radius: 50px;
+    text-decoration: none !important;
 }
 
 .mobile-menu-btn {
@@ -766,6 +769,7 @@ header {
 .header-container {
     will-change: transform, background-color, border-radius;
     transform: translateZ(0);
+    background: #ffffff;
 }
 
 /* Smooth transitions for all interactive elements */
@@ -780,6 +784,7 @@ header.scrolled .nav-item a:hover {
 
 header.scrolled .btn-access:hover {
     transform: scale(1.05) translateY(-1px);
+    text-decoration: none !important;
 }
 
 /* Focus styles for accessibility */

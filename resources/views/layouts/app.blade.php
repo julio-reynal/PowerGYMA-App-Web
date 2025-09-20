@@ -20,6 +20,9 @@
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
+    {{-- Vite Assets --}}
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+
     <!-- Custom Styles -->
     <style>
         :root {
@@ -101,6 +104,11 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/') }}">
                                 <i class="fas fa-home me-1"></i>Inicio
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('servicios') }}">
+                                <i class="fas fa-cog me-1"></i>Servicios
                             </a>
                         </li>
                         @auth
@@ -195,23 +203,7 @@
             @yield('content')
         </main>
 
-        <!-- Footer -->
-        <footer class="footer mt-auto">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6">
-                        <p class="mb-0">
-                            &copy; {{ date('Y') }} PowerGYMA. Todos los derechos reservados.
-                        </p>
-                    </div>
-                    <div class="col-md-6 text-end">
-                        <p class="mb-0">
-                            <small>Versión 1.0 - Sistema de Gestión Deportiva</small>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </footer>
+
     </div>
 
     <!-- Bootstrap 5 JS -->
