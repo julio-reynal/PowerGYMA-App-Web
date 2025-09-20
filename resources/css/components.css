@@ -59,7 +59,7 @@ header.scrolled {
 }
 
 header.scrolled .header-container {
-    background-color: rgb(25 255 255 / 30%);
+    background-color: rgba(255, 255, 255, 0.3);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid var(--scrolled-border);
@@ -272,7 +272,7 @@ header.scrolled .mobile-menu-btn span {
     font-size: 22px;
     font-weight: 600;
     line-height: 30px;
-    color: rgba(25, 255, 255, 0.85);
+    color: rgba(255, 255, 255, 0.85);
     margin: 0 0 20px 0;
 }
 
@@ -866,13 +866,13 @@ header.scrolled .nav-item a:focus {
 }
 
 .contact-form-container {
-    background-color: #111827;
-    border: 1px solid #1F2937;
+    /* background-color:#111827; */
+    /* border:1px solid #1F2937; */
     border-radius: 16px;
     padding: 25px;
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 24px
 }
 
 .form-header h2 {
@@ -944,7 +944,7 @@ header.scrolled .nav-item a:focus {
 .input-wrapper textarea {
     width: 100%;
     box-sizing: border-box;
-    background-color: #000000;
+    /* background-color:#000; */
     border: 1px solid #000000;
     border-radius: 16px;
     padding: 14px 16px 12px 16px; /* Ajuste de padding para alinear el texto */
