@@ -18,6 +18,11 @@ Route::get('/servicios', function () {
     return view('servicios.index');
 })->name('servicios');
 
+// Ruta para nosotros
+Route::get('/nosotros', function () {
+    return view('nosotros.index');
+})->name('nosotros');
+
 // Ruta de prueba para servicios
 Route::get('/servicios-test', function () {
     return view('servicios.test');

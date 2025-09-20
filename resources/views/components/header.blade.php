@@ -13,8 +13,8 @@
                 <li class="nav-item {{ Request::is('servicios*') ? 'active' : '' }}">
                     <a href="{{ route('servicios') }}">Servicios</a>
                 </li>
-                <li class="nav-item">
-                    <a href="#nosotros">Nosotros</a>
+                <li class="nav-item {{ Request::is('nosotros*') ? 'active' : '' }}">
+                    <a href="{{ route('nosotros') }}">Nosotros</a>
                 </li>
                 <li class="nav-item">
                     <a href="#clientes">Clientes</a>
