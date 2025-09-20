@@ -1,5 +1,5 @@
 /* Components CSS - Header and Footer */
-
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 /* CSS Variables */
 :root {
     /* Paleta de Colores (Initial State - Figma Design) */
@@ -25,12 +25,12 @@
 /* Header Styles - Estado inicial según diseño Figma */
 header {
     position: fixed;
-    top: 0;
+    top: 5px;
     left: 0;
     width: 100%;
     z-index: 1000;
-    background: rgba(255, 255, 255, 1);
-    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0);
+    backdrop-filter: none;
     border-bottom: 1px solid rgba(0, 0, 0, 0);
     transition: all 0.5s var(--transition-curve);
     padding: 0;
@@ -45,7 +45,6 @@ header {
     height: 80px;
     max-width: 1920px;
     margin: 0 auto;
-    background: transparent;
     border: none;
     transition: all 0.5s var(--transition-curve);
 }
@@ -55,7 +54,7 @@ header.scrolled {
     padding: 1rem 2rem;
     background: transparent;
     backdrop-filter: none;
-    box-shadow: none;
+    box-shadow: none
 }
 
 header.scrolled .header-container {
@@ -801,278 +800,3 @@ header.scrolled .nav-item a:focus {
     }
 }
 
-/* Estilos para la página de Contactos */
-/* Importar la fuente Poppins si no está ya importada globalmente */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
-
-.main-content-panel {
-    background: linear-gradient(180deg, #025AC8 0%, #000000 100%);
-    box-shadow: inset 0px 0px 50px 0px rgba(2, 92, 205, 0.2);
-    padding: 80px 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    min-height: 796px; /* Aproximadamente la altura del diseño original */
-    position: relative;
-}
-
-.background-text-top {
-    color: #FFFFFF;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 700;
-    font-size: 36px;
-    line-height: 1.1111112;
-    text-align: center;
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    margin-bottom: 20px; /* gap from layout_NBVGGF */
-}
-
-.background-text-bottom {
-    color: #FFFFFF;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 1.4;
-    text-align: center;
-    height: 72px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    padding: 0 16px 0; /* padding from layout_5SO3R9 */
-    box-sizing: border-box;
-}
-
-.background-text-bottom p {
-    width: 760px;
-    max-width: 100%;
-    height: 56px;
-    margin: 0;
-    /* Ajuste fino para la posición vertical, basado en layout_36V6VI x: 0.05 */
-    position: relative;
-    left: 0.05px; 
-}
-
-.margin-wrapper {
-    width: 100%;
-    max-width: 800px;
-    padding: 0 20px; /* Para dar algo de espacio en pantallas pequeñas */
-    box-sizing: border-box;
-}
-
-.contact-form-container {
-    /* background-color:#111827; */
-    /* border:1px solid #1F2937; */
-    border-radius: 16px;
-    padding: 25px;
-    display: flex;
-    flex-direction: column;
-    gap: 24px
-}
-
-.form-header h2 {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 600;
-    font-size: 24px;
-    line-height: 1.33;
-    text-align: center;
-    color: #FFFFFF;
-    margin: 0;
-    padding: 0;
-}
-
-.form-content {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 24px;
-}
-
-/* Sección del Formulario */
-.contact-form-section {
-    flex: 1;
-    min-width: 300px; /* Para mantener un tamaño mínimo en pantallas pequeñas */
-}
-
-#contactForm {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-
-.form-row {
-    display: flex;
-    gap: 16px;
-}
-
-.form-group {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-}
-
-.form-group.full-width {
-    width: 100%;
-}
-
-.form-group label {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 1.5;
-    color: #FFFFFF;
-    margin-bottom: 4px;
-    display: flex;
-    align-items: center;
-}
-
-.required {
-    color: #FF4D4F;
-    margin-left: 4px;
-}
-
-.input-wrapper {
-    position: relative;
-}
-
-.input-wrapper input,
-.input-wrapper textarea {
-    width: 100%;
-    box-sizing: border-box;
-    /* background-color:#000; */
-    border: 1px solid #000000;
-    border-radius: 16px;
-    padding: 14px 16px 12px 16px; /* Ajuste de padding para alinear el texto */
-    font-family: 'Poppins', sans-serif;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 1.5;
-    color: #FFFFFF;
-    outline: none;
-    transition: border-color 0.2s ease;
-}
-
-.input-wrapper input::placeholder,
-.input-wrapper textarea::placeholder {
-    color: #9CA3AF;
-}
-
-.input-wrapper input:focus,
-.input-wrapper textarea:focus {
-    border-color: #FE9213; /* Color del borde al enfocar, basado en el color de los iconos */
-}
-
-.input-wrapper textarea {
-    min-height: 100px;
-    resize: vertical;
-}
-
-.submit-button {
-    background-color: #DB7F13;
-    color: #FFFFFF;
-    border: none;
-    border-radius: 16px;
-    padding: 8px 24px; /* Ajuste de padding para coincidir con Figma */
-    font-family: 'Poppins', sans-serif;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 1.5;
-    cursor: pointer;
-    align-self: flex-start; /* Alinear a la izquierda */
-    transition: background-color 0.2s ease;
-}
-
-.submit-button:hover {
-    background-color: #c26e10; /* Un tono ligeramente más oscuro para el hover */
-}
-
-/* Sección de Información de Contacto */
-.contact-info-section {
-    flex: 1;
-    min-width: 300px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-
-.map-container {
-    background-color: #0F141E;
-    border-radius: 16px;
-    overflow: hidden;
-    height: 166px; /* Altura fija como en el diseño */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.map-container img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.contact-details {
-    background-color: #1F2937;
-    border-radius: 16px;
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-
-.contact-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.icon-wrapper {
-    width: 20px;
-    height: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-shrink: 0;
-}
-
-.contact-icon {
-    width: 100%;
-    height: 100%;
-    /* Los SVGs descargados deberían tener el color #FE9213, pero si no, se puede forzar */
-    /* fill: #FE9213; */ 
-}
-
-.contact-item span {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 1.5;
-    color: #FFFFFF;
-    word-break: break-word;
-}
-
-/* Media Queries para Responsividad */
-@media (max-width: 768px) {
-    .form-row {
-        flex-direction: column;
-        gap: 16px;
-    }
-    
-    .form-group {
-        width: 100%;
-    }
-    
-    .form-content {
-        flex-direction: column;
-    }
-    
-    .contact-form-section,
-    .contact-info-section {
-        min-width: 100%;
-    }
-}
