@@ -154,7 +154,7 @@ body {
                                 <span class="benefit-text">Implementación sin interrupciones operativas</span>
                             </div>
                         </div>
-                        <a href="#" class="service-btn orange">
+                        <a href="{{ route('demo.solicitar') }}" class="service-btn orange">
                             <img src="{{ asset('Img/959f8dffc25d7eba01c86ab0d94b71de62e0f7ec.svg') }}" alt="" width="16" height="16">
                             Solicita una Demostración Gratuita
                         </a>

@@ -144,6 +144,13 @@ document.addEventListener('DOMContentLoaded', function() {
         
         serviceButtons.forEach(button => {
             button.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                // If the button has a real link, allow normal navigation
+                if (href && href !== '#' && href !== 'javascript:void(0)') {
+                    return; // do not preventDefault
+                }
+                
+                // Otherwise, treat as an action button
                 e.preventDefault();
                 
                 // Add loading state
