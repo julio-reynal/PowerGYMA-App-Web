@@ -492,3 +492,49 @@
         line-height: 28px;
     }
 }
+
+/* ==================================================
+   Overrides específicos para evitar conflictos CSS
+   ================================================== */
+/* Usamos selectores con mayor especificidad y !important
+   solo en propiedades visuales para evitar romper layout */
+.contact-section, .contact-section * {
+    box-sizing: border-box !important;
+}
+
+.contact-section {
+    background: linear-gradient(179deg, #025AC8 -17.83%, #000 103.51%) !important;
+    color: #ffffff !important;
+}
+
+.contact-section .contact-form-wrapper {
+    background-color: #0b1220 !important;
+    border-color: rgba(255,255,255,0.04) !important;
+}
+
+.contact-section .form-input,
+.contact-section .form-textarea {
+    background-color: #000000 !important;
+    border: 1px solid #000000 !important;
+    color: #9ca3af !important;
+}
+
+.contact-section .form-input::placeholder,
+.contact-section .form-textarea::placeholder {
+    color: #9ca3af !important;
+}
+
+.contact-section .submit-button {
+    background-color: #db7f13 !important;
+    color: #ffffff !important;
+}
+
+.contact-section .contact-details {
+    background-color: #374151 !important;
+}
+
+/* Asegurar que el iframe del mapa mantenga border-radius */
+.contact-section .contact-map iframe {
+    border-radius: 12px !important;
+}
+

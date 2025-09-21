@@ -115,40 +115,30 @@ function updateServiceShowcase(serviceData) {
     serviceShowcase.style.transition = 'all 0.3s ease';
     
     setTimeout(() => {
+        // Use the service key from the title to build a fragment-friendly id
+        const keyFragment = serviceData.title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '');
+
         serviceShowcase.innerHTML = `
             <div class="service-card">
-                <div class="service-image">
-                    <img src="${serviceData.image}" alt="${serviceData.title}">
-                </div>
-                <div class="service-info">
-                    <h3>${serviceData.title}</h3>
-                    <p>${serviceData.description}</p>
-                    <a href="#" class="service-link">
-                        Ver más
-                        <img src="assets/icons/a6423256919ef67ad6fb02dfe2329e77a12fee54.svg" alt="arrow">
-                    </a>
-                </div>
+            <div class="service-image">
+                <img src="${serviceData.image}" alt="${serviceData.title}">
+            </div>
+            <div class="service-info">
+                <h3>${serviceData.title}</h3>
+                <p>${serviceData.description}</p>
+                <a href="/servicios#plan-${keyFragment}" class="service-link" aria-label="Ver más sobre ${serviceData.title}">
+                Ver más
+                <img src="assets/icons/a6423256919ef67ad6fb02dfe2329e77a12fee54.svg" alt="arrow">
+                </a>
+            </div>
             </div>
         `;
-        
+
         // Animate in with perfect Figma-like transition
         serviceShowcase.style.opacity = '1';
         serviceShowcase.style.transform = 'translateX(0)';
-        
-        // Add click handler to the new service link
-        const newServiceLink = serviceShowcase.querySelector('.service-link');
-        if (newServiceLink) {
-            newServiceLink.addEventListener('click', function(e) {
-                e.preventDefault();
-                // Scroll to contact section or show modal
-                const contactSection = document.querySelector('.contact-section-figma');
-                if (contactSection) {
-                    contactSection.scrollIntoView({ behavior: 'smooth' });
-                } else {
-                    showContactModal();
-                }
-            });
-        }
+
+        // No preventDefault: allow normal navigation to Blade route /servicios
     }, 200);
 }
 

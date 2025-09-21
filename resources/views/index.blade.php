@@ -75,7 +75,7 @@
                                         <span>Solicitar Demo Gratuito</span>
                                     </a>
                                     <button class="hero-btn hero-btn-secondary">
-                                        <span>Ver Nuestros Servicios</span>
+                                        <span onclick="document.querySelector('.services-section').scrollIntoView({behavior:'smooth'});" style="cursor:pointer">Ver Nuestros Servicios</span>
                                     </button>
                                 </div>
                             </div>
@@ -114,8 +114,8 @@
                             <div class="service-info">
                                 <h3>Plan SmartPeak</h3>
                                 <p>Optimizamos tus picos de consumo energético para reducir penalizaciones y costes asociados.</p>
-                                <a href="#" class="service-link">
-                                    Ver más
+                                <a href="{{ url('/servicios#plan-smartpeak') }}" class="service-link">
+                                    <span style="cursor:pointer">Ver más</span>
                                     <img src="assets/icons/a6423256919ef67ad6fb02dfe2329e77a12fee54.svg" alt="arrow">
                                 </a>
                             </div>
@@ -244,7 +244,7 @@
         </section>
 
         <!-- Contact Section -->
-        <section class="contact-section-figma">
+        <section id="contactanos" class="contact-section-figma">
             <div class="contact-container">
                 <div class="contact-content">
                     <!-- Contact Header -->

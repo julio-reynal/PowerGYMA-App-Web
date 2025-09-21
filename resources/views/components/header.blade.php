@@ -20,7 +20,7 @@
                     <a href="{{ route('clientes') }}">Clientes</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#contacto">Contacto</a>
+                    <a href="{{ url('/') }}#contactanos">Contacto</a>
                 </li>
             </ul>
         </nav>

@@ -9,7 +9,15 @@
     @include('components.favicon')
     
     <!-- Vite Assets -->
-    @vite(['resources/css/main.css', 'resources/css/components.css', 'resources/css/nosotros.css', 'resources/js/components.js', 'resources/js/main.js'])
+    @vite([
+        'resources/css/main.css',
+        'resources/css/components.css',
+        'resources/css/nosotros.css',
+        'resources/css/contacto.css',
+        'resources/js/components.js',
+        'resources/js/main.js',
+        'resources/js/app.js',
+    ])
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -227,6 +235,8 @@
             </div>
         </section>
     </main>
+
+
 
     <footer id="footer">
         @include('components.footer')
