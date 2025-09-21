@@ -84,9 +84,9 @@
                             {{-- Teléfono --}}
                             <div class="contact-item">
                                 <div class="contact-icon">
-                                    <img src="{{ asset('assets/images/9e5c90cfb329dff5491bec61d889e986638db91f.svg') }}" 
-                                         alt="Teléfono" 
-                                         class="icon">
+                             <img src="{{ asset('Img/Ico/icons/contact-phone-icon.svg') }}" 
+                                 alt="Teléfono" 
+                                 class="icon critical">
                                 </div>
                                 <div class="contact-text">
                                     <span>+51 946 432 574 / +51 970 894 954</span>
@@ -96,9 +96,9 @@
                             {{-- Email --}}
                             <div class="contact-item">
                                 <div class="contact-icon">
-                                    <img src="{{ asset('assets/images/b1035d66b167254a42232938209c666d03016ddb.svg') }}" 
-                                         alt="Email" 
-                                         class="icon">
+                             <img src="{{ asset('Img/Ico/icons/contact-email-icon.svg') }}" 
+                                 alt="Email" 
+                                 class="icon critical">
                                 </div>
                                 <div class="contact-text">
                                     <span>info@powergyma.com</span>
@@ -108,9 +108,9 @@
                             {{-- Dirección --}}
                             <div class="contact-item">
                                 <div class="contact-icon">
-                                    <img src="{{ asset('assets/images/4189df55b6b684d930a3067891add3f69f39d4ed.svg') }}" 
-                                         alt="Ubicación" 
-                                         class="icon">
+                             <img src="{{ asset('Img/Ico/icons/contact-address-icon.svg') }}" 
+                                 alt="Ubicación" 
+                                 class="icon critical">
                                 </div>
                                 <div class="contact-text">
                                     <span>Av. Gaviotas Nro. 1805 Lima - Lima - Santiago De Surco</span>

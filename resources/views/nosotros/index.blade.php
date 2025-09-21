@@ -89,12 +89,12 @@
                     </div>
                 </div>
                 
-                <!-- Floating decorative icons - POSICIONADOS CORRECTAMENTE -->
+                <!-- Floating decorative icons -->
                 <div class="nosotros-about-decorative-icons">
-                    <div class="decorative-icon decorative-icon-top-right">
+                    <div class="decorative-icon decorative-icon-1">
                         <img src="{{ asset('Img/ecb12b9859ad18bd57dcb26f82ece97dd7bcc26a.svg') }}" alt="Icono decorativo">
                     </div>
-                    <div class="decorative-icon decorative-icon-bottom-left">
+                    <div class="decorative-icon decorative-icon-2">
                         <img src="{{ asset('Img/759a2638106b5cf00daa4f3f1063068d6e4f56af.svg') }}" alt="Icono decorativo">
                     </div>
                 </div>
@@ -196,7 +196,7 @@
                 <div class="team-grid">
                     <div class="team-card">
                         <div class="team-photo">
-                            <img src="{{ asset('Img/b6beba38f53b28f29e855075ab49ad574e2b550f.png') }}" alt="Guido Yauri">
+                            <img src="{{ asset('Img/b6beba38f53b2E8f29e855075ab49ad574e2b550f.png') }}" alt="Guido Yauri">
                         </div>
                         <h3 class="team-name">
                             <a href="https://www.linkedin.com/in/guidoyauri/overlay/about-this-profile/" target="_blank" rel="noopener noreferrer">
@@ -211,7 +211,7 @@
                     
                     <div class="team-card">
                         <div class="team-photo">
-                            <img src="{{ asset('Img/0c8b8746bf570f1ab539b63133f3e07ca3366fcd.png') }}" alt="Marco Hernandez">
+                            <img src="{{ asset('Img/0c8b874bf570f1ab539b63133f3e07ca3366fcd.png') }}" alt="Marco Hernandez">
                         </div>
                         <h3 class="team-name">
                             <a href="https://www.linkedin.com/in/marco-hernandez-mendoza-0b156052/overlay/about-this-profile/" target="_blank" rel="noopener noreferrer">

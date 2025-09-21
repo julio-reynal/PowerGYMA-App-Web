@@ -32,7 +32,7 @@
                         <div class="contact-icon-wrapper">
                             <img src="{{ asset('Img/Ico/icons/contact-address-icon.svg') }}" alt="Ubicación" class="contact-icon-figma">
                         </div>
-                        <span class="contact-text-figma">AV. GAVIOTAS NRO. 1805 LIMA - LIMA - SANTIAGO DE SURCO</span>
+                        <span class="contact-text-figma">Av. Gaviotas Nro. 1805 Lima - Lima - Santiago De Surco</span>
                     </div>
                     <div class="contact-item-figma">
                         <div class="contact-icon-wrapper">
