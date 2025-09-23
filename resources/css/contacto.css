@@ -3,6 +3,37 @@
 /* Configuración de fuente Poppins */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
+/* ==================================================
+   OVERRIDE PRINCIPAL PARA EVITAR CONFLICTOS
+   ================================================== */
+/* Este override tiene la máxima prioridad para evitar conflictos con main.css */
+section.contact-section {
+    background: linear-gradient(179deg, #025AC8 -17.83%, #000 103.51%) !important;
+    padding: 80px 0 !important;
+    min-height: auto !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-family: 'Poppins', sans-serif !important;
+    position: relative !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+    box-shadow: 0 0 50px 0 rgba(2, 92, 205, 0.20) inset !important;
+}
+
+section.contact-section .contact-container {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 20px !important;
+    align-items: center !important;
+    max-width: 1200px !important;
+    width: 100% !important;
+    padding: 0 20px !important;
+    position: relative !important;
+    z-index: 1 !important;
+    box-sizing: border-box !important;
+}
+
 /* Sección principal con fondo degradado exacto */
 
 
@@ -10,7 +41,7 @@
 .contact-section {
     background: linear-gradient(179deg, #025AC8 -17.83%, #000 103.51%);
     padding: 80px 0;
-    min-height: 100vh;
+    min-height: auto;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -96,9 +127,9 @@
 .contact-main-container {
     width: 100%;
     max-width: 800px;
-    height: 473px;
+    min-height: 473px;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
 }
 
 .contact-section .contact-form-wrapper {
@@ -107,7 +138,7 @@
     border-radius: 16px;
     padding: 25px;
     width: 100%;
-    height: 100%;
+    min-height: 100%;
     display: flex;
     flex-direction: column;
     gap: 24px;
@@ -140,7 +171,7 @@
 .contact-section .contact-content {
     display: flex;
     gap: 24px;
-    height: 367px;
+    min-height: 367px;
     width: 100%;
     flex-wrap: nowrap;
 }
@@ -148,7 +179,7 @@
 /* Formulario */
 .contact-section .contact-form {
     width: 363px;
-    height: 367px;
+    min-height: 367px;
     flex-shrink: 0;
 }
 
@@ -156,7 +187,7 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
-    height: 100%;
+    min-height: 100%;
 }
 
 /* Fila de campos */
@@ -298,7 +329,7 @@
 /* Información de contacto */
 .contact-section .contact-info {
     width: 363px;
-    height: 367px;
+    min-height: 367px;
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -332,7 +363,7 @@
 .contact-section .contact-details {
     background-color: #374151;
     border-radius: 16px;
-    height: 160px;
+    min-height: 160px;
     width: 100%;
     padding: 16px;
     display: flex;
@@ -407,89 +438,110 @@
 
 /* Responsive design */
 @media (max-width: 1024px) {
-    .contact-container {
-        padding: 0 40px;
+    .contact-section .contact-container {
+        padding: 0 40px !important;
     }
     
-    .contact-main-container {
-        width: 100%;
-        max-width: 800px;
-        height: auto;
+    .contact-section .contact-main-container {
+        width: 100% !important;
+        max-width: 800px !important;
+        min-height: auto !important;
     }
     
-    .contact-content {
-        flex-direction: column;
-        height: auto;
-        gap: 32px;
+    .contact-section .contact-content {
+        flex-direction: column !important;
+        min-height: auto !important;
+        gap: 32px !important;
     }
     
-    .contact-form,
-    .contact-info {
-        width: 100%;
-        height: auto;
+    .contact-section .contact-form,
+    .contact-section .contact-info {
+        width: 100% !important;
+        min-height: auto !important;
     }
     
-    .contact-form-wrapper {
-        height: auto;
-        padding: 32px;
+    .contact-section .contact-form-wrapper {
+        min-height: auto !important;
+        padding: 32px !important;
     }
     
-    .contact-subtitle {
-        width: 100%;
+    .contact-section .contact-subtitle {
+        width: 100% !important;
     }
 }
 
 @media (max-width: 768px) {
-    .contact-title {
-        font-size: 28px;
-        line-height: 36px;
-        white-space: normal;
-        text-align: center;
+    .contact-section {
+        padding: 60px 0 !important;
+        min-height: auto !important;
     }
     
-    .contact-subtitle p {
-        font-size: 18px;
-        line-height: 26px;
+    .contact-section .contact-title {
+        font-size: 28px !important;
+        line-height: 36px !important;
+        white-space: normal !important;
+        text-align: center !important;
     }
     
-    .form-row {
-        flex-direction: column;
-        height: auto;
-        gap: 16px;
+    .contact-section .contact-subtitle p {
+        font-size: 18px !important;
+        line-height: 26px !important;
     }
     
-    .form-field {
-        width: 100%;
-        height: 70px;
+    .contact-section .form-row {
+        flex-direction: column !important;
+        height: auto !important;
+        gap: 16px !important;
     }
     
-    .contact-container {
-        padding: 0 20px;
+    .contact-section .form-field {
+        width: 100% !important;
+        height: 70px !important;
+    }
+    
+    .contact-section .contact-container {
+        padding: 0 20px !important;
+    }
+    
+    .contact-section .contact-content {
+        gap: 24px !important;
+    }
+    
+    .contact-section .contact-form-wrapper {
+        padding: 24px !important;
     }
 }
 
 @media (max-width: 480px) {
     .contact-section {
-        padding: 40px 0;
+        padding: 40px 0 !important;
     }
     
-    .contact-title {
-        font-size: 24px;
-        line-height: 32px;
+    .contact-section .contact-title {
+        font-size: 24px !important;
+        line-height: 32px !important;
     }
     
-    .contact-subtitle p {
-        font-size: 16px;
-        line-height: 24px;
+    .contact-section .contact-subtitle p {
+        font-size: 16px !important;
+        line-height: 24px !important;
     }
     
-    .contact-form-wrapper {
-        padding: 24px;
+    .contact-section .contact-form-wrapper {
+        padding: 20px !important;
     }
     
-    .contact-form-title {
-        font-size: 20px;
-        line-height: 28px;
+    .contact-section .contact-form-title {
+        font-size: 20px !important;
+        line-height: 28px !important;
+    }
+    
+    .contact-section .contact-container {
+        padding: 0 16px !important;
+    }
+    
+    .contact-section .contact-content {
+        gap: 20px !important;
     }
 }
 
@@ -505,6 +557,17 @@
 .contact-section {
     background: linear-gradient(179deg, #025AC8 -17.83%, #000 103.51%) !important;
     color: #ffffff !important;
+    min-height: auto !important;
+    padding: 80px 0 !important;
+}
+
+.contact-section .contact-container {
+    max-width: 1200px !important;
+    padding: 0 20px !important;
+    gap: 20px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
 }
 
 .contact-section .contact-form-wrapper {
@@ -536,5 +599,26 @@
 /* Asegurar que el iframe del mapa mantenga border-radius */
 .contact-section .contact-map iframe {
     border-radius: 12px !important;
+}
+
+/* Overrides específicos para títulos */
+.contact-section .contact-title {
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 40px !important;
+    line-height: 44px !important;
+    color: #ffffff !important;
+    text-align: center !important;
+    margin: 0 !important;
+}
+
+.contact-section .contact-form-title {
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: 600 !important;
+    font-size: 24px !important;
+    line-height: 32px !important;
+    color: #ffffff !important;
+    text-align: center !important;
+    margin: 0 !important;
 }
 

@@ -53,23 +53,16 @@
             <div class="footer-section-social">
                 <h3 class="footer-title">Redes Sociales</h3>
                 <div class="social-links-figma">
-                    <div class="social-link-figma">
+                    <a href="https://www.facebook.com/people/Power-GYMA/61581443061373/" target="_blank" rel="noopener noreferrer" class="social-link-figma">
                         <div class="social-icon-wrapper">
-                            <div class="social-icon-mask" style="mask-image: url('{{ asset('Img/Ico/icons/6c9b92c0c85b14cac961f98c594ed2d828a294c8.svg') }}');">
-                                <img src="{{ asset('Img/Ico/icons/e57eb75b9a3746adf9b511f5b2c187f29954028e.svg') }}" alt="Facebook" class="social-icon-figma">
-                            </div>
+                            <img src="{{ asset('Img/e57eb75b9a3746adf9b511f5b2c187f29954028e.svg') }}" alt="Facebook" class="social-icon-figma">
                         </div>
-                    </div>
-                    <div class="social-link-figma">
+                    </a>
+                    <a href="https://www.linkedin.com/company/power-gyma/about/" target="_blank" rel="noopener noreferrer" class="social-link-figma">
                         <div class="social-icon-wrapper">
-                            <img src="{{ asset('Img/Ico/icons/882987b08bba9631ba09fb44ccb0c27d64479668.svg') }}" alt="Twitter" class="social-icon-figma">
+                            <img src="{{ asset('Img/ddddddddddddd.svg') }}" alt="LinkedIn" class="social-icon-figma">
                         </div>
-                    </div>
-                    <div class="social-link-figma">
-                        <div class="social-icon-wrapper">
-                            <img src="{{ asset('Img/Ico/icons/d0d724634d0fef102f7d5f039bc6abd9b75f51d1.svg') }}" alt="LinkedIn" class="social-icon-figma">
-                        </div>
-                    </div>
+                    </a>
                 </div>
             </div>
         </div>

@@ -447,15 +447,12 @@
 
                                 <!-- Social Icons -->
                                 <div class="contact-social-iconsaa">
-                                    <div class="social-icon-f">
+                                    <a href="https://www.facebook.com/people/Power-GYMA/61581443061373/" target="_blank" class="social-icon-f">
                                         <img src="assets/icons/1c82bff56120f7a8612dd55bfe910c82f150186e.svg" alt="Facebook">
-                                    </div>
-                                    <div class="social-icon-f">
-                                        <img src="assets/icons/398f94a44dede11c1af4e3999bf259680207bc74.svg" alt="Twitter">
-                                    </div>
-                                    <div class="social-icon-f">
+                                    </a>
+                                    <a href="https://www.linkedin.com/company/power-gyma/about/" target="_blank" class="social-icon-f">
                                         <img src="assets/icons/a0ab1de4c5e1466b7919a577eb8162580d2d4c1e.svg" alt="LinkedIn">
-                                    </div>
+                                    </a>
                                 </div>
                             </div>
                         </div>

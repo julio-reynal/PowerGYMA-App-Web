@@ -152,12 +152,24 @@ function initializeFooter() {
     // Add any footer-specific JavaScript here
     const socialLinks = document.querySelectorAll('.social-link-figma');
     
-    // Add hover effects or click handlers for social links
+    // Remove the preventDefault to allow normal link behavior
     socialLinks.forEach(link => {
+        // Add hover effects if needed, but don't prevent default behavior
+        link.addEventListener('mouseenter', function() {
+            // Optional: Add any hover effects
+        });
+        
+        // Ensure links work properly
         link.addEventListener('click', function(e) {
-            e.preventDefault();
-            // Add your social media links here
-            console.log('Social link clicked:', this);
+            // Don't prevent default - let the links work normally
+            const href = this.getAttribute('href');
+            if (href && href !== '#') {
+                // Link will work normally, no need to prevent default
+                console.log('Social link clicked:', href);
+            } else {
+                e.preventDefault();
+                console.log('Social link has no valid href');
+            }
         });
     });
     

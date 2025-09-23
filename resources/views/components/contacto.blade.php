@@ -84,7 +84,7 @@
                             {{-- Teléfono --}}
                             <div class="contact-item">
                                 <div class="contact-icon">
-                             <img src="{{ asset('Img/Ico/icons/contact-phone-icon.svg') }}" 
+                             <img src="/Img/Ico/icons/contact-phone-icon.svg" 
                                  alt="Teléfono" 
                                  class="icon critical">
                                 </div>
@@ -96,7 +96,7 @@
                             {{-- Email --}}
                             <div class="contact-item">
                                 <div class="contact-icon">
-                             <img src="{{ asset('Img/Ico/icons/contact-email-icon.svg') }}" 
+                             <img src="/Img/Ico/icons/contact-email-icon.svg" 
                                  alt="Email" 
                                  class="icon critical">
                                 </div>
@@ -108,7 +108,7 @@
                             {{-- Dirección --}}
                             <div class="contact-item">
                                 <div class="contact-icon">
-                             <img src="{{ asset('Img/Ico/icons/contact-address-icon.svg') }}" 
+                             <img src="/Img/Ico/icons/contact-address-icon.svg" 
                                  alt="Ubicación" 
                                  class="icon critical">
                                 </div>
