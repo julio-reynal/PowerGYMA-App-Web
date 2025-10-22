@@ -8,9 +8,11 @@
 
 @push('styles')
 <link rel="stylesheet" href="{{ asset('css/nosotros.css') }}">
+@vite(['resources/css/contacto.css'])
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
     body {
         background-color: #121212 !important;
@@ -481,6 +483,9 @@
             </div>
         </div>
     </section>
+
+    <!-- Componente de Contacto -->
+    @include('components.contacto')
 </div>
 
 <script>

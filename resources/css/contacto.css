@@ -262,9 +262,7 @@
 }
 
 /* Campo de mensaje */
-.contact-section .contact-form .form-field-full:nth-child(3) {
-    height: 135px;
-}
+
 
 /* Botón enviar */
 .contact-section .form-submit {
