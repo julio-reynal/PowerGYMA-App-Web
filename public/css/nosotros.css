@@ -1,0 +1,186 @@
+/* Estilos personalizados para la página Nosotros */
+
+/* Asegurar que todas las imágenes se muestren correctamente */
+.nosotros-container img {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Asegurar visibilidad de imágenes SVG */
+.nosotros-container img[src$=".svg"] {
+    display: block !important;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+/* Asegurar visibilidad de imágenes PNG */
+.nosotros-container img[src$=".png"] {
+    display: block !important;
+    pointer-events: none;
+}
+
+/* Fix para imágenes de fondo */
+.nosotros-container section img {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+}
+
+/* Hero Section Responsiveness */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 36px !important;
+        line-height: 40px !important;
+    }
+    
+    .hero-subtitle {
+        font-size: 18px !important;
+    }
+}
+
+/* Animaciones suaves */
+.transition-all {
+    transition: all 0.3s ease;
+}
+
+/* Efecto hover en tarjetas */
+.card-hover:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(250, 140, 22, 0.2);
+}
+
+/* Gradientes personalizados */
+.gradient-overlay {
+    background: linear-gradient(180deg, rgba(10, 10, 10, 0) 0%, rgba(18, 18, 18, 0) 100%);
+}
+
+/* Estilos para líneas decorativas */
+.decorative-line {
+    position: absolute;
+    background: linear-gradient(90deg, #1a3a6c 0%, #fa8c16 50%, #1a3a6c 100%);
+}
+
+/* Responsividad para valores */
+@media (max-width: 1024px) {
+    .values-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+
+@media (max-width: 640px) {
+    .values-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+/* Efectos de blur para fondos decorativos */
+.blur-effect {
+    filter: blur(96px);
+}
+
+/* Estilos para equipo */
+.team-card {
+    transition: all 0.3s ease;
+}
+
+.team-card:hover {
+    transform: scale(1.05);
+}
+
+.team-card img {
+    transition: all 0.3s ease;
+}
+
+.team-card:hover img {
+    transform: scale(1.1);
+}
+
+/* Enlaces de LinkedIn */
+a[href*="linkedin"] {
+    transition: color 0.3s ease;
+}
+
+a[href*="linkedin"]:hover {
+    color: #0077b5 !important;
+}
+
+/* Botones CTA */
+.btn-cta {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.btn-cta:hover::before {
+    left: 100%;
+}
+
+/* Animación de entrada para secciones */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in {
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+/* Retraso para animaciones en cascada */
+.animate-delay-1 {
+    animation-delay: 0.1s;
+}
+
+.animate-delay-2 {
+    animation-delay: 0.2s;
+}
+
+.animate-delay-3 {
+    animation-delay: 0.3s;
+}
+
+.animate-delay-4 {
+    animation-delay: 0.4s;
+}
+
+.animate-delay-5 {
+    animation-delay: 0.5s;
+}
+
+/* Asegurar que el fondo oscuro se vea bien */
+.bg-dark-custom {
+    background-color: #121212;
+}
+
+/* Estilos para bordes con efecto glow */
+.border-glow {
+    border-color: rgba(250, 140, 22, 0.3);
+    box-shadow: 0 0 10px rgba(250, 140, 22, 0.1);
+}
+
+.border-glow:hover {
+    border-color: rgba(250, 140, 22, 0.6);
+    box-shadow: 0 0 20px rgba(250, 140, 22, 0.2);
+}

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Imágenes Nosotros</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #121212;
+            color: white;
+        }
+        .image-test {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #333;
+            border-radius: 8px;
+        }
+        .image-test h3 {
+            color: #fa8c16;
+            margin: 0 0 10px 0;
+        }
+        .image-test img {
+            max-width: 300px;
+            display: block;
+            margin: 10px 0;
+            border: 2px solid #fa8c16;
+        }
+        .path {
+            font-family: monospace;
+            background: #1a1a1a;
+            padding: 5px 10px;
+            border-radius: 4px;
+            margin: 5px 0;
+            display: inline-block;
+        }
+        .status {
+            padding: 5px 10px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-left: 10px;
+        }
+        .success { background: #52c41a; color: white; }
+        .error { background: #f5222d; color: white; }
+    </style>
+</head>
+<body>
+    <h1>Test de Imágenes - Página Nosotros</h1>
+    <p>Esta página verifica que todas las imágenes se estén sirviendo correctamente.</p>
+    
+    <div class="image-test">
+        <h3>1. Hero Background (PNG)</h3>
+        <div class="path">assets/images/nosotros/d59ee7973d60e759cd7c99ad2637afa915d0bfe8.png</div>
+        <span class="status" id="status-1">Cargando...</span>
+        <br>
+        <img 
+            src="assets/images/nosotros/d59ee7973d60e759cd7c99ad2637afa915d0bfe8.png" 
+            alt="Hero Background"
+            onload="document.getElementById('status-1').className='status success'; document.getElementById('status-1').textContent='✓ Cargada';"
+            onerror="document.getElementById('status-1').className='status error'; document.getElementById('status-1').textContent='✗ Error';">
+    </div>
+
+    <div class="image-test">
+        <h3>2. Equipo de Trabajo (PNG)</h3>
+        <div class="path">assets/images/nosotros/5e000563e99ca661005cbb407cf4f754485b5878.png</div>
+        <span class="status" id="status-2">Cargando...</span>
+        <br>
+        <img 
+            src="assets/images/nosotros/5e000563e99ca661005cbb407cf4f754485b5878.png" 
+            alt="Equipo de trabajo"
+            onload="document.getElementById('status-2').className='status success'; document.getElementById('status-2').textContent='✓ Cargada';"
+            onerror="document.getElementById('status-2').className='status error'; document.getElementById('status-2').textContent='✗ Error';">
+    </div>
+
+    <div class="image-test">
+        <h3>3. Marco Hernandez (PNG)</h3>
+        <div class="path">assets/images/nosotros/b6beba38f53b28f29e855075ab49ad574e2b550f.png</div>
+        <span class="status" id="status-3">Cargando...</span>
+        <br>
+        <img 
+            src="assets/images/nosotros/b6beba38f53b28f29e855075ab49ad574e2b550f.png" 
+            alt="Marco Hernandez"
+            onload="document.getElementById('status-3').className='status success'; document.getElementById('status-3').textContent='✓ Cargada';"
+            onerror="document.getElementById('status-3').className='status error'; document.getElementById('status-3').textContent='✗ Error';">
+    </div>
+
+    <div class="image-test">
+        <h3>4. Guido Yauri (PNG)</h3>
+        <div class="path">assets/images/nosotros/0c8b8746bf570f1ab539b63133f3e07ca3366fcd.png</div>
+        <span class="status" id="status-4">Cargando...</span>
+        <br>
+        <img 
+            src="assets/images/nosotros/0c8b8746bf570f1ab539b63133f3e07ca3366fcd.png" 
+            alt="Guido Yauri"
+            onload="document.getElementById('status-4').className='status success'; document.getElementById('status-4').textContent='✓ Cargada';"
+            onerror="document.getElementById('status-4').className='status error'; document.getElementById('status-4').textContent='✗ Error';">
+    </div>
+
+    <div class="image-test">
+        <h3>5. Análisis de Datos (SVG)</h3>
+        <div class="path">assets/images/nosotros/ecc850cd1dd65210bc095a061bebc08fd56bd05e.svg</div>
+        <span class="status" id="status-5">Cargando...</span>
+        <br>
+        <img 
+            src="assets/images/nosotros/ecc850cd1dd65210bc095a061bebc08fd56bd05e.svg" 
+            alt="Análisis de Datos"
+            onload="document.getElementById('status-5').className='status success'; document.getElementById('status-5').textContent='✓ Cargada';"
+            onerror="document.getElementById('status-5').className='status error'; document.getElementById('status-5').textContent='✗ Error';">
+    </div>
+
+    <div class="image-test">
+        <h3>6. Eficiencia Energética (SVG)</h3>
+        <div class="path">assets/images/nosotros/a806b20c6145735ac6240cd2839f89e18c6cb6fa.svg</div>
+        <span class="status" id="status-6">Cargando...</span>
+        <br>
+        <img 
+            src="assets/images/nosotros/a806b20c6145735ac6240cd2839f89e18c6cb6fa.svg" 
+            alt="Eficiencia Energética"
+            onload="document.getElementById('status-6').className='status success'; document.getElementById('status-6').textContent='✓ Cargada';"
+            onerror="document.getElementById('status-6').className='status error'; document.getElementById('status-6').textContent='✗ Error';">
+    </div>
+
+    <div class="image-test">
+        <h3>7. Misión (SVG)</h3>
+        <div class="path">assets/images/nosotros/48b44baef915d04b6ce61e8ab8457396c5ad456c.svg</div>
+        <span class="status" id="status-7">Cargando...</span>
+        <br>
+        <img 
+            src="assets/images/nosotros/48b44baef915d04b6ce61e8ab8457396c5ad456c.svg" 
+            alt="Misión"
+            onload="document.getElementById('status-7').className='status success'; document.getElementById('status-7').textContent='✓ Cargada';"
+            onerror="document.getElementById('status-7').className='status error'; document.getElementById('status-7').textContent='✗ Error';">
+    </div>
+
+    <div class="image-test">
+        <h3>8. Visión (SVG)</h3>
+        <div class="path">assets/images/nosotros/32f9d91764c033d8d63ff8068c68e4d1a13e7a88.svg</div>
+        <span class="status" id="status-8">Cargando...</span>
+        <br>
+        <img 
+            src="assets/images/nosotros/32f9d91764c033d8d63ff8068c68e4d1a13e7a88.svg" 
+            alt="Visión"
+            onload="document.getElementById('status-8').className='status success'; document.getElementById('status-8').textContent='✓ Cargada';"
+            onerror="document.getElementById('status-8').className='status error'; document.getElementById('status-8').textContent='✗ Error';">
+    </div>
+
+    <script>
+        // Verificar todas las imágenes después de 5 segundos
+        setTimeout(() => {
+            const allImages = document.querySelectorAll('.image-test img');
+            let loaded = 0;
+            let failed = 0;
+            
+            allImages.forEach(img => {
+                if (img.complete && img.naturalHeight !== 0) {
+                    loaded++;
+                } else {
+                    failed++;
+                }
+            });
+            
+            console.log(`Imágenes cargadas: ${loaded}/${allImages.length}`);
+            console.log(`Imágenes fallidas: ${failed}/${allImages.length}`);
+            
+            if (failed > 0) {
+                alert(`⚠️ ${failed} imágenes no se pudieron cargar. Abre la consola del navegador (F12) para más detalles.`);
+            } else {
+                alert(`✅ Todas las ${loaded} imágenes se cargaron correctamente!`);
+            }
+        }, 5000);
+    </script>
+</body>
+</html>

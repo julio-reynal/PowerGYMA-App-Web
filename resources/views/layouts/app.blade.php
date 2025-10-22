@@ -113,6 +113,11 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="{{ route('nosotros') }}">
+                                <i class="fas fa-info-circle me-1"></i>Nosotros
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="{{ route('servicios') }}">
                                 <i class="fas fa-cog me-1"></i>Servicios
                             </a>
