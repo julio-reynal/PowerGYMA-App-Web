@@ -22,13 +22,13 @@ export default defineConfig({
                 // Servicios page assets
                 'resources/css/servicios.css',
                 'resources/js/servicios.js',
-                // Nosotros page assets
-                'resources/css/nosotros.css',
                 // Clientes page assets
                 'resources/css/clientes.css',
                 'resources/js/clientes.js',
                 // Contacto page assets
                 'resources/css/contacto.css',
+                'resources/css/contacto-figma.css',
+                'resources/js/contacto-figma.js',
                 // Dashboard dark theme assets
                 'resources/css/dashboard.css',
                 'resources/js/chart-theme.js',

@@ -23,6 +23,12 @@
     {{-- Vite Assets --}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
+    {{-- Additional styles from pages --}}
+    @stack('styles')
+
+    {{-- Additional meta tags from pages --}}
+    @stack('meta')
+
     <!-- Custom Styles -->
     <style>
         :root {

@@ -18,17 +18,12 @@ Route::get('/servicios', function () {
     return view('servicios.index');
 })->name('servicios');
 
-// Ruta para nosotros
-Route::get('/nosotros', function () {
-    return view('nosotros.index');
-})->name('nosotros');
-
 // Ruta para clientes
 Route::get('/clientes', [App\Http\Controllers\ClientesController::class, 'index'])->name('clientes');
 
-// Ruta para contacto (nuevo componente)
+// Ruta para contacto
 Route::get('/contacto', function () {
-    return view('contacto-ejemplo');
+    return view('contacto');
 })->name('contacto');
 
 // Ruta de prueba para servicios

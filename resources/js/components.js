@@ -225,7 +225,6 @@ function createFallbackHeader() {
                 <ul class="nav-menu">
                     <li class="nav-item active"><a href="#inicio">Inicio</a></li>
                     <li class="nav-item"><a href="#servicios">Servicios</a></li>
-                    <li class="nav-item"><a href="#nosotros">Nosotros</a></li>
                     <li class="nav-item"><a href="#clientes">Clientes</a></li>
                     <li class="nav-item"><a href="#contacto">Contacto</a></li>
                 </ul>
@@ -261,7 +260,6 @@ function createFallbackFooter() {
                     <ul>
                         <li><a href="#inicio">Inicio</a></li>
                         <li><a href="#servicios">Servicios</a></li>
-                        <li><a href="#nosotros">Nosotros</a></li>
                         <li><a href="#clientes">Clientes</a></li>
                         <li><a href="#contacto">Contacto</a></li>
                     </ul>
