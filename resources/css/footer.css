@@ -1,0 +1,317 @@
+/* ===== FOOTER EXACT FIGMA DESIGN ===== */
+.footer-figma {
+    background: #050505;
+    color: white;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.footer-container-figma {
+    max-width: 1920px;
+    margin: 0 auto;
+    padding: 64px 80px 32px;
+    box-sizing: border-box;
+}
+
+.footer-content-figma {
+    display: flex;
+    justify-content: space-between;
+    gap: 80px;
+    margin-bottom: 60px;
+    align-items: flex-start;
+}
+
+/* Company Section */
+.footer-section-company {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 360px;
+    flex-shrink: 0;
+}
+
+.footer-logo-figma {
+    width: 144px;
+    height: 64px;
+    margin-bottom: 0;
+}
+
+.footer-logo-figma img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.company-description-figma {
+    padding-top: 20px;
+    width: 334px;
+}
+
+.company-description-figma p {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #9CA3AF;
+    margin: 0;
+}
+
+/* Navigation Section */
+.footer-section-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 135px;
+    flex-shrink: 0;
+}
+
+.footer-title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 30px;
+    color: rgba(255, 255, 255, 0.85);
+    margin: 0 0 20px 0;
+}
+
+.nav-links-figma {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.nav-link-figma {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #9CA3AF;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    white-space: nowrap;
+}
+
+.nav-link-figma:hover {
+    color: #FE9213;
+}
+
+/* Contact Section */
+.footer-section-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    flex-shrink: 0;
+}
+
+.footer-section-contact .footer-title {
+    margin-bottom: 8px;
+}
+
+.contact-items-figma {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.contact-item-figma {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.contact-icon-wrapper {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.contact-icon-wrapper img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+}
+
+.contact-text-figma {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #9CA3AF;
+    flex: 1;
+}
+
+/* Social Section */
+.footer-section-social {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 304px;
+    flex-shrink: 0;
+}
+
+.social-links-figma {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.social-link-figma {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 24px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: transparent;
+    border: none;
+}
+
+.social-link-figma:hover {
+    transform: translateY(-3px);
+    filter: brightness(1.2);
+}
+
+.social-icon-wrapper {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.social-icon-wrapper img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+}
+
+/* Footer Divider */
+.footer-divider-figma {
+    padding: 40px 0;
+    width: 100%;
+}
+
+.footer-line {
+    height: 1px;
+    background: rgba(229, 231, 235, 0.1);
+    width: 100%;
+}
+
+/* Footer Bottom */
+.footer-bottom-figma {
+    text-align: center;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.copyright-figma {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 20px;
+    color: #6B7280;
+    margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 1400px) {
+    .footer-figma {
+        padding: 56px 60px 32px;
+    }
+
+    .footer-content-figma {
+        flex-wrap: wrap;
+        gap: 60px;
+    }
+
+    .footer-section-company {
+        width: calc(50% - 30px);
+    }
+
+    .footer-section-nav,
+    .footer-section-contact,
+    .footer-section-social {
+        width: calc(25% - 45px);
+    }
+}
+
+@media (max-width: 992px) {
+    .footer-figma {
+        padding: 48px 40px 32px;
+    }
+
+    .footer-content-figma {
+        gap: 48px;
+    }
+
+    .footer-section-company {
+        width: 100%;
+    }
+
+    .footer-section-nav,
+    .footer-section-contact,
+    .footer-section-social {
+        width: calc(33.333% - 32px);
+    }
+}
+
+@media (max-width: 768px) {
+    .footer-figma {
+        padding: 40px 24px 32px;
+    }
+
+    .footer-content-figma {
+        flex-direction: column;
+        gap: 40px;
+        margin-bottom: 40px;
+    }
+
+    .footer-section-company,
+    .footer-section-nav,
+    .footer-section-contact,
+    .footer-section-social {
+        width: 100%;
+    }
+
+    .company-description-figma {
+        width: 100%;
+    }
+
+    .footer-logo-figma {
+        margin: 0 auto 12px;
+    }
+
+    .company-description-figma p {
+        text-align: center;
+    }
+
+    .footer-section-nav,
+    .footer-section-contact,
+    .footer-section-social {
+        align-items: center;
+        text-align: center;
+    }
+
+    .nav-links-figma,
+    .contact-items-figma {
+        align-items: center;
+    }
+
+    .social-links-figma {
+        justify-content: center;
+    }
+
+    .contact-item-figma {
+        justify-content: center;
+    }
+}

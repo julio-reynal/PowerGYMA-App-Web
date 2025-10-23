@@ -195,8 +195,13 @@
 <!-- Sección de Contacto -->
 @include('components.contacto-figma')
 
+<!-- Gradient Divider -->
+<div class="contact-gradient-divider"></div>
+
 <!-- Footer Component -->
-@include('components.footer')
+<footer id="footer">
+    @include('components.footer')
+</footer>
 
 @endsection
 

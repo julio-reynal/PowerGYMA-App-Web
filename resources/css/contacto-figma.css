@@ -345,6 +345,15 @@
     overflow: hidden;
 }
 
+/* Gradient Divider */
+.contact-gradient-divider {
+    width: 100%;
+    max-width: 1792px;
+    height: 2px;
+    background: linear-gradient(90deg,#025ccd,#fe9213);
+    /*margin: 51px auto 0;*/
+}
+
 /* ========================================
    RESPONSIVE DESIGN
    ======================================== */

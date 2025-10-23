@@ -283,6 +283,10 @@
             <h2 style="color: #fa8c16; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 36px; line-height: 40px; text-align: center; margin: 0 0 104px 0;">
                 Nuestros Valores
             </h2>
+                <!-- Divider -->
+                <div style="max-width: 1152px; margin: 40px auto; padding: 0 20px;">
+                    <div style="height: 1px; background: linear-gradient(90deg, #1a3a6c 0%, #fa8c16 50%, #1a3a6c 100%);"></div>
+                </div>
             
             <div class="grid-valores" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 24px;">
                 <!-- Innovación -->
@@ -398,10 +402,7 @@
         </div>
     </section>
 
-    <!-- Divider -->
-    <div style="max-width: 1152px; margin: 40px auto; padding: 0 20px;">
-        <div style="height: 1px; background: linear-gradient(90deg, #1a3a6c 0%, #fa8c16 50%, #1a3a6c 100%);"></div>
-    </div>
+
 
     <!-- Conoce a Nuestro Equipo Section -->
     <section style="background: rgba(0, 0, 0, 0.3); padding: 80px 20px;">
@@ -486,7 +487,16 @@
 
     <!-- Componente de Contacto -->
     @include('components.contacto')
+    
+    <!-- Gradient Divider -->
+    <div class="contact-gradient-divider"></div>
 </div>
+
+
+<!-- Componente de Footer (fuera del contenedor nosotros) -->
+<footer id="footer">
+    @include('components.footer')
+</footer>
 
 <script>
 // Add media query support for responsive grid

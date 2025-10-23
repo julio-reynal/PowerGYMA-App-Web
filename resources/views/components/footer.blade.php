@@ -1,79 +1,84 @@
-<!-- Footer Component - Figma Design -->
-<div class="footer-figma" data-node-id="499:273">
+<!-- Footer Component - Exact Figma Design -->
+@push('styles')
+@vite(['resources/css/footer.css'])
+@endpush
+
+<footer class="footer-figma">
     <div class="footer-container-figma">
         <div class="footer-content-figma">
-            <!-- Company Info -->
+            <!-- Column 1: Company Info & Logo -->
             <div class="footer-section-company">
                 <div class="footer-logo-figma">
-                    <img src="{{ asset('Img/Ico/icons/7a17b5800db8bc7c0a48bdddc2558bc8e2f7aad0.svg') }}" alt="PowerGYMA Logo">
+                    <img src="{{ asset('Img/a5be701b182eafefc13cf9c7f3794d6ef7f3ac24.svg') }}" alt="PowerGYMA Logo">
                 </div>
                 <div class="company-description-figma">
                     <p>Soluciones energéticas innovadoras para empresas que buscan optimización y ahorro.</p>
                 </div>
             </div>
             
-            <!-- Navigation -->
+            <!-- Column 2: Navigation -->
             <div class="footer-section-nav">
                 <h3 class="footer-title">Navegación</h3>
-                <div class="nav-links-figma">
-                    <a href="{{ route('home') }}" class="nav-link-figma">Inicio</a>
-                    <a href="{{ route('servicios') }}" class="nav-link-figma">Servicios</a>
-                    <a href="{{ route('clientes') }}" class="nav-link-figma">Clientes</a>
-                    <a href="#contacto" class="nav-link-figma">Contacto</a>
-                </div>
+                <nav class="nav-links-figma">
+                    <a href="{{ url('/') }}" class="nav-link-figma">Inicio</a>
+                    <a href="{{ url('/servicios') }}" class="nav-link-figma">Servicios</a>
+                    <a href="{{ url('/nosotros') }}" class="nav-link-figma">Nosotros</a>
+                    <a href="{{ url('/clientes') }}" class="nav-link-figma">Clientes</a>
+                    <a href="#contactanos" class="nav-link-figma">Contacto</a>
+                </nav>
             </div>
             
-            <!-- Contact Info -->
+            <!-- Column 3: Contact Info -->
             <div class="footer-section-contact">
                 <h3 class="footer-title">Contacto</h3>
                 <div class="contact-items-figma">
                     <div class="contact-item-figma">
                         <div class="contact-icon-wrapper">
-                            <img src="{{ asset('Img/Ico/icons/contact-address-icon.svg') }}" alt="Ubicación" class="contact-icon-figma">
+                            <img src="{{ asset('Img/icons/location-icon.svg') }}" alt="Ubicación">
                         </div>
                         <span class="contact-text-figma">Av. Gaviotas Nro. 1805 Lima - Lima - Santiago De Surco</span>
                     </div>
                     <div class="contact-item-figma">
                         <div class="contact-icon-wrapper">
-                            <img src="{{ asset('Img/Ico/icons/contact-phone-icon.svg') }}" alt="Teléfono" class="contact-icon-figma">
+                            <img src="{{ asset('Img/icons/phone-icon.svg') }}" alt="Teléfono">
                         </div>
                         <span class="contact-text-figma">+51 946 432 574 / +51 970 894 954</span>
                     </div>
                     <div class="contact-item-figma">
                         <div class="contact-icon-wrapper">
-                            <img src="{{ asset('Img/Ico/icons/contact-email-icon.svg') }}" alt="Email" class="contact-icon-figma">
+                            <img src="{{ asset('Img/icons/email-icon.svg') }}" alt="Email">
                         </div>
                         <span class="contact-text-figma">info@powergyma.com</span>
                     </div>
                 </div>
             </div>
             
-            <!-- Social Media -->
+            <!-- Column 4: Social Media -->
             <div class="footer-section-social">
                 <h3 class="footer-title">Redes Sociales</h3>
                 <div class="social-links-figma">
-                    <a href="https://www.facebook.com/people/Power-GYMA/61581443061373/" target="_blank" rel="noopener noreferrer" class="social-link-figma">
+                    <a href="https://www.linkedin.com/company/power-gyma/" target="_blank" rel="noopener noreferrer" class="social-link-figma" aria-label="LinkedIn">
                         <div class="social-icon-wrapper">
-                            <img src="{{ asset('Img/e57eb75b9a3746adf9b511f5b2c187f29954028e.svg') }}" alt="Facebook" class="social-icon-figma">
+                            <img src="{{ asset('Img/icons/linkedin-icon.svg') }}" alt="LinkedIn">
                         </div>
                     </a>
-                    <a href="https://www.linkedin.com/company/power-gyma/about/" target="_blank" rel="noopener noreferrer" class="social-link-figma">
+                    <a href="https://www.instagram.com/powergyma/" target="_blank" rel="noopener noreferrer" class="social-link-figma" aria-label="Instagram">
                         <div class="social-icon-wrapper">
-                            <img src="{{ asset('Img/ddddddddddddd.svg') }}" alt="LinkedIn" class="social-icon-figma">
+                            <img src="{{ asset('Img/icons/instagram-icon.svg') }}" alt="Instagram">
                         </div>
                     </a>
                 </div>
             </div>
         </div>
+        
+        <!-- Divider Line -->
+        <div class="footer-divider-figma">
+            <div class="footer-line"></div>
+        </div>
+        
+        <!-- Copyright Section -->
+        <div class="footer-bottom-figma">
+            <p class="copyright-figma">© 2025 POWERGYMA. Todos los derechos reservados.</p>
+        </div>
     </div>
-    
-    <!-- Footer Divider -->
-    <div class="footer-divider-figma">
-        <div class="footer-line"></div>
-    </div>
-    
-    <!-- Footer Bottom -->
-    <div class="footer-bottom-figma">
-        <p class="copyright-figma">© 2025 POWERGYMA. Todos los derechos reservados.</p>
-    </div>
-</div>
+</footer>

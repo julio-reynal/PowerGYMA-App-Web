@@ -316,15 +316,17 @@ body {
 
     <!-- Final Divider -->
 
-</div>
-
-    <div class="final-divider"></div>
 
 <!-- Sección de Contacto -->
 @include('components.contacto-figma')
 
+<!-- Gradient Divider -->
+<div class="contact-gradient-divider"></div>
+
 <!-- Footer Component -->
-@include('components.footer')
+<footer id="footer">
+    @include('components.footer')
+</footer>
 
 @push('scripts')
 @vite(['resources/js/servicios.js', 'resources/js/contacto-figma.js'])

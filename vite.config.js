@@ -29,6 +29,8 @@ export default defineConfig({
                 'resources/css/contacto.css',
                 'resources/css/contacto-figma.css',
                 'resources/js/contacto-figma.js',
+                // Footer component assets
+                'resources/css/footer.css',
                 // Dashboard dark theme assets
                 'resources/css/dashboard.css',
                 'resources/js/chart-theme.js',
