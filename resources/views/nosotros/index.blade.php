@@ -265,7 +265,7 @@
             <p style="color: #e0e0e0; font-family: 'Inter', sans-serif; font-size: 18px; line-height: 28px; margin: 0 0 32px 0;">
                 Transformamos tus datos en soluciones energéticas inteligentes
             </p>
-            <a href="{{ route('contacto') }}" style="display: inline-block; background: #fa8c16; color: white; padding: 12px 32px; border-radius: 8px; text-decoration: none; font-family: 'Inter', sans-serif; font-size: 16px; line-height: 24px; transition: background 0.3s;">
+            <a href="{{ route('demo.solicitar') }}" style="display: inline-block; background: #fa8c16; color: white; padding: 12px 32px; border-radius: 8px; text-decoration: none; font-family: 'Inter', sans-serif; font-size: 16px; line-height: 24px; transition: background 0.3s;">
                 Solicita una consulta gratuita
             </a>
         </div>
