@@ -117,7 +117,7 @@
                 </p>
             </div>
             <div style="text-align: center;">
-                <a href="#contacto" style="display: inline-block; background: #fa8c16; color: white; padding: 12px 32px; border-radius: 8px; text-decoration: none; font-family: 'Inter', sans-serif; font-size: 16px; line-height: 24px; transition: all 0.3s; box-shadow: 0 2px 8px rgba(250, 140, 22, 0.3);">
+                <a href="#contactanos" style="display: inline-block; background: #fa8c16; color: white; padding: 12px 32px; border-radius: 8px; text-decoration: none; font-family: 'Inter', sans-serif; font-size: 16px; line-height: 24px; transition: all 0.3s; box-shadow: 0 2px 8px rgba(250, 140, 22, 0.3);">
                     Conoce más
                 </a>
             </div>

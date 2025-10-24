@@ -1,5 +1,5 @@
 {{-- Componente de Contacto basado en diseño de Figma --}}
-<section class="contact-section">
+<section id="contactanos" class="contact-section">
     <div class="contact-container">
         {{-- Título principal --}}
         <div class="contact-header">
