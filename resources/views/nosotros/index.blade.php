@@ -7,12 +7,13 @@
 @endphp
 
 @push('styles')
-<link rel="stylesheet" href="{{ asset('css/nosotros.css') }}">
-@vite(['resources/css/contacto.css'])
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+@vite(['resources/css/contacto.css'])
+
 <style>
     body {
         background-color: #121212 !important;
@@ -33,8 +34,8 @@
         min-height: 100vh;
         width: 100%;
         position: relative;
-        padding-top: 0;
-        margin-top: 0; /* Sin navbar, no necesitamos compensar */
+        padding-top: 90px; /* Espacio para el header fijo */
+        margin-top: 0;
     }
     
     /* Asegurar que las imágenes se muestren correctamente */
@@ -42,16 +43,6 @@
         display: block;
         max-width: 100%;
         height: auto;
-    }
-    
-    /* Ocultar el navbar en la página de Nosotros */
-    nav.navbar {
-        display: none !important;
-    }
-    
-    /* Remover el margin negativo ya que no hay navbar */
-    .nosotros-container {
-        margin-top: 0 !important;
     }
     
     @media (max-width: 768px) {
@@ -85,6 +76,9 @@
 @endpush
 
 @section('content')
+<!-- Header Component -->
+@include('components.header')
+
 <div class="nosotros-container">
     <!-- Hero Section -->
     <section style="position: relative; height: 600px; width: 100%; padding-top: 0; background-color: #121212;">
@@ -516,3 +510,8 @@ if (window.matchMedia('(max-width: 640px)').matches) {
 }
 </script>
 @endsection
+
+@push('scripts')
+<!-- Script del componente header -->
+@vite(['resources/js/components.js'])
+@endpush

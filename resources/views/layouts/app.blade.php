@@ -21,7 +21,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
     {{-- Vite Assets --}}
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/css/components.css', 'resources/js/app.js'])
 
     {{-- Additional styles from pages --}}
     @stack('styles')
@@ -93,7 +93,8 @@
 </head>
 <body>
     <div id="app" class="d-flex flex-column min-vh-100">
-        <!-- Navigation -->
+        <!-- Navigation - Comentado porque ahora usamos el componente header personalizado -->
+        {{-- 
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
@@ -173,6 +174,7 @@
                 </div>
             </div>
         </nav>
+        --}}
 
         <!-- Page Content -->
         <main class="main-content">
@@ -227,6 +229,9 @@
     
     <!-- jQuery (si es necesario) -->
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    
+    <!-- Components JS -->
+    @vite(['resources/js/components.js'])
 
     @stack('scripts')
 </body>
