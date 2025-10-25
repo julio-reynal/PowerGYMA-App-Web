@@ -5,8 +5,14 @@
 
     RewriteEngine On
 
+    # Forzar HTTPS primero
+    RewriteCond %{HTTPS} off
+    RewriteCond %{HTTP:X-Forwarded-Proto} !https
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+
     # Redireccionar de powergyma.com a www.powergyma.com
-    RewriteCond %{HTTP_HOST} ^powergyma\.com$ [NC]
+    RewriteCond %{HTTP_HOST} ^powergyma\.com$ [NC,OR]
+    RewriteCond %{HTTP_HOST} ^http://powergyma\.com$ [NC]
     RewriteRule ^(.*)$ https://www.powergyma.com/$1 [R=301,L]
 
     # Handle Authorization Header
