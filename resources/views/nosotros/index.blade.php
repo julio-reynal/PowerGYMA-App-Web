@@ -462,7 +462,7 @@
                         </div>
                         <div style="padding-bottom: 16px;">
                             <p style="color: #fa8c16; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 14px; line-height: 20px; margin: 0;">
-                                Directora de Operaciones
+                                Director de Operaciones
                             </p>
                         </div>
                         <a href="https://www.linkedin.com/in/guidoyauri/" 
