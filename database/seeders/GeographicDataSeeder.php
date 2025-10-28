@@ -12,7 +12,7 @@ class GeographicDataSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->command->info('🗺️  C argando datos geográficos del Perú...');
+        $this->command->info('🗺️  Cargando datos geográficos del Perú...');
         
         // Cargar departamentos (25 departamentos)
         $this->call(DepartamentosSeeder::class);
