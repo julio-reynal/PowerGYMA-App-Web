@@ -14,11 +14,12 @@ class GeographicDataSeeder extends Seeder
     {
         $this->command->info('🗺️  Cargando datos geográficos del Perú...');
         
-        // Cargar departamentos
+        // Cargar departamentos (25 departamentos)
         $this->call(DepartamentosSeeder::class);
         
-        // Cargar provincias
+        // Cargar TODAS las provincias (incluyendo Madre de Dios y todas las demás)
         $this->call(ProvinciasSeeder::class);
+        $this->call(ProvinciasCompletasSeeder::class);
         
         $this->command->info('✅ Datos geográficos cargados correctamente.');
     }
