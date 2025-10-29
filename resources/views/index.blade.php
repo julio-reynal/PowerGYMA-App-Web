@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>POWERGYMA - Optimiza tu energía. Controla tu costo</title>
     
     {{-- Favicon y PWA meta tags --}}
@@ -588,12 +589,17 @@
                     }
                     
                     try {
+                        // Obtener el token CSRF del meta tag o del formulario
+                        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content 
+                                       || document.querySelector('input[name="_token"]')?.value;
+                        
                         const response = await fetch('/contacto/enviar', {
                             method: 'POST',
                             body: formData,
                             headers: {
                                 'X-Requested-With': 'XMLHttpRequest',
-                                'Accept': 'application/json'
+                                'Accept': 'application/json',
+                                'X-CSRF-TOKEN': csrfToken
                             }
                         });
                         
