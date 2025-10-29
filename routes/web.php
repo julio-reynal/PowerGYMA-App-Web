@@ -17,6 +17,37 @@ Route::get('/', function () {
 // Ruta para enviar formulario de contacto
 Route::post('/contacto/enviar', [ContactController::class, 'send'])->name('contacto.enviar');
 
+// RUTA TEMPORAL DE DEBUG - ELIMINAR DESPUÉS DE PROBAR
+Route::get('/test-email', function () {
+    try {
+        $config = [
+            'MAIL_MAILER' => config('mail.default'),
+            'MAIL_HOST' => config('mail.mailers.smtp.host'),
+            'MAIL_PORT' => config('mail.mailers.smtp.port'),
+            'MAIL_USERNAME' => config('mail.mailers.smtp.username'),
+            'MAIL_ENCRYPTION' => config('mail.mailers.smtp.encryption'),
+            'MAIL_FROM_ADDRESS' => config('mail.from.address'),
+        ];
+
+        \Mail::raw('Email de prueba desde Railway - PowerGYMA', function ($message) {
+            $message->to('info@powergyma.com')
+                    ->subject('Test desde Railway - ' . now());
+        });
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Email enviado correctamente',
+            'config' => $config,
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'status' => 'error',
+            'message' => $e->getMessage(),
+            'config' => config('mail'),
+        ], 500);
+    }
+});
+
 // Ruta de prueba para el formulario de contacto
 Route::get('/test/contacto', function () {
     return view('test-contact-form');

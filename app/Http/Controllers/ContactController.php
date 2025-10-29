@@ -54,9 +54,16 @@ class ContactController extends Controller
             ]);
 
         } catch (\Exception $e) {
+            // Log del error para debugging
+            \Log::error('Error al enviar email de contacto: ' . $e->getMessage(), [
+                'exception' => $e,
+                'data' => $data
+            ]);
+            
             return response()->json([
                 'success' => false,
-                'message' => 'Error al enviar el mensaje. Por favor, intenta de nuevo más tarde.'
+                'message' => 'Error al enviar el mensaje. Por favor, intenta de nuevo más tarde.',
+                'error' => config('app.debug') ? $e->getMessage() : null
             ], 500);
         }
     }
