@@ -42,24 +42,46 @@ class ContactController extends Controller
         $data = $validator->validated();
 
         try {
-            Log::info('Contacto recibido', [
+            Log::info('=== CONTACTO RECIBIDO ===', [
                 'email' => $data['email'],
-                'company' => $data['companyName']
+                'company' => $data['companyName'],
+                'timestamp' => now()->toDateTimeString()
+            ]);
+            
+            // Log de configuración de correo para debugging
+            Log::info('Configuración SMTP', [
+                'host' => config('mail.mailers.smtp.host'),
+                'port' => config('mail.mailers.smtp.port'),
+                'encryption' => config('mail.mailers.smtp.encryption'),
+                'username' => config('mail.mailers.smtp.username'),
+                'from' => config('mail.from.address'),
+                'timeout' => config('mail.mailers.smtp.timeout')
             ]);
             
             // Intentar enviar el email con timeout corto
             // Si falla, se captura pero el usuario recibe confirmación
             try {
+                Log::info('Intentando enviar email...');
+                
                 Mail::send('emails.contact', ['data' => $data], function ($message) use ($data) {
                     $message->to(config('mail.from.address', 'info@powergyma.com'))
                             ->subject('Nuevo mensaje de contacto - ' . $data['companyName'])
                             ->replyTo($data['email'], $data['fullName']);
                 });
                 
-                Log::info('Email enviado exitosamente');
+                Log::info('✅ Email enviado exitosamente', [
+                    'to' => config('mail.from.address'),
+                    'subject' => 'Nuevo mensaje de contacto - ' . $data['companyName']
+                ]);
             } catch (\Exception $mailError) {
-                // Log del error pero NO fallar la respuesta al usuario
-                Log::error('Error al enviar email (usuario ya notificado): ' . $mailError->getMessage());
+                // Log COMPLETO del error
+                Log::error('❌ ERROR al enviar email', [
+                    'error' => $mailError->getMessage(),
+                    'code' => $mailError->getCode(),
+                    'file' => $mailError->getFile(),
+                    'line' => $mailError->getLine(),
+                    'trace' => $mailError->getTraceAsString()
+                ]);
             }
 
             // SIEMPRE responder con éxito (el contacto se registró en logs)
@@ -72,7 +94,8 @@ class ContactController extends Controller
             Log::error('Error crítico en formulario de contacto', [
                 'error' => $e->getMessage(),
                 'file' => $e->getFile(),
-                'line' => $e->getLine()
+                'line' => $e->getLine(),
+                'trace' => $e->getTraceAsString()
             ]);
             
             return response()->json([

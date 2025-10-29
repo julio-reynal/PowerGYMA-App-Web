@@ -1,3 +1,17 @@
+# 🔧 SOLUCIÓN COMPLETA - Correo No Llega en Railway
+
+## 🔴 PROBLEMA ACTUAL
+
+**Síntomas:**
+- ✅ Formulario muestra "Mensaje enviado"
+- ✅ En local funciona (email llega)
+- ❌ En Railway NO funciona (email NO llega)
+- ❌ No hay errores visibles
+
+**Causa:** Railway tiene restricciones de red y configuración que impiden el envío de emails.
+
+---
+
 # 🔧 SOLUCIÓN ERROR 500/502 - Formulario de Contacto
 
 ## ❌ PROBLEMA DETECTADO
