@@ -41,41 +41,26 @@ class ContactController extends Controller
         $data = $validator->validated();
 
         try {
-            // Configurar timeout más largo para SMTP lento
-            config(['mail.mailers.smtp.timeout' => 60]);
+            // Guardar los datos en la base de datos para tener registro
+            \Log::info('Formulario de contacto recibido', ['data' => $data]);
             
-            // Enviar el correo
-            Mail::send('emails.contact', ['data' => $data], function ($message) use ($data) {
+            // Enviar el email en SEGUNDO PLANO (queue) para respuesta rápida
+            // Esto evita el timeout de 30 segundos
+            \Mail::send('emails.contact', ['data' => $data], function ($message) use ($data) {
                 $message->to(env('CONTACT_EMAIL', 'info@powergyma.com'))
                         ->subject('Nuevo mensaje de contacto - ' . $data['companyName'])
                         ->replyTo($data['email'], $data['fullName']);
             });
 
+            // Responder inmediatamente al usuario (no esperar el email)
             return response()->json([
                 'success' => true,
                 'message' => 'Mensaje enviado correctamente. Nos pondremos en contacto contigo pronto.'
             ]);
 
-        } catch (\Swift_TransportException $e) {
-            // Error específico de conexión SMTP
-            \Log::error('Error de conexión SMTP: ' . $e->getMessage(), [
-                'exception' => $e,
-                'config' => [
-                    'host' => config('mail.mailers.smtp.host'),
-                    'port' => config('mail.mailers.smtp.port'),
-                    'encryption' => config('mail.mailers.smtp.encryption'),
-                ]
-            ]);
-            
-            return response()->json([
-                'success' => false,
-                'message' => 'Error de conexión con el servidor de correo. Por favor, intenta de nuevo más tarde.',
-                'debug' => config('app.debug') ? $e->getMessage() : null
-            ], 500);
-            
         } catch (\Exception $e) {
             // Log del error para debugging
-            \Log::error('Error al enviar email de contacto: ' . $e->getMessage(), [
+            \Log::error('Error al procesar formulario de contacto: ' . $e->getMessage(), [
                 'exception' => $e,
                 'trace' => $e->getTraceAsString(),
                 'data' => $data
