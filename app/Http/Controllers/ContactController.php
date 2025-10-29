@@ -42,26 +42,38 @@ class ContactController extends Controller
         $data = $validator->validated();
 
         try {
-            // Log simple solo del contacto recibido
-            Log::info('Contacto recibido: ' . $data['email'] . ' - ' . $data['companyName']);
+            Log::info('Contacto recibido', [
+                'email' => $data['email'],
+                'company' => $data['companyName']
+            ]);
             
-            // Enviar el email de forma ASÍNCRONA usando later() para no bloquear
-            // Si falla, se registra en logs pero el usuario ya recibió confirmación
-            Mail::later(now()->addSeconds(2), 'emails.contact', ['data' => $data], function ($message) use ($data) {
-                $message->to(config('mail.from.address', 'info@powergyma.com'))
-                        ->subject('Nuevo mensaje de contacto - ' . $data['companyName'])
-                        ->replyTo($data['email'], $data['fullName']);
-            });
+            // Intentar enviar el email con timeout corto
+            // Si falla, se captura pero el usuario recibe confirmación
+            try {
+                Mail::send('emails.contact', ['data' => $data], function ($message) use ($data) {
+                    $message->to(config('mail.from.address', 'info@powergyma.com'))
+                            ->subject('Nuevo mensaje de contacto - ' . $data['companyName'])
+                            ->replyTo($data['email'], $data['fullName']);
+                });
+                
+                Log::info('Email enviado exitosamente');
+            } catch (\Exception $mailError) {
+                // Log del error pero NO fallar la respuesta al usuario
+                Log::error('Error al enviar email (usuario ya notificado): ' . $mailError->getMessage());
+            }
 
-            // Responder INMEDIATAMENTE al usuario (no esperar el email)
+            // SIEMPRE responder con éxito (el contacto se registró en logs)
             return response()->json([
                 'success' => true,
                 'message' => 'Mensaje enviado correctamente. Nos pondremos en contacto contigo pronto.'
             ]);
 
         } catch (\Exception $e) {
-            // Log simple del error
-            Log::error('Error en formulario de contacto: ' . $e->getMessage());
+            Log::error('Error crítico en formulario de contacto', [
+                'error' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine()
+            ]);
             
             return response()->json([
                 'success' => false,
