@@ -41,9 +41,12 @@ class ContactController extends Controller
         $data = $validator->validated();
 
         try {
+            // Configurar timeout más largo para SMTP lento
+            config(['mail.mailers.smtp.timeout' => 60]);
+            
             // Enviar el correo
             Mail::send('emails.contact', ['data' => $data], function ($message) use ($data) {
-                $message->to('info@powergyma.com')
+                $message->to(env('CONTACT_EMAIL', 'info@powergyma.com'))
                         ->subject('Nuevo mensaje de contacto - ' . $data['companyName'])
                         ->replyTo($data['email'], $data['fullName']);
             });
@@ -53,17 +56,35 @@ class ContactController extends Controller
                 'message' => 'Mensaje enviado correctamente. Nos pondremos en contacto contigo pronto.'
             ]);
 
+        } catch (\Swift_TransportException $e) {
+            // Error específico de conexión SMTP
+            \Log::error('Error de conexión SMTP: ' . $e->getMessage(), [
+                'exception' => $e,
+                'config' => [
+                    'host' => config('mail.mailers.smtp.host'),
+                    'port' => config('mail.mailers.smtp.port'),
+                    'encryption' => config('mail.mailers.smtp.encryption'),
+                ]
+            ]);
+            
+            return response()->json([
+                'success' => false,
+                'message' => 'Error de conexión con el servidor de correo. Por favor, intenta de nuevo más tarde.',
+                'debug' => config('app.debug') ? $e->getMessage() : null
+            ], 500);
+            
         } catch (\Exception $e) {
             // Log del error para debugging
             \Log::error('Error al enviar email de contacto: ' . $e->getMessage(), [
                 'exception' => $e,
+                'trace' => $e->getTraceAsString(),
                 'data' => $data
             ]);
             
             return response()->json([
                 'success' => false,
                 'message' => 'Error al enviar el mensaje. Por favor, intenta de nuevo más tarde.',
-                'error' => config('app.debug') ? $e->getMessage() : null
+                'debug' => config('app.debug') ? $e->getMessage() : null
             ], 500);
         }
     }
