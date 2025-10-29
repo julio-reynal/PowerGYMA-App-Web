@@ -612,7 +612,7 @@
                         
                         <div class="form-header">
                             <h1>Solicitar Demo</h1>
-                            <p>Complete los siguientes pasos para solicitar su demostración.</p>
+                            <p>Para que pueda probar nuestros servicios deberá completar la siguiente información.</p>
                         </div>
 
                         <!-- Progress Bar -->
@@ -808,19 +808,18 @@
 
                             <!-- Step 4: Demo Information -->
                             <div class="form-step">
-                                 <h2 class="form-section-title">Información del Demo</h2>
+                                 <h2 class="form-section-title">Tipo de Consulta</h2>
                                 <div class="form-grid">
                                     <div class="form-group grid-full-width">
-                                        <label for="tipo_demo">Tipo de Demo <span class="required">*</span></label>
+                                        <label for="tipo_demo">Tipo de Consulta <span class="required">*</span></label>
                                         <div class="input-wrapper">
                                             <i class='bx bx-desktop icon'></i>
                                             <select id="tipo_demo" name="tipo_demo" class="form-control" required>
-                                                <option value="" disabled selected>Seleccione el tipo de demo</option>
-                                                @foreach(\App\Models\DemoRequest::TIPOS_DEMO as $key => $label)
-                                                    <option value="{{ $key }}" {{ old('tipo_demo') == $key ? 'selected' : '' }}>
-                                                        {{ $label }}
-                                                    </option>
-                                                @endforeach
+                                                <option value="" disabled selected>Seleccione el tipo de consulta</option>
+                                                <option value="prueba_gratuita_smartpeak" {{ old('tipo_demo') == 'prueba_gratuita_smartpeak' ? 'selected' : '' }}>Prueba Gratuita del Pronóstico Plan de SmartPeak</option>
+                                                <option value="plan_pico_cero" {{ old('tipo_demo') == 'plan_pico_cero' ? 'selected' : '' }}>Plan Pico Cero</option>
+                                                <option value="plan_smart_tarifa" {{ old('tipo_demo') == 'plan_smart_tarifa' ? 'selected' : '' }}>Plan Smart Tarifa</option>
+                                                <option value="business_consulting" {{ old('tipo_demo') == 'business_consulting' ? 'selected' : '' }}>Business Consulting</option>
                                             </select>
                                         </div>
                                     </div>

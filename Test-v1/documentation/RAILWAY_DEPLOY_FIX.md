@@ -37,6 +37,7 @@ APP_ENV=production
 APP_DEBUG=false
 APP_KEY=base64:vAUG8BbJbiXaEuZYKBkM9suO0Q2j8cRwNi+/nTF2oMs=
 APP_URL=https://tu-app.up.railway.app
+ASSET_URL=https://tu-app.up.railway.app
 FORCE_HTTPS=true
 
 # Database (Railway las provee automáticamente)

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Assets - Power GYMA</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #1d4ed8;
+            border-bottom: 3px solid #f59e0b;
+            padding-bottom: 10px;
+        }
+        .test-section {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f9fafb;
+            border-left: 4px solid #1d4ed8;
+        }
+        .test-item {
+            margin: 15px 0;
+            padding: 15px;
+            background: white;
+            border-radius: 5px;
+        }
+        .status {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        .success { background: #10b981; color: white; }
+        .error { background: #ef4444; color: white; }
+        img {
+            max-width: 200px;
+            height: auto;
+            border: 2px solid #ddd;
+            padding: 10px;
+            background: white;
+        }
+        code {
+            background: #1e293b;
+            color: #10b981;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        .info-box {
+            background: #dbeafe;
+            border-left: 4px solid #3b82f6;
+            padding: 15px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Test de Assets - Power GYMA</h1>
+        
+        <div class="info-box">
+            <strong>ℹ️ Información:</strong><br>
+            Esta página prueba si las imágenes y assets se cargan correctamente en Railway.<br>
+            <strong>URL actual:</strong> <code id="current-url"></code>
+        </div>
+
+        <!-- Test 1: Logo Principal -->
+        <div class="test-section">
+            <h2>Test 1: Logo Principal</h2>
+            <div class="test-item">
+                <p><strong>Ruta:</strong> <code>/Img/Ico/Ico-Pw.svg</code></p>
+                <img src="/Img/Ico/Ico-Pw.svg" alt="Logo Power GYMA" 
+                     onload="markSuccess(this)" 
+                     onerror="markError(this)">
+                <p id="status-1" class="status">Cargando...</p>
+            </div>
+        </div>
+
+        <!-- Test 2: Logo Redes -->
+        <div class="test-section">
+            <h2>Test 2: Logo Redes</h2>
+            <div class="test-item">
+                <p><strong>Ruta:</strong> <code>/Img/Ico/Ico-Pw-Redes.svg</code></p>
+                <img src="/Img/Ico/Ico-Pw-Redes.svg" alt="Logo Redes" 
+                     onload="markSuccess(this)" 
+                     onerror="markError(this)">
+                <p id="status-2" class="status">Cargando...</p>
+            </div>
+        </div>
+
+        <!-- Test 3: Imagen de Servicios -->
+        <div class="test-section">
+            <h2>Test 3: Imagen Background Servicios</h2>
+            <div class="test-item">
+                <p><strong>Ruta:</strong> <code>/Img/91ceeac05d1a7348d95c7409d57b507c61180ecd.png</code></p>
+                <img src="/Img/91ceeac05d1a7348d95c7409d57b507c61180ecd.png" alt="Background" 
+                     onload="markSuccess(this)" 
+                     onerror="markError(this)">
+                <p id="status-3" class="status">Cargando...</p>
+            </div>
+        </div>
+
+        <!-- Test 4: Icono -->
+        <div class="test-section">
+            <h2>Test 4: Icono de Check</h2>
+            <div class="test-item">
+                <p><strong>Ruta:</strong> <code>/Img/c100919206cfe1af49861b043bbeaaa62166d45a.svg</code></p>
+                <img src="/Img/c100919206cfe1af49861b043bbeaaa62166d45a.svg" alt="Check Icon" 
+                     onload="markSuccess(this)" 
+                     onerror="markError(this)">
+                <p id="status-4" class="status">Cargando...</p>
+            </div>
+        </div>
+
+        <!-- Resultados -->
+        <div class="test-section" style="border-left-color: #f59e0b;">
+            <h2>📊 Resultados</h2>
+            <div id="results">
+                <p>Esperando resultados de carga...</p>
+            </div>
+        </div>
+
+        <!-- Información de Debug -->
+        <div class="test-section" style="border-left-color: #6366f1;">
+            <h2>🔍 Información de Debug</h2>
+            <div id="debug-info">
+                <p><strong>Protocol:</strong> <code id="protocol"></code></p>
+                <p><strong>Hostname:</strong> <code id="hostname"></code></p>
+                <p><strong>Port:</strong> <code id="port"></code></p>
+                <p><strong>Full URL:</strong> <code id="full-url"></code></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let totalTests = 4;
+        let successCount = 0;
+        let errorCount = 0;
+
+        // Mostrar información de la URL
+        document.getElementById('current-url').textContent = window.location.href;
+        document.getElementById('protocol').textContent = window.location.protocol;
+        document.getElementById('hostname').textContent = window.location.hostname;
+        document.getElementById('port').textContent = window.location.port || 'default';
+        document.getElementById('full-url').textContent = window.location.href;
+
+        function markSuccess(img) {
+            const num = Array.from(document.querySelectorAll('img')).indexOf(img) + 1;
+            const status = document.getElementById('status-' + num);
+            status.textContent = '✅ CARGADO';
+            status.className = 'status success';
+            successCount++;
+            updateResults();
+        }
+
+        function markError(img) {
+            const num = Array.from(document.querySelectorAll('img')).indexOf(img) + 1;
+            const status = document.getElementById('status-' + num);
+            status.textContent = '❌ ERROR';
+            status.className = 'status error';
+            errorCount++;
+            updateResults();
+        }
+
+        function updateResults() {
+            if (successCount + errorCount === totalTests) {
+                const resultsDiv = document.getElementById('results');
+                let html = `
+                    <p><strong>Tests completados:</strong> ${totalTests}</p>
+                    <p style="color: #10b981;"><strong>✅ Exitosos:</strong> ${successCount}</p>
+                    <p style="color: #ef4444;"><strong>❌ Fallidos:</strong> ${errorCount}</p>
+                `;
+                
+                if (errorCount > 0) {
+                    html += `
+                        <div style="background: #fee2e2; padding: 15px; border-radius: 5px; margin-top: 15px;">
+                            <strong>⚠️ Acción requerida:</strong><br>
+                            Algunas imágenes no cargaron. Verifica:
+                            <ul>
+                                <li>Variable <code>ASSET_URL</code> en Railway</li>
+                                <li>Archivos existen en <code>public/Img/</code></li>
+                                <li>Git rastreó los archivos correctamente</li>
+                            </ul>
+                        </div>
+                    `;
+                } else {
+                    html += `
+                        <div style="background: #d1fae5; padding: 15px; border-radius: 5px; margin-top: 15px;">
+                            <strong>🎉 ¡Perfecto!</strong><br>
+                            Todas las imágenes se cargaron correctamente.
+                        </div>
+                    `;
+                }
+                
+                resultsDiv.innerHTML = html;
+            }
+        }
+
+        // Timeout de seguridad
+        setTimeout(() => {
+            if (successCount + errorCount < totalTests) {
+                alert('⚠️ Algunos assets están tomando mucho tiempo en cargar. Revisa la consola del navegador (F12).');
+            }
+        }, 5000);
+    </script>
+</body>
+</html>
