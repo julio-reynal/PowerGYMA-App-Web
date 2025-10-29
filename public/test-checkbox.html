@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Checkbox - POWERGYMA</title>
+    <link rel="stylesheet" href="/build/assets/main-Duu6g5tZ.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #1a2639 0%, #2d4356 100%);
+            padding: 40px;
+            font-family: 'Poppins', sans-serif;
+        }
+        .test-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 10px;
+        }
+        h1 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        .status {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        .test-button {
+            margin-top: 20px;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #fe9213 0%, #ff6b00 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        .test-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(254, 146, 19, 0.4);
+        }
+        .info {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(33, 150, 243, 0.1);
+            border-left: 4px solid #2196F3;
+            border-radius: 5px;
+            color: white;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>✅ Test de Checkbox - POWERGYMA</h1>
+        
+        <div class="info">
+            <strong>📋 Instrucciones:</strong><br>
+            1. Haz clic en el checkbox o en el texto<br>
+            2. Verás el estado cambiar abajo<br>
+            3. El checkbox ahora usa el diseño NATIVO del navegador con color naranja<br>
+            4. Es 100% clickeable y funcional
+        </div>
+        
+        <div class="checkbox-group" style="margin-top: 30px;">
+            <label class="checkbox-label">
+                <input type="checkbox" id="testCheckbox" name="privacyPolicy" value="1">
+                He leído y acepto la política de privacidad y el tratamiento de mis datos
+            </label>
+        </div>
+        
+        <div class="status" id="statusDiv">
+            Estado: <span id="checkboxStatus">❌ No marcado</span>
+        </div>
+        
+        <button class="test-button" onclick="testSubmit()">
+            🚀 Probar Envío de Formulario
+        </button>
+    </div>
+    
+    <script>
+        const checkbox = document.getElementById('testCheckbox');
+        const status = document.getElementById('checkboxStatus');
+        const statusDiv = document.getElementById('statusDiv');
+        
+        // Actualizar estado visual
+        checkbox.addEventListener('change', function() {
+            if (this.checked) {
+                status.textContent = '✅ MARCADO (listo para enviar)';
+                status.style.color = '#28a745';
+                statusDiv.style.background = 'rgba(40, 167, 69, 0.2)';
+                statusDiv.style.borderLeft = '4px solid #28a745';
+            } else {
+                status.textContent = '❌ No marcado';
+                status.style.color = '#dc3545';
+                statusDiv.style.background = 'rgba(220, 53, 69, 0.1)';
+                statusDiv.style.borderLeft = '4px solid #dc3545';
+            }
+            console.log('Checkbox estado:', this.checked);
+        });
+        
+        function testSubmit() {
+            if (checkbox.checked) {
+                // Mostrar notificación de éxito
+                const notification = document.createElement('div');
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+                    color: white;
+                    padding: 20px 30px;
+                    border-radius: 12px;
+                    box-shadow: 0 8px 32px rgba(40, 167, 69, 0.4);
+                    z-index: 10000;
+                    font-family: 'Poppins', sans-serif;
+                    font-size: 16px;
+                    font-weight: 500;
+                    max-width: 400px;
+                    animation: slideIn 0.3s ease-out;
+                `;
+                
+                notification.innerHTML = `
+                    <div style="display: flex; align-items: start; gap: 15px;">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" style="flex-shrink: 0; margin-top: 2px;">
+                            <circle cx="12" cy="12" r="11" stroke="white" stroke-width="2" fill="rgba(255,255,255,0.2)"/>
+                            <path d="M7 12l4 4 6-8" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <div>
+                            <div style="font-size: 18px; font-weight: 600; margin-bottom: 8px;">
+                                ✅ ¡Checkbox Validado!
+                            </div>
+                            <div style="font-size: 14px; line-height: 1.5; opacity: 0.95;">
+                                El formulario se enviaría correctamente.
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                const style = document.createElement('style');
+                style.textContent = `
+                    @keyframes slideIn {
+                        from { transform: translateX(400px); opacity: 0; }
+                        to { transform: translateX(0); opacity: 1; }
+                    }
+                `;
+                document.head.appendChild(style);
+                document.body.appendChild(notification);
+                
+                setTimeout(() => notification.remove(), 3000);
+            } else {
+                // Mostrar notificación de advertencia
+                const notification = document.createElement('div');
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);
+                    color: white;
+                    padding: 20px 30px;
+                    border-radius: 12px;
+                    box-shadow: 0 8px 32px rgba(255, 193, 7, 0.4);
+                    z-index: 10000;
+                    font-family: 'Poppins', sans-serif;
+                    font-size: 16px;
+                    font-weight: 500;
+                    max-width: 400px;
+                    animation: slideIn 0.3s ease-out;
+                `;
+                
+                notification.innerHTML = `
+                    <div style="display: flex; align-items: start; gap: 15px;">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" style="flex-shrink: 0; margin-top: 2px;">
+                            <circle cx="12" cy="12" r="11" stroke="white" stroke-width="2" fill="rgba(255,255,255,0.2)"/>
+                            <path d="M12 7v6M12 17h.01" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+                        </svg>
+                        <div>
+                            <div style="font-size: 18px; font-weight: 600; margin-bottom: 8px;">
+                                ⚠️ Marca el checkbox
+                            </div>
+                            <div style="font-size: 14px; line-height: 1.5; opacity: 0.95;">
+                                Debes aceptar la política de privacidad para continuar.
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                document.body.appendChild(notification);
+                setTimeout(() => notification.remove(), 3000);
+            }
+        }
+        
+        console.log('✅ Test checkbox cargado correctamente');
+        console.log('📋 Checkbox element:', checkbox);
+    </script>
+</body>
+</html>

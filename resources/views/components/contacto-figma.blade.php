@@ -61,6 +61,36 @@
                                 <textarea name="mensaje" class="form-textarea-new" placeholder="Detállanos tu consulta y nos pondremos en contacto contigo lo antes posible" required></textarea>
                             </div>
                             
+                            {{-- Texto de Términos y Privacidad --}}
+                            <div class="form-field-full-new">
+                                <div class="privacy-notice-wrapper">
+                                    <p class="privacy-notice-text">
+                                        Si haces clic en "Enviar", aceptas nuestros 
+                                        <span class="privacy-link" data-tooltip="terms">Términos de servicio</span> 
+                                        y la 
+                                        <span class="privacy-link" data-tooltip="privacy">Política de privacidad</span>.
+                                    </p>
+                                    
+                                    {{-- Tooltip de Términos --}}
+                                    <div class="privacy-tooltip" id="tooltip-terms">
+                                        <div class="tooltip-arrow"></div>
+                                        <div class="tooltip-content">
+                                            <p><strong>📋 Términos y Condiciones</strong></p>
+                                            <p>Al enviar este formulario, aceptas nuestros términos y condiciones. Esto incluye el consentimiento para el procesamiento de tus datos personales conforme a nuestra Política de Privacidad. No compartiremos tu información con terceros sin tu permiso explícito. Si tienes alguna duda, contáctanos en <a href="mailto:info@powergyma.com">info@powergyma.com</a>. Al continuar, confirmas que eres mayor de edad y que la información proporcionada es veraz.</p>
+                                        </div>
+                                    </div>
+                                    
+                                    {{-- Tooltip de Privacidad --}}
+                                    <div class="privacy-tooltip" id="tooltip-privacy">
+                                        <div class="tooltip-arrow"></div>
+                                        <div class="tooltip-content">
+                                            <p><strong>🔒 Política de Privacidad</strong></p>
+                                            <p>Al enviar este formulario, aceptas nuestros términos y condiciones. Esto incluye el consentimiento para el procesamiento de tus datos personales conforme a nuestra Política de Privacidad. No compartiremos tu información con terceros sin tu permiso explícito. Si tienes alguna duda, contáctanos en <a href="mailto:info@powergyma.com">info@powergyma.com</a>. Al continuar, confirmas que eres mayor de edad y que la información proporcionada es veraz.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
                             {{-- Botón enviar --}}
                             <div class="form-button-wrapper">
                                 <button type="submit" class="submit-button-new">Enviar mensaje</button>

@@ -8,10 +8,19 @@ use App\Http\Controllers\ExcelController;
 use App\Http\Controllers\ClienteDashboardController;
 use App\Http\Controllers\DemoDashboardController;
 use App\Http\Controllers\DemoRequestController;
+use App\Http\Controllers\ContactController;
 
 Route::get('/', function () {
     return view('index');
 })->name('home');
+
+// Ruta para enviar formulario de contacto
+Route::post('/contacto/enviar', [ContactController::class, 'send'])->name('contacto.enviar');
+
+// Ruta de prueba para el formulario de contacto
+Route::get('/test/contacto', function () {
+    return view('test-contact-form');
+})->name('test.contacto');
 
 // Ruta para servicios
 Route::get('/servicios', function () {

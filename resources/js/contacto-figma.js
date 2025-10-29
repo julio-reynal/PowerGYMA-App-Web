@@ -12,6 +12,62 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
     
+    // Variable para controlar envíos múltiples
+    let isSubmitting = false;
+    
+    // Manejar tooltips de términos y privacidad
+    const privacyLinks = document.querySelectorAll('.privacy-link');
+    
+    privacyLinks.forEach(link => {
+        link.addEventListener('mouseenter', function() {
+            const tooltipType = this.getAttribute('data-tooltip');
+            const tooltip = document.getElementById(`tooltip-${tooltipType}`);
+            
+            if (tooltip) {
+                // Ocultar otros tooltips
+                document.querySelectorAll('.privacy-tooltip').forEach(t => {
+                    t.classList.remove('active');
+                });
+                
+                // Mostrar el tooltip correspondiente
+                tooltip.classList.add('active');
+            }
+        });
+        
+        link.addEventListener('mouseleave', function(e) {
+            const tooltipType = this.getAttribute('data-tooltip');
+            const tooltip = document.getElementById(`tooltip-${tooltipType}`);
+            
+            if (tooltip) {
+                // Verificar si el mouse se movió al tooltip
+                const relatedTarget = e.relatedTarget;
+                if (!relatedTarget || !tooltip.contains(relatedTarget)) {
+                    setTimeout(() => {
+                        if (!tooltip.matches(':hover')) {
+                            tooltip.classList.remove('active');
+                        }
+                    }, 100);
+                }
+            }
+        });
+    });
+    
+    // Mantener tooltip visible cuando el mouse está sobre él
+    document.querySelectorAll('.privacy-tooltip').forEach(tooltip => {
+        tooltip.addEventListener('mouseleave', function() {
+            this.classList.remove('active');
+        });
+    });
+    
+    // Cerrar tooltips al hacer clic fuera
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.privacy-link') && !e.target.closest('.privacy-tooltip')) {
+            document.querySelectorAll('.privacy-tooltip').forEach(tooltip => {
+                tooltip.classList.remove('active');
+            });
+        }
+    });
+    
     // Validación en tiempo real
     const inputs = contactForm.querySelectorAll('.form-input-new, .form-textarea-new');
     
@@ -38,6 +94,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // Envío del formulario
     contactForm.addEventListener('submit', function(e) {
         e.preventDefault();
+        
+        // Prevenir múltiples envíos
+        if (isSubmitting) {
+            showNotification('Por favor espera, el formulario se está enviando...', 'warning');
+            return;
+        }
         
         // Validar todos los campos
         let isValid = true;
@@ -91,6 +153,9 @@ document.addEventListener('DOMContentLoaded', function() {
      * Enviar el formulario
      */
     function submitForm(form) {
+        // Activar flag de envío
+        isSubmitting = true;
+        
         const submitButton = form.querySelector('.submit-button-new');
         const originalText = submitButton.textContent;
         
@@ -98,9 +163,14 @@ document.addEventListener('DOMContentLoaded', function() {
         submitButton.disabled = true;
         submitButton.textContent = 'Enviando...';
         submitButton.style.opacity = '0.7';
+        submitButton.style.cursor = 'not-allowed';
         
         // Obtener datos del formulario
         const formData = new FormData(form);
+        
+        // AGREGAR AUTOMÁTICAMENTE EL CAMPO privacyPolicy
+        // Ya que el usuario acepta implícitamente al hacer clic en "Enviar"
+        formData.append('privacyPolicy', '1');
         
         // Simular envío (aquí deberías hacer la petición real)
         setTimeout(() => {
@@ -124,6 +194,10 @@ document.addEventListener('DOMContentLoaded', function() {
             submitButton.disabled = false;
             submitButton.textContent = originalText;
             submitButton.style.opacity = '1';
+            submitButton.style.cursor = 'pointer';
+            
+            // Desactivar flag de envío
+            isSubmitting = false;
             
         }, 1500);
     }
@@ -137,12 +211,34 @@ document.addEventListener('DOMContentLoaded', function() {
         notification.className = `contact-notification contact-notification-${type}`;
         notification.textContent = message;
         
+        // Estilos según el tipo
+        let backgroundColor;
+        let icon;
+        
+        switch(type) {
+            case 'success':
+                backgroundColor = '#10b981';
+                icon = '✅';
+                break;
+            case 'error':
+                backgroundColor = '#ef4444';
+                icon = '❌';
+                break;
+            case 'warning':
+                backgroundColor = '#f59e0b';
+                icon = '⚠️';
+                break;
+            default:
+                backgroundColor = '#3b82f6';
+                icon = 'ℹ️';
+        }
+        
         // Estilos
         notification.style.cssText = `
             position: fixed;
             top: 20px;
             right: 20px;
-            background-color: ${type === 'success' ? '#10b981' : '#ef4444'};
+            background-color: ${backgroundColor};
             color: white;
             padding: 16px 24px;
             border-radius: 8px;
@@ -153,7 +249,12 @@ document.addEventListener('DOMContentLoaded', function() {
             font-weight: 500;
             animation: slideIn 0.3s ease-out;
             max-width: 400px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         `;
+        
+        notification.innerHTML = `<span style="font-size: 18px;">${icon}</span><span>${message}</span>`;
         
         // Agregar animación
         const style = document.createElement('style');

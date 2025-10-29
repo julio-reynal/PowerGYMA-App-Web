@@ -9,7 +9,7 @@
     @include('components.favicon')
     
     <!-- Vite Assets -->
-    @vite(['resources/css/main.css', 'resources/css/components.css', 'resources/js/components.js', 'resources/js/main.js'])
+    @vite(['resources/css/main.css', 'resources/css/components.css', 'resources/js/components.js', 'resources/js/main.js', 'resources/js/contact-form.js'])
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -158,7 +158,7 @@
                 <div class="cta-content">
                     <h2>¿Listo para optimizar tu consumo energético?</h2>
                     <p>Nuestros expertos están listos para ayudarte</p>
-                    <a href="{{ route('demo.solicitar') }}" class="btn btn-primary">Solicita una demostración gratuita</a>
+                    <a href="#contactanos" class="btn btn-primary">Solicita una demostración gratuita</a>
                 </div>
             </div>
         </section>
@@ -260,7 +260,8 @@
                     <div class="contact-main-grid">
                         <!-- Contact Form Container -->
                         <div class="contact-form-container">
-                            <form class="contact-form-figma">
+                            <form class="contact-form-figma" id="contactForm">
+                                @csrf
                                 <!-- First Row -->
                                 <div class="form-row">
                                     <div class="form-group">
@@ -375,12 +376,33 @@
                                 </div>
 
                                 <!-- Checkbox Group -->
-                                <div class="checkbox-group">
-                                    <label class="checkbox-label">
-                                        <input type="checkbox" name="privacyPolicy" required>
-                                        <span class="checkbox-custom"></span>
-                                        He leído y acepto la política de privacidad y el tratamiento de mis datos
-                                    </label>
+                                <div class="form-field-full-new">
+                                    <div class="privacy-notice-wrapper">
+                                        <p class="privacy-notice-text">
+                                            Si haces clic en "Enviar", aceptas nuestros 
+                                            <span class="privacy-link" data-tooltip="terms">Términos de servicio</span> 
+                                            y la 
+                                            <span class="privacy-link" data-tooltip="privacy">Política de privacidad</span>.
+                                        </p>
+                                        
+                                        {{-- Tooltip de Términos --}}
+                                        <div class="privacy-tooltip" id="tooltip-terms">
+                                            <div class="tooltip-arrow"></div>
+                                            <div class="tooltip-content">
+                                                <p><strong>Términos y Condiciones</strong></p>
+                                                <p>Al enviar este formulario, aceptas nuestros términos y condiciones. Esto incluye el consentimiento para el procesamiento de tus datos personales conforme a nuestra Política de Privacidad. No compartiremos tu información con terceros sin tu permiso explícito. Si tienes alguna duda, contáctanos en <a href="mailto:info@powergyma.com">info@powergyma.com</a>. Al continuar, confirmas que eres mayor de edad y que la información proporcionada es veraz.</p>
+                                            </div>
+                                        </div>
+                                        
+                                        {{-- Tooltip de Privacidad --}}
+                                        <div class="privacy-tooltip" id="tooltip-privacy">
+                                            <div class="tooltip-arrow"></div>
+                                            <div class="tooltip-content">
+                                                <p><strong>Política de Privacidad</strong></p>
+                                                <p>Al enviar este formulario, aceptas nuestros términos y condiciones. Esto incluye el consentimiento para el procesamiento de tus datos personales conforme a nuestra Política de Privacidad. No compartiremos tu información con terceros sin tu permiso explícito. Si tienes alguna duda, contáctanos en <a href="mailto:info@powergyma.com">info@powergyma.com</a>. Al continuar, confirmas que eres mayor de edad y que la información proporcionada es veraz.</p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <!-- Submit Button -->
@@ -468,5 +490,317 @@
     <footer id="footer">
         @include('components.footer')
     </footer>
+    
+    <script>
+        // Script inline para asegurar que el formulario funcione
+        console.log('🔍 Inline script ejecutándose...');
+        
+        // SOLUCIÓN: Evitar múltiples event listeners usando una variable de control
+        if (!window.contactFormInitialized) {
+            window.contactFormInitialized = true;
+            
+            window.addEventListener('load', function() {
+                const form = document.getElementById('contactForm');
+                
+                console.log('📋 Formulario encontrado:', form);
+                
+                // Manejar tooltips de términos y privacidad
+                const privacyLinks = document.querySelectorAll('.privacy-link');
+                
+                privacyLinks.forEach(link => {
+                    link.addEventListener('mouseenter', function() {
+                        const tooltipType = this.getAttribute('data-tooltip');
+                        const tooltip = document.getElementById(`tooltip-${tooltipType}`);
+                        
+                        if (tooltip) {
+                            // Ocultar otros tooltips
+                            document.querySelectorAll('.privacy-tooltip').forEach(t => {
+                                t.classList.remove('active');
+                            });
+                            
+                            // Mostrar el tooltip correspondiente
+                            tooltip.classList.add('active');
+                        }
+                    });
+                    
+                    link.addEventListener('mouseleave', function(e) {
+                        const tooltipType = this.getAttribute('data-tooltip');
+                        const tooltip = document.getElementById(`tooltip-${tooltipType}`);
+                        
+                        if (tooltip) {
+                            // Verificar si el mouse se movió al tooltip
+                            const relatedTarget = e.relatedTarget;
+                            if (!relatedTarget || !tooltip.contains(relatedTarget)) {
+                                setTimeout(() => {
+                                    if (!tooltip.matches(':hover')) {
+                                        tooltip.classList.remove('active');
+                                    }
+                                }, 100);
+                            }
+                        }
+                    });
+                });
+                
+                // Mantener tooltip visible cuando el mouse está sobre él
+                document.querySelectorAll('.privacy-tooltip').forEach(tooltip => {
+                    tooltip.addEventListener('mouseleave', function() {
+                        this.classList.remove('active');
+                    });
+                });
+                
+                // Cerrar tooltips al hacer clic fuera
+                document.addEventListener('click', function(e) {
+                    if (!e.target.closest('.privacy-link') && !e.target.closest('.privacy-tooltip')) {
+                        document.querySelectorAll('.privacy-tooltip').forEach(tooltip => {
+                            tooltip.classList.remove('active');
+                        });
+                    }
+                });
+                
+                if (form) {
+                    // IMPORTANTE: Usar handleSubmit nombrada para evitar duplicados
+                    const handleSubmit = async function(e) {
+                    e.preventDefault();
+                    console.log('✅ Evento submit capturado!');
+                    
+                    // FUNCIÓN HELPER: Remover TODAS las notificaciones previas
+                    const removeAllNotifications = () => {
+                        const existingNotifications = document.querySelectorAll('.contact-notification');
+                        console.log(`🗑️ Removiendo ${existingNotifications.length} notificaciones previas`);
+                        existingNotifications.forEach(n => n.remove());
+                    };
+                    
+                    const submitBtn = form.querySelector('button[type="submit"]');
+                    const originalText = submitBtn.textContent;
+                    
+                    submitBtn.disabled = true;
+                    submitBtn.textContent = 'Enviando...';
+                    
+                    const formData = new FormData(form);
+                    
+                    // AGREGAR AUTOMÁTICAMENTE EL CAMPO privacyPolicy
+                    // Ya que el usuario acepta implícitamente al hacer clic en "Enviar"
+                    formData.append('privacyPolicy', '1');
+                    
+                    console.log('📤 Enviando datos...');
+                    for (let [key, value] of formData.entries()) {
+                        console.log(key + ': ' + value);
+                    }
+                    
+                    try {
+                        const response = await fetch('/contacto/enviar', {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                'X-Requested-With': 'XMLHttpRequest',
+                                'Accept': 'application/json'
+                            }
+                        });
+                        
+                        const data = await response.json();
+                        console.log('📩 Respuesta:', data);
+                        
+                        if (response.ok && data.success) {
+                            // REMOVER NOTIFICACIONES PREVIAS
+                            removeAllNotifications();
+                            
+                            // Mostrar UNA SOLA notificación verde estilizada
+                            const notification = document.createElement('div');
+                            notification.className = 'contact-notification';
+                            notification.style.cssText = `
+                                position: fixed;
+                                top: 20px;
+                                right: 20px;
+                                background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+                                color: white;
+                                padding: 20px 30px;
+                                border-radius: 12px;
+                                box-shadow: 0 8px 32px rgba(40, 167, 69, 0.4);
+                                z-index: 10000;
+                                font-family: 'Poppins', sans-serif;
+                                font-size: 16px;
+                                font-weight: 500;
+                                max-width: 400px;
+                                animation: slideIn 0.3s ease-out;
+                            `;
+                            
+                            notification.innerHTML = `
+                                <div style="display: flex; align-items: start; gap: 15px;">
+                                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" style="flex-shrink: 0; margin-top: 2px;">
+                                        <circle cx="12" cy="12" r="11" stroke="white" stroke-width="2" fill="rgba(255,255,255,0.2)"/>
+                                        <path d="M7 12l4 4 6-8" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    <div>
+                                        <div style="font-size: 18px; font-weight: 600; margin-bottom: 8px;">
+                                            ¡Gracias por tu consulta!
+                                        </div>
+                                        <div style="font-size: 14px; line-height: 1.5; opacity: 0.95;">
+                                            Nos pondremos en contacto contigo en las próximas 24 horas.
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                            
+                            // Agregar animación
+                            const style = document.createElement('style');
+                            style.textContent = `
+                                @keyframes slideIn {
+                                    from {
+                                        transform: translateX(400px);
+                                        opacity: 0;
+                                    }
+                                    to {
+                                        transform: translateX(0);
+                                        opacity: 1;
+                                    }
+                                }
+                                @keyframes slideOut {
+                                    from {
+                                        transform: translateX(0);
+                                        opacity: 1;
+                                    }
+                                    to {
+                                        transform: translateX(400px);
+                                        opacity: 0;
+                                    }
+                                }
+                            `;
+                            document.head.appendChild(style);
+                            document.body.appendChild(notification);
+                            
+                            // Remover después de 5 segundos
+                            setTimeout(() => {
+                                notification.style.animation = 'slideOut 0.3s ease-out';
+                                setTimeout(() => notification.remove(), 300);
+                            }, 5000);
+                            
+                            // Limpiar formulario
+                            form.reset();
+                            
+                            // Scroll suave al inicio del formulario
+                            form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        } else {
+                            // REMOVER NOTIFICACIONES PREVIAS
+                            removeAllNotifications();
+                            
+                            const errorNotification = document.createElement('div');
+                            errorNotification.className = 'contact-notification';
+                            errorNotification.style.cssText = `
+                                position: fixed;
+                                top: 20px;
+                                right: 20px;
+                                background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+                                color: white;
+                                padding: 20px 30px;
+                                border-radius: 12px;
+                                box-shadow: 0 8px 32px rgba(220, 53, 69, 0.4);
+                                z-index: 10000;
+                                font-family: 'Poppins', sans-serif;
+                                font-size: 16px;
+                                font-weight: 500;
+                                max-width: 400px;
+                                animation: slideIn 0.3s ease-out;
+                            `;
+                            
+                            let errorMsg = data.message || 'Error al enviar el formulario';
+                            if (data.errors) {
+                                errorMsg = '<ul style="margin: 10px 0 0 0; padding-left: 20px;">';
+                                for (let [field, errors] of Object.entries(data.errors)) {
+                                    errorMsg += '<li>' + errors.join(', ') + '</li>';
+                                }
+                                errorMsg += '</ul>';
+                            }
+                            
+                            errorNotification.innerHTML = `
+                                <div style="display: flex; align-items: start; gap: 15px;">
+                                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" style="flex-shrink: 0; margin-top: 2px;">
+                                        <circle cx="12" cy="12" r="11" stroke="white" stroke-width="2" fill="rgba(255,255,255,0.2)"/>
+                                        <path d="M8 8l8 8M16 8l-8 8" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+                                    </svg>
+                                    <div>
+                                        <div style="font-size: 18px; font-weight: 600; margin-bottom: 8px;">
+                                            Error al enviar
+                                        </div>
+                                        <div style="font-size: 14px; line-height: 1.5; opacity: 0.95;">
+                                            ${errorMsg}
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                            
+                            document.body.appendChild(errorNotification);
+                            
+                            setTimeout(() => {
+                                errorNotification.style.animation = 'slideOut 0.3s ease-out';
+                                setTimeout(() => errorNotification.remove(), 300);
+                            }, 7000);
+                        }
+                    } catch (error) {
+                        console.error('Error:', error);
+                        
+                        // REMOVER NOTIFICACIONES PREVIAS
+                        removeAllNotifications();
+                        
+                        const errorNotification = document.createElement('div');
+                        errorNotification.className = 'contact-notification';
+                        errorNotification.style.cssText = `
+                            position: fixed;
+                            top: 20px;
+                            right: 20px;
+                            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+                            color: white;
+                            padding: 20px 30px;
+                            border-radius: 12px;
+                            box-shadow: 0 8px 32px rgba(220, 53, 69, 0.4);
+                            z-index: 10000;
+                            font-family: 'Poppins', sans-serif;
+                            font-size: 16px;
+                            font-weight: 500;
+                            max-width: 400px;
+                            animation: slideIn 0.3s ease-out;
+                        `;
+                        
+                        errorNotification.innerHTML = `
+                            <div style="display: flex; align-items: start; gap: 15px;">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" style="flex-shrink: 0; margin-top: 2px;">
+                                    <circle cx="12" cy="12" r="11" stroke="white" stroke-width="2" fill="rgba(255,255,255,0.2)"/>
+                                    <path d="M8 8l8 8M16 8l-8 8" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+                                </svg>
+                                <div>
+                                    <div style="font-size: 18px; font-weight: 600; margin-bottom: 8px;">
+                                        Error de conexión
+                                    </div>
+                                    <div style="font-size: 14px; line-height: 1.5; opacity: 0.95;">
+                                        ${error.message}
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        
+                        document.body.appendChild(errorNotification);
+                        
+                        setTimeout(() => {
+                            errorNotification.style.animation = 'slideOut 0.3s ease-out';
+                            setTimeout(() => errorNotification.remove(), 300);
+                        }, 7000);
+                    } finally {
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = originalText;
+                    }
+                };
+                
+                // Remover cualquier listener previo antes de agregar uno nuevo
+                form.removeEventListener('submit', handleSubmit);
+                form.addEventListener('submit', handleSubmit);
+                
+                console.log('✅ Event listener agregado correctamente');
+            } else {
+                console.error('❌ Formulario #contactForm NO encontrado');
+            }
+        });
+        } else {
+            console.log('⚠️ Script ya inicializado, evitando duplicados');
+        }
+    </script>
 </body>
 </html>

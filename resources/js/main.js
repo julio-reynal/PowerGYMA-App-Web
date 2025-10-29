@@ -515,10 +515,6 @@ function initializeContactForm() {
             const queryType = document.querySelector('input[name="query-type"]:checked');
             data['query-type'] = queryType ? queryType.value : '';
             
-            // Get checkbox value
-            const privacyPolicy = document.getElementById('privacy-policy');
-            data['privacy-policy'] = privacyPolicy ? privacyPolicy.checked : false;
-            
             // Basic validation
             if (!data['full-name'] || !data['email'] || !data['phone']) {
                 showNotification('Por favor, completa todos los campos obligatorios.', 'error');
@@ -529,12 +525,6 @@ function initializeContactForm() {
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(data['email'])) {
                 showNotification('Por favor, introduce un email válido.', 'error');
-                return;
-            }
-            
-            // Privacy policy validation
-            if (!data['privacy-policy']) {
-                showNotification('Debes aceptar la política de privacidad para continuar.', 'error');
                 return;
             }
             
@@ -667,11 +657,12 @@ function showNotification(message, type = 'info') {
 
 // Initialize contact form when page loads
 document.addEventListener('DOMContentLoaded', function() {
+    // DESACTIVADO: Ya se maneja en index.blade.php con script inline
     // Wait a bit for the page to fully load
-    setTimeout(() => {
-        initializeContactForm();
-        initializeContactFormFigma();
-    }, 1000);
+    // setTimeout(() => {
+    //     initializeContactForm();
+    //     initializeContactFormFigma();
+    // }, 1000);
 });
 
 // Contact Form Figma Functionality
@@ -764,9 +755,6 @@ function handleContactFormSubmission(form) {
     // Get radio button value
     const consultType = form.querySelector('input[name="consultType"]:checked')?.value;
     
-    // Get checkbox value
-    const privacyPolicy = form.querySelector('input[name="privacyPolicy"]')?.checked;
-    
     // Basic validation
     if (!fullName || !email || !phone) {
         showNotification('Por favor, completa todos los campos obligatorios (Nombre, Email y Teléfono).', 'error');
@@ -777,12 +765,6 @@ function handleContactFormSubmission(form) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
         showNotification('Por favor, introduce un email válido.', 'error');
-        return;
-    }
-    
-    // Privacy policy validation
-    if (!privacyPolicy) {
-        showNotification('Debes aceptar la política de privacidad para continuar.', 'error');
         return;
     }
     

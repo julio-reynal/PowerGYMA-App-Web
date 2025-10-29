@@ -19,6 +19,7 @@ export default defineConfig({
                 'resources/css/components.css',
                 'resources/js/main.js',
                 'resources/js/components.js',
+                'resources/js/contact-form.js',
                 // Servicios page assets
                 'resources/css/servicios.css',
                 'resources/js/servicios.js',
