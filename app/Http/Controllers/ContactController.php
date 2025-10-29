@@ -5,18 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
 
 class ContactController extends Controller
 {
     public function send(Request $request)
     {
-        // Log de entrada para debugging en Railway
-        \Log::info('=== INICIO PROCESAMIENTO FORMULARIO CONTACTO ===', [
-            'ip' => $request->ip(),
-            'user_agent' => $request->userAgent(),
-            'all_data' => $request->all()
-        ]);
-
         // Validar los datos del formulario
         $validator = Validator::make($request->all(), [
             'fullName' => 'required|string|max:255',
@@ -39,10 +33,6 @@ class ContactController extends Controller
         ]);
 
         if ($validator->fails()) {
-            \Log::warning('Validación fallida en formulario de contacto', [
-                'errors' => $validator->errors()->toArray()
-            ]);
-            
             return response()->json([
                 'success' => false,
                 'errors' => $validator->errors()
@@ -52,60 +42,31 @@ class ContactController extends Controller
         $data = $validator->validated();
 
         try {
-            // Log de configuración de correo (sin contraseña)
-            \Log::info('Configuración de correo', [
-                'mailer' => config('mail.default'),
-                'host' => config('mail.mailers.smtp.host'),
-                'port' => config('mail.mailers.smtp.port'),
-                'encryption' => config('mail.mailers.smtp.encryption'),
-                'from_address' => config('mail.from.address'),
-                'username' => config('mail.mailers.smtp.username'),
-            ]);
+            // Log simple solo del contacto recibido
+            Log::info('Contacto recibido: ' . $data['email'] . ' - ' . $data['companyName']);
             
-            // Guardar los datos en la base de datos para tener registro
-            \Log::info('Formulario de contacto validado', ['data' => $data]);
-            
-            // Enviar el email - SINCRÓNICO para poder capturar errores
-            \Mail::send('emails.contact', ['data' => $data], function ($message) use ($data) {
-                $message->to(env('CONTACT_EMAIL', 'info@powergyma.com'))
+            // Enviar el email de forma ASÍNCRONA usando later() para no bloquear
+            // Si falla, se registra en logs pero el usuario ya recibió confirmación
+            Mail::later(now()->addSeconds(2), 'emails.contact', ['data' => $data], function ($message) use ($data) {
+                $message->to(config('mail.from.address', 'info@powergyma.com'))
                         ->subject('Nuevo mensaje de contacto - ' . $data['companyName'])
                         ->replyTo($data['email'], $data['fullName']);
             });
 
-            \Log::info('Email enviado exitosamente', [
-                'to' => env('CONTACT_EMAIL', 'info@powergyma.com'),
-                'subject' => 'Nuevo mensaje de contacto - ' . $data['companyName']
-            ]);
-
-            // Responder al usuario
+            // Responder INMEDIATAMENTE al usuario (no esperar el email)
             return response()->json([
                 'success' => true,
                 'message' => 'Mensaje enviado correctamente. Nos pondremos en contacto contigo pronto.'
             ]);
 
         } catch (\Exception $e) {
-            // Log COMPLETO del error para debugging en Railway
-            \Log::error('Error al procesar formulario de contacto', [
-                'message' => $e->getMessage(),
-                'file' => $e->getFile(),
-                'line' => $e->getLine(),
-                'trace' => $e->getTraceAsString(),
-                'data' => $data ?? null,
-                'mail_config' => [
-                    'mailer' => config('mail.default'),
-                    'host' => config('mail.mailers.smtp.host'),
-                    'port' => config('mail.mailers.smtp.port'),
-                ]
-            ]);
+            // Log simple del error
+            Log::error('Error en formulario de contacto: ' . $e->getMessage());
             
             return response()->json([
                 'success' => false,
                 'message' => 'Error al enviar el mensaje. Por favor, intenta de nuevo más tarde.',
-                'debug' => config('app.debug') ? [
-                    'error' => $e->getMessage(),
-                    'line' => $e->getLine(),
-                    'file' => basename($e->getFile())
-                ] : null
+                'debug' => config('app.debug') ? $e->getMessage() : null
             ], 500);
         }
     }

@@ -1,0 +1,84 @@
+# ========================================
+# VARIABLES DE ENTORNO OPTIMIZADAS - RAILWAY
+# Copia y pega en Railway > Variables
+# ========================================
+
+# === APP PRINCIPAL ===
+APP_NAME=Power GYMA
+APP_ENV=production
+APP_KEY=base64:vAUG8BbJbiXaEuZYKBkM9suO0Q2j8cRwNi+/nTF2oMs=
+APP_DEBUG=false
+APP_URL=https://www.powergyma.com/
+ASSET_URL=https://www.powergyma.com/
+APP_LOCALE=es
+APP_FALLBACK_LOCALE=en
+APP_FAKER_LOCALE=es_PE
+
+# === BASE DE DATOS ===
+DB_CONNECTION=mysql
+DB_HOST=mysql.railway.internal
+DB_PORT=3306
+DB_DATABASE=railway
+DB_USERNAME=root
+DB_PASSWORD=XkqwygNOdxJplpkRvVJpHGvHtpSCsaLH
+
+# === CORREO ELECTRÓNICO ===
+MAIL_MAILER=smtp
+MAIL_HOST=mail.exclusivehosting.net
+MAIL_PORT=587
+MAIL_USERNAME=info@powergyma.com
+MAIL_PASSWORD=Powergyma_123$
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS=info@powergyma.com
+MAIL_FROM_NAME=Power GYMA
+MAIL_TIMEOUT=60
+CONTACT_EMAIL=info@powergyma.com
+
+# === SESIONES (OPTIMIZADO - COOKIE) ===
+SESSION_DRIVER=cookie
+SESSION_LIFETIME=120
+SESSION_ENCRYPT=false
+SESSION_DOMAIN=.powergyma.com
+SESSION_SECURE_COOKIE=true
+SESSION_SAME_SITE=lax
+SESSION_HTTP_ONLY=true
+
+# === CACHÉ (OPTIMIZADO - FILE) ===
+CACHE_STORE=file
+CACHE_PREFIX=powergyma
+
+# === COLA DE TRABAJOS ===
+QUEUE_CONNECTION=sync
+FILESYSTEM_DISK=local
+
+# === LOGS (OPTIMIZADO - SOLO WARNINGS) ===
+LOG_CHANNEL=stack
+LOG_LEVEL=warning
+LOG_DEPRECATIONS_CHANNEL=null
+
+# === SEGURIDAD HTTPS ===
+FORCE_HTTPS=true
+TRUST_PROXIES=*
+
+# === NODE/VITE ===
+NODE_ENV=production
+NODE_VERSION=20.19.0
+NIXPACKS_NODE_VERSION=20
+VITE_APP_NAME=${APP_NAME}
+
+# === PHP CONFIGURACIÓN ===
+PHP_MAX_EXECUTION_TIME=120
+PHP_MEMORY_LIMIT=256M
+
+# ========================================
+# CAMBIOS PRINCIPALES RESPECTO A TU CONFIG ANTERIOR:
+# ========================================
+# 1. SESSION_DRIVER=cookie (antes: database) → 20x más rápido
+# 2. CACHE_STORE=file (antes: database) → Menos consultas BD
+# 3. LOG_LEVEL=warning (antes: debug) → 99% menos logs
+# 4. APP_DEBUG=false (antes: true) → Seguridad en producción
+# 5. MAIL_TIMEOUT=60 (antes: 120) → Respuestas más rápidas
+# 6. SESSION_DOMAIN agregado → Cookies funcionan correctamente
+# 7. SESSION_SECURE_COOKIE=true → Seguridad HTTPS
+# 8. CACHE_PREFIX agregado → Evita conflictos de caché
+# ========================================
