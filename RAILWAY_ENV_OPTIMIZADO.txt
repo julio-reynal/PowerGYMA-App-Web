@@ -22,17 +22,12 @@ DB_DATABASE=railway
 DB_USERNAME=root
 DB_PASSWORD=XkqwygNOdxJplpkRvVJpHGvHtpSCsaLH
 
-# === CORREO ELECTRÓNICO ===
-MAIL_MAILER=smtp
-MAIL_HOST=mail.exclusivehosting.net
-MAIL_PORT=587
-MAIL_USERNAME=info@powergyma.com
-MAIL_PASSWORD=Powergyma_123$
-MAIL_ENCRYPTION=tls
-MAIL_FROM_ADDRESS=info@powergyma.com
-MAIL_FROM_NAME=Power GYMA
-MAIL_TIMEOUT=60
-CONTACT_EMAIL=info@powergyma.com
+# === CORREO ELECTRÓNICO (RESEND) ===
+MAIL_MAILER=resend
+RESEND_API_KEY=re_3ebY2iUy_BaFbxX1xMEoR6AHs76ebmTrA
+MAIL_FROM_ADDRESS=dev@powergyma.com
+MAIL_FROM_NAME=Power GYMA Contacto
+CONTACT_EMAIL=infopowergyma@gmail.com
 
 # === SESIONES (OPTIMIZADO - COOKIE) ===
 SESSION_DRIVER=cookie

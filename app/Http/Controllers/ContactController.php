@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ContactFormMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -42,56 +43,66 @@ class ContactController extends Controller
         $data = $validator->validated();
 
         try {
-            Log::info('=== CONTACTO RECIBIDO ===', [
+            Log::info('=== CONTACTO RECIBIDO VÍA RESEND ===', [
                 'email' => $data['email'],
                 'company' => $data['companyName'],
+                'name' => $data['fullName'],
+                'industry' => $data['industry'],
                 'timestamp' => now()->toDateTimeString()
             ]);
             
-            // Log de configuración de correo para debugging
-            Log::info('Configuración SMTP', [
-                'host' => config('mail.mailers.smtp.host'),
-                'port' => config('mail.mailers.smtp.port'),
-                'encryption' => config('mail.mailers.smtp.encryption'),
-                'username' => config('mail.mailers.smtp.username'),
+            // Configuración de Resend
+            Log::info('📧 Configuración Resend', [
+                'mailer' => config('mail.default'),
                 'from' => config('mail.from.address'),
-                'timeout' => config('mail.mailers.smtp.timeout')
+                'from_name' => config('mail.from.name'),
             ]);
             
-            // Intentar enviar el email con timeout corto
-            // Si falla, se captura pero el usuario recibe confirmación
+            // Enviar email con Resend usando Mailable
             try {
-                Log::info('Intentando enviar email...');
+                Log::info('🚀 Enviando email vía Resend API...');
                 
-                Mail::send('emails.contact', ['data' => $data], function ($message) use ($data) {
-                    $message->to(config('mail.from.address', 'info@powergyma.com'))
-                            ->subject('Nuevo mensaje de contacto - ' . $data['companyName'])
-                            ->replyTo($data['email'], $data['fullName']);
-                });
+                // Destinatario: donde quieres recibir los contactos
+                $recipientEmail = env('CONTACT_EMAIL', 'infopowergyma@gmail.com');
                 
-                Log::info('✅ Email enviado exitosamente', [
-                    'to' => config('mail.from.address'),
-                    'subject' => 'Nuevo mensaje de contacto - ' . $data['companyName']
+                // Enviar usando el Mailable optimizado para Resend
+                Mail::to($recipientEmail)->send(new ContactFormMail($data));
+                
+                Log::info('✅ Email enviado exitosamente vía Resend', [
+                    'to' => $recipientEmail,
+                    'from' => config('mail.from.address'),
+                    'subject' => 'Nuevo contacto - ' . $data['companyName'],
+                    'company' => $data['companyName'],
+                    'client_email' => $data['email'],
+                    'tags' => ['contact-form', 'website', 'powergyma']
                 ]);
+                
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Mensaje enviado correctamente. Nos pondremos en contacto contigo pronto.'
+                ]);
+                
             } catch (\Exception $mailError) {
-                // Log COMPLETO del error
-                Log::error('❌ ERROR al enviar email', [
+                // Log detallado del error de Resend
+                Log::error('❌ ERROR al enviar email con Resend', [
                     'error' => $mailError->getMessage(),
                     'code' => $mailError->getCode(),
                     'file' => $mailError->getFile(),
                     'line' => $mailError->getLine(),
-                    'trace' => $mailError->getTraceAsString()
+                    'company' => $data['companyName'],
+                    'client_email' => $data['email']
                 ]);
+                
+                // Retornar error específico al cliente
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Error al enviar el mensaje. Por favor, intenta de nuevo o contáctanos por teléfono.',
+                    'debug' => config('app.debug') ? $mailError->getMessage() : null
+                ], 500);
             }
 
-            // SIEMPRE responder con éxito (el contacto se registró en logs)
-            return response()->json([
-                'success' => true,
-                'message' => 'Mensaje enviado correctamente. Nos pondremos en contacto contigo pronto.'
-            ]);
-
         } catch (\Exception $e) {
-            Log::error('Error crítico en formulario de contacto', [
+            Log::error('❌ Error crítico en formulario de contacto', [
                 'error' => $e->getMessage(),
                 'file' => $e->getFile(),
                 'line' => $e->getLine(),
@@ -100,7 +111,7 @@ class ContactController extends Controller
             
             return response()->json([
                 'success' => false,
-                'message' => 'Error al enviar el mensaje. Por favor, intenta de nuevo más tarde.',
+                'message' => 'Error al procesar el mensaje. Por favor, intenta de nuevo más tarde.',
                 'debug' => config('app.debug') ? $e->getMessage() : null
             ], 500);
         }
